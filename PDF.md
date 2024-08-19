@@ -178,7 +178,7 @@ Bu modüller, Pong oyununuzda gelişmiş web özelliklerini entegre etmenizi sa�
   Bu modülün kısıtlamaları olmadan, varsayılan dil/framework kullanarak bir ön yüz oluşturabilirsiniz. Ancak, bu modül sadece ilişkili kısıtlamaları kullanırsanız geçerli olacaktır.
 - **Küçük Modül:** Backend için bir veritabanı kullanın ve daha fazlası.
   Projenizdeki tüm veritabanı örnekleri için belirlenen veritabanı PostgreSQL'dir. Bu seçim, veri tutarlılığını ve projenin tüm bileşenleri arasında uyumluluğu garanti eder ve backend Framework modülü gibi diğer modüller için bir ön koşul olabilir.
-- **Küçük Modül:** Bir turnuvanın skorlarını Blockchain'de saklayın.
+- **Büyük Modül:** Bir turnuvanın skorlarını Blockchain'de saklayın.
   Bu ana modül, Pong web sitesinde turnuva skorlarını güvenli bir şekilde bir blockchain üzerine kaydetmek için bir özellik uygulamaya odaklanır. Geliştirme ve test amaçları için, bir test blockchain ortamı kullanılacaktır.
   Bu uygulama için seçilen blockchain, Ethereum'dur ve Solidity, akıllı sözleşme geliştirme için kullanılacak programlama dili olacaktır.
 - Blockchain Entegrasyonu: Bu modülün birincil hedefi, blockchain teknolojisini, özellikle Ethereum'u, Pong web sitesine sorunsuz bir şekilde entegre etmektir. Bu entegrasyon, turnuva skorlarının güvenli ve değiştirilemez bir şekilde saklanmasını sağlar, oyunculara oyun başarılarının şeffaf ve manipüle edilemez bir kaydını sunar.
