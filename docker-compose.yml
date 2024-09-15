@@ -1,0 +1,7 @@
+services:
+  authservice:
+    container_name: authservice
+    build: ./auth_service
+    env_file:
+      - .env
+    hostname: authservice
