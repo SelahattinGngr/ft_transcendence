@@ -1,7 +1,23 @@
 services:
+  apigateway:
+    container_name: apigateway
+    build: ./apigateway
+    env_file:
+      - .env
+    hostname: apigateway
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
   authservice:
     container_name: authservice
     build: ./auth_service
     env_file:
       - .env
     hostname: authservice
+    networks:
+      - backend
+    
+networks:
+  backend:
+    driver: bridge
