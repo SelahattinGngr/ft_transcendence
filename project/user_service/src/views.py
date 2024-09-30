@@ -1,3 +1,6 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
-# Create your views here.
+
+def deneme(request):
+    return JsonResponse({"message": "Hello from user service!"})

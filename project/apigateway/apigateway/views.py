@@ -7,33 +7,23 @@ logger = logging.getLogger(__name__)
 # Mikroservislerin URL'lerini burada bir dictionary olarak tanımla
 MICROSERVICES = {
     "auth": "http://authservice:8000",
-    "user": "http://user_service:10001",
-    "game": "http://game_service:10002",
-    "mail": "http://mail_service:10003",
-    "tournament": "http://tournament_service:10004",
-    "matchmaking": "http://matchmaking_service:10005",
-    "chat": "http://chat_service:10006",
-    "friend": "http://friend_service:10007",
-    "notification": "http://notification_service:10008",
-    "monitoring": "http://monitoring_service:10009"
+    "user": "http://userservice:8000",
+    "game": "http://gameservice:8000",
+    "mail": "http://mailservice:8000",
+    "tournament": "http://tournamentservice:8000",
+    "matchmaking": "http://matchmakingservice:8000",
+    "chat": "http://chatservice:8000",
+    "friend": "http://friendservice:8000",
+    "notification": "http://notificationservice:8000",
+    "monitoring": "http://monitoringservice:8000"
 }
 
-def proxy_request(request, path):
-    logger.info("Service Name: %s", path)  # Logger'ı kullan
-    print("------------------------------------")
-    print("Service Name:", path)
-    print("------------------------------------")
-    print(path.split('/')[0])
-    print("------------------------------------")
-    
+def proxy_request(request, path):   
     service_url = MICROSERVICES.get(path.split('/')[0], None)
     if not service_url:
         return JsonResponse({"error": "Invalid service name"}, status=400)
 
     try:
-        print("------------------------------------")
-        print(f"Proxying request to {path}")
-        print("------------------------------------")
         response = requests.request(
             method=request.method,
             url=f"{service_url}{request.path}",

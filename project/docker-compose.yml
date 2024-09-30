@@ -17,7 +17,28 @@ services:
     hostname: authservice
     networks:
       - backend
+    ports:
+      - "5432:5432"
+  userservice:
+    container_name: userservice
+    build: ./user_service
+    env_file:
+      - .env
+    hostname: userservice
+    networks:
+      - backend
     
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+
 networks:
   backend:
     driver: bridge

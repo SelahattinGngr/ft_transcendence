@@ -5,7 +5,7 @@ class Users(models.Model):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=255)
     is_active = models.BooleanField(default=False)
     refresh_token = models.CharField(max_length=50, null=True)
     access_token = models.CharField(max_length=50, null=True)
