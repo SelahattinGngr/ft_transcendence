@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.hashers import check_password, make_password
 
 class Users(models.Model):
     id = models.AutoField(primary_key=True)
@@ -7,11 +7,17 @@ class Users(models.Model):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
     is_active = models.BooleanField(default=False)
-    refresh_token = models.CharField(max_length=50, null=True)
-    access_token = models.CharField(max_length=50, null=True)
+    refresh_token = models.CharField(max_length=255, null=True)
+    access_token = models.CharField(max_length=255, null=True)
     status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def check_password(self, password):
+        return check_password(password, self.password)
+    
+    def set_password(self, password):
+        self.password = make_password(password)
 
 class MailTokens(models.Model):
     TOKEN_TYPE_CHOICES = [
@@ -22,7 +28,7 @@ class MailTokens(models.Model):
 
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    token = models.CharField(max_length=20)
+    token = models.CharField(max_length=255)
     type = models.CharField(max_length=20, choices=TOKEN_TYPE_CHOICES)
     status = models.BooleanField(default=True)
     expiration = models.DateTimeField(null=True, blank=True)

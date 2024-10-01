@@ -1,7 +1,6 @@
 @url = http://localhost:8000
 
 ### signup
-# @name signup
 POST {{url}}/auth/signup/ HTTP/1.1
 Accept-Language: tr
 Accept: application/json
@@ -13,4 +12,28 @@ Accept: application/json
 }
 
 ###
-GET http://authservice:10000 HTTP/1.1
+GET {{url}}/auth/verify-account/09e408bf-751c-473a-a064-d9e0d33c2b20 HTTP/1.1
+Accept-Language: tr
+
+###
+# @name signin
+POST {{url}}/auth/signin/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "signin": "deneme@mail.com",
+    "password": "P4ssword."
+}
+
+###
+# @name signout
+GET {{url}}/auth/signout/ HTTP/1.1
+Accept-Language: tr
+Authorization: Bearer {{signin.response.body.data.access_token.token}}
+
+###
+# @name refresh
+GET {{url}}/auth/refresh-token/ HTTP/1.1
+Accept-Language: tr
+Authorization: Bearer {{refresh.response.body.data.refresh_token.token}}
