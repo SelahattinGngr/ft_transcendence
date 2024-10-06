@@ -24,7 +24,7 @@ class TokenService:
         return refresh_token, exp
 
     def create_expiration_date(minutes):
-        return datetime.utcnow() + timedelta(minutes=minutes)
+        return datetime.now() + timedelta(minutes=minutes)
 
     @staticmethod
     def validate_access_token(access_token):
@@ -45,3 +45,6 @@ class TokenService:
             return None, "Refresh token expired"
         except jwt.InvalidTokenError:
             return None, "Invalid refresh token"
+
+    def is_mail_token_expired(exp):
+        return datetime.now() > exp

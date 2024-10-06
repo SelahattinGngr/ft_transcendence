@@ -17,8 +17,6 @@ services:
     hostname: authservice
     networks:
       - backend
-    ports:
-      - "5432:5432"
   userservice:
     container_name: userservice
     build: ./user_service

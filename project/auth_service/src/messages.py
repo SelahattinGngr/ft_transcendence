@@ -22,6 +22,11 @@ class Messages(Enum):
     REFRESH_TOKEN_FAILED = ("Refresh token failed", "Refresh token başarısız oldu")
     ACCESS_TOKEN_EXPIRED = ("Access token expired", "Access token süresi doldu")
     ACCESS_TOKEN_FAILED = ("Access token failed", "Access token başarısız oldu")
+    TOKEN_EXPIRED_NEW_SENT = ("Token expired. New token sent to your email", "Token süresi doldu. Yeni token e-postanıza gönderildi")
+    FAILED_TO_RETRIEVE_TOKEN = ("Failed to retrieve token", "Token alınamadı")
+    FAILED_TO_RETRIEVE_USER = ("Failed to retrieve user", "Kullanıcı alınamadı")
+    AUTHORIZATION_CODE_NOT_PROVIDED = ("Authorization code not provided", "Yetkilendirme kodu sağlanmadı")
+
 
     def get_message(message_enum, language="en"):
         lang_index = {'en' : 0, 'tr' : 1}
