@@ -5,7 +5,7 @@ type Props = {
 };
 
 export default async function Home({ searchParams }: Props) {
-  const response = await fetch("http://localhost:8000/auth/intra");
+  const response = await fetch("http://apigateway:8000/auth/intra");
   const data = await response.json();
 
   return (

@@ -5,7 +5,7 @@ FROM node
 WORKDIR /app
 
 # package.json ve package-lock.json dosyalarını çalışma dizinine kopyalıyoruz
-COPY package*.json ./
+COPY . ./
 
 # Gerekli Node.js bağımlılıklarını yüklüyoruz
 RUN npm install
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Uygulama başlatma komutunu belirliyoruz (örneğin, `npm start`)
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

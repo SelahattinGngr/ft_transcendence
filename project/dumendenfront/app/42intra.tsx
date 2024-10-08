@@ -4,7 +4,7 @@ type Props = {
 
 export async function Intra({ code }: Props) {
   const response = await fetch(
-    `http://localhost:8000/auth/intra-callback/?code=${code}`,
+    `http://apigateway:8000/auth/intra-callback/?code=${code}`,
     {
       method: "POST",
       headers: {
