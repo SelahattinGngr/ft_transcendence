@@ -1,4 +1,15 @@
 services:
+  frontend:
+    container_name: frontend
+    build: ./dumendenforont
+    env_file:
+      - .env
+    hostname: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+
   apigateway:
     container_name: apigateway
     build: ./apigateway
