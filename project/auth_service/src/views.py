@@ -3,6 +3,7 @@ import logging
 import os
 import uuid
 
+from django.http import JsonResponse
 import requests
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
@@ -108,7 +109,11 @@ def signin(request):
         password = data.get("password")
 
         try:
-            user = Users.objects.get(email=signin) if '@' in signin else Users.objects.get(username=signin)
+            user = (
+                Users.objects.get(email=signin)
+                if "@" in signin
+                else Users.objects.get(username=signin)
+            )
         except Users.DoesNotExist:
             return ResponseService.create_error_response(
                 Messages.USER_NOT_FOUND, language, 400
@@ -142,63 +147,6 @@ def signin(request):
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, 405
     )
-
-
-def intra(request):
-    return ResponseService.create_success_response(
-        {"url": os.environ.get("INTRA_REDIRECT_URL")}
-    )
-
-
-def intraCallback(request):
-    language = request.headers.get("Accept-Language", "en")
-    data = json.loads(request.body.decode("utf-8"))
-    code = data.get("code")
-
-    if not code:
-        return ResponseService.create_error_response(
-            Messages.AUTHORIZATION_CODE_NOT_PROVIDED, language, 400
-        )
-
-    api_url = os.environ.get("INTRA_API_URL")
-    token_url = api_url + "/oauth/token"
-    payload = {
-        "grant_type": "client_credentials",
-        "client_id": os.environ.get("INTRA_UID"),
-        "client_secret": os.environ.get("INTRA_SECRET"),
-        "code": code,
-        "redirect_uri": os.environ.get("INTRA_CALLBACK_URL")
-    }
-
-    response = requests.post(token_url, data=payload)
-    if response.status_code != 200:
-        return ResponseService.create_error_response(
-            Messages.FAILED_TO_RETRIEVE_TOKEN, language, response.status_code
-        )
-    
-    token_data = response.json()
-    access_token = token_data.get("access_token")
-
-    user_info_url = api_url + "/v2/me"
-    headers = {"Authorization": f"Bearer {access_token}"}
-    
-    user_response = requests.get(user_info_url, headers=headers)
-    
-    logger.fatal("+++++++++++++++++++++++++++++++++++++++++")
-    logger.fatal("Requesting user info from " + user_info_url)
-    logger.fatal("token data" + str(token_data))
-    logger.fatal("access_token " + access_token)
-    logger.fatal("user response " + str(user_response))
-    logger.fatal("+++++++++++++++++++++++++++++++++++++++++")
-
-    if user_response.status_code != 200:
-        return ResponseService.create_error_response(
-            Messages.FAILED_TO_RETRIEVE_USER, language, user_response.status_code
-        )
-
-    user_data = user_response.json()
-
-    return ResponseService.create_success_response(user_data)
 
 
 def signout(request):
@@ -339,3 +287,61 @@ def verifyAccount(request, verify_token):
         return ResponseService.create_error_response(
             "error", Messages.AN_ERROR_OCCURRED, language, 500
         )
+
+
+def intra(request):
+    return ResponseService.create_success_response(
+        {"url": os.environ.get("INTRA_REDIRECT_URL")}
+    )
+
+
+def intraCallback(request):
+    language = request.headers.get("Accept-Language", "en")
+    data = json.loads(request.body.decode("utf-8"))
+    code = data.get("code")
+
+    if not code:
+        return ResponseService.create_error_response(
+            Messages.AUTHORIZATION_CODE_NOT_PROVIDED, language, 400
+        )
+
+    api_url = os.environ.get("INTRA_API_URL")
+    token_url = api_url + "/oauth/token"
+    payload = {
+        "grant_type": "client_credentials",
+        "client_id": os.environ.get("INTRA_UID"),
+        "client_secret": os.environ.get("INTRA_SECRET"),
+        "code": code,
+        "redirect_uri": os.environ.get("INTRA_CALLBACK_URL"),
+    }
+
+    response = requests.post(token_url, data=payload)
+    if response.status_code != 200:
+        return ResponseService.create_error_response(
+            Messages.FAILED_TO_RETRIEVE_TOKEN, language, response.status_code
+        )
+
+    token_data = response.json()
+    access_token = token_data.get("access_token")
+
+    user_info_url = api_url + "/v2/users/me"
+    headers = {"Authorization": f"Bearer {token_data.get('access_token')}"}
+
+    user_response = requests.request("GET", user_info_url, headers=headers)
+
+    logger.fatal("+++++++++++++++++++++++++++++++++++++++++")
+    logger.fatal("Requesting user info from " + user_info_url)
+    logger.fatal("token data " + str(token_data))
+    logger.fatal("access_token " + access_token)
+    logger.fatal("user response " + str(user_response))
+    logger.fatal("+++++++++++++++++++++++++++++++++++++++++")
+
+    if user_response.status_code != 200:
+        # return JsonResponse({"access_token" : access_token}, status=user_response.status_code)
+        return ResponseService.create_error_response(
+            Messages.FAILED_TO_RETRIEVE_USER, language, user_response.status_code
+        )
+
+    user_data = user_response.json()
+
+    return ResponseService.create_success_response(user_data)

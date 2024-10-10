@@ -46,4 +46,4 @@ Accept-Language: tr
 ###
 #
 GET https://api.intra.42.fr/v2/me
-Authorization: Bearer 6f6d611a2a6d60549615616d40a2f54cc41b3677cb7ce9fcd7f745470c84f3a9
+Authorization: Bearer 9f03d359ec6a2b08a3b0250891cdf0acfc1154e7f4243d5e819e93f9e054af56
