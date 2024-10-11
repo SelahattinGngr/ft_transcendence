@@ -3,7 +3,6 @@ import logging
 import os
 import uuid
 
-from django.http import JsonResponse
 import requests
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
@@ -308,7 +307,7 @@ def intraCallback(request):
     api_url = os.environ.get("INTRA_API_URL")
     token_url = api_url + "/oauth/token"
     payload = {
-        "grant_type": "client_credentials",
+        "grant_type": "authorization_code",
         "client_id": os.environ.get("INTRA_UID"),
         "client_secret": os.environ.get("INTRA_SECRET"),
         "code": code,
@@ -324,24 +323,37 @@ def intraCallback(request):
     token_data = response.json()
     access_token = token_data.get("access_token")
 
-    user_info_url = api_url + "/v2/users/me"
-    headers = {"Authorization": f"Bearer {token_data.get('access_token')}"}
+    user_response = create_user(api_url, access_token)
+    if user_response.status_code != 200 and user_response.status_code != 201:
+        return ResponseService.create_error_response(
+            Messages.FAILED_TO_RETRIEVE_USER, language, user_response
+        )
+
+    response_data = user_response.json()
+    # TODO: response data verilerini db ye aktar
+    return ResponseService.create_success_response(str(response_data))
+
+
+def create_user(api_url, access_token):
+    user_info_url = api_url + "/v2/me"
+    headers = {"Authorization": f"Bearer {access_token}"}
 
     user_response = requests.request("GET", user_info_url, headers=headers)
 
-    logger.fatal("+++++++++++++++++++++++++++++++++++++++++")
-    logger.fatal("Requesting user info from " + user_info_url)
-    logger.fatal("token data " + str(token_data))
-    logger.fatal("access_token " + access_token)
-    logger.fatal("user response " + str(user_response))
-    logger.fatal("+++++++++++++++++++++++++++++++++++++++++")
-
     if user_response.status_code != 200:
-        # return JsonResponse({"access_token" : access_token}, status=user_response.status_code)
-        return ResponseService.create_error_response(
-            Messages.FAILED_TO_RETRIEVE_USER, language, user_response.status_code
-        )
+        return user_response.status_code
 
-    user_data = user_response.json()
+    json_data = user_response.json()
+    user_service_url = os.environ.get("USER_SERVICE_URL")
+    user_create_url = f"{user_service_url}/user/intra_create/"
+    user_create_data = {
+        "username": json_data.get("login"),
+        "email": json_data.get("email"),
+        "first_name": json_data.get("first_name"),
+        "last_name": json_data.get("last_name"),
+        "source": "intra",
+        "source_id": json_data.get("id"),
+        "avatar": json_data.get("image"),
+    }
 
-    return ResponseService.create_success_response(user_data)
+    return requests.post(user_create_url, json=user_create_data)

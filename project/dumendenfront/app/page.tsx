@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/Link";
 import { Intra } from "./42intra";
 type Props = {
   searchParams: { code?: string };

@@ -1,6 +1,6 @@
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,8 +40,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']
-
 ROOT_URLCONF = 'auth_service.urls'
 
 TEMPLATES = [
@@ -76,7 +74,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 
 # Password validation
