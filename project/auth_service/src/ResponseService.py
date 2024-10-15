@@ -4,9 +4,9 @@ from .Messages import Messages
 
 
 class ResponseService:
-    def create_success_response(data):
+    def create_success_response(data, status_code = 200):
         return JsonResponse(
-            {"status": True, "status_code": 200, "data": data}, status=200
+            {"status": True, "status_code": 200, "data": data}, status=status_code
         )
 
     def create_error_response(error_message, language, status_code):

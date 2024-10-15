@@ -26,7 +26,7 @@ class Messages(Enum):
     FAILED_TO_RETRIEVE_TOKEN = ("Failed to retrieve token", "Token alınamadı")
     FAILED_TO_RETRIEVE_USER = ("Failed to retrieve user", "Kullanıcı alınamadı")
     AUTHORIZATION_CODE_NOT_PROVIDED = ("Authorization code not provided", "Yetkilendirme kodu sağlanmadı")
-
+    USER_CREATION_FAILED = ("User creation failed", "Kullanıcı oluşturma başarısız")
 
     def get_message(message_enum, language="en"):
         lang_index = {'en' : 0, 'tr' : 1}

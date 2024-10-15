@@ -28,8 +28,7 @@ def send_verification_email(user, token):
     #     logger.error(f"Failed to send email to {user.email}: {response.text}")
 
     # Şu an için dümenden mail gönderim
-    logger.info(f"Verification email sent to {user.email} with token: {token}")
-    print(f"[INFO] Verification email to: {user.email}, Token: {token}")
+    logger.fatal(f"Verification email sent to {user.email} with token: {token}")
 
 
 def signup(request):
@@ -84,6 +83,24 @@ def signup(request):
             )
 
             send_verification_email(user, token)
+
+            # UserService'e kullanıcıyı kaydetme
+            user_service_url = os.environ.get("USER_SERVICE_URL")
+            user_data = {
+                "username": username,
+                "email": email,
+                "first_name": data.get("first_name", ""),
+                "last_name": data.get("last_name", "")
+            }
+            user_service_response = requests.post(
+                f"{user_service_url}/user/create/", json=user_data
+            )
+
+            if user_service_response.status_code != 201:
+                user.delete()  # Eğer UserService kaydetmede hata alırsa, auth service'deki kullanıcıyı sil.
+                return ResponseService.create_error_response(
+                    Messages.USER_CREATION_FAILED, language, 500
+                )
 
             return ResponseService.create_response(
                 True, "success", Messages.USER_CREATED_SUCCESSFULLY, language, 201
@@ -323,29 +340,25 @@ def intraCallback(request):
     token_data = response.json()
     access_token = token_data.get("access_token")
 
-    user_response = create_user(api_url, access_token)
+    user_response = intra_user(api_url, access_token)
     if user_response.status_code != 200 and user_response.status_code != 201:
         return ResponseService.create_error_response(
-            Messages.FAILED_TO_RETRIEVE_USER, language, user_response
+            Messages.FAILED_TO_RETRIEVE_USER, language, str(user_response.json())
         )
 
-    response_data = user_response.json()
-    # TODO: response data verilerini db ye aktar
-    return ResponseService.create_success_response(str(response_data))
+    return user_response
 
 
-def create_user(api_url, access_token):
+def intra_user(api_url, access_token):
     user_info_url = api_url + "/v2/me"
     headers = {"Authorization": f"Bearer {access_token}"}
 
     user_response = requests.request("GET", user_info_url, headers=headers)
-
     if user_response.status_code != 200:
-        return user_response.status_code
+        return user_response
 
     json_data = user_response.json()
     user_service_url = os.environ.get("USER_SERVICE_URL")
-    user_create_url = f"{user_service_url}/user/intra_create/"
     user_create_data = {
         "username": json_data.get("login"),
         "email": json_data.get("email"),
@@ -356,4 +369,43 @@ def create_user(api_url, access_token):
         "avatar": json_data.get("image"),
     }
 
-    return requests.post(user_create_url, json=user_create_data)
+    # Kullanıcı daha önce oluşturulmuşsa bilgileri getir
+    user = Users.objects.filter(username=user_create_data["username"]).first()
+    if user:
+        return ResponseService.create_success_response(valid_user(user, user_service_url), 200)
+
+    # Kullanıcı daha önce oluşturulmamışsa oluştur
+    
+    return ResponseService.create_success_response(invalid_user(user_service_url, user_create_data), 201)
+
+
+def create_tokens(username):
+    rtoken, exp = TokenService.generate_refresh_token(username)
+    atoken, exp = TokenService.generate_access_token(username)
+    refresh_token = {"token": rtoken, "expiration_date": exp}
+    access_token = {"token": atoken, "expiration_date": exp}
+    return refresh_token, access_token
+
+def valid_user(user, user_service_url):
+    user_get_url = f"{user_service_url}/user/{user.username}"
+    request = requests.get(user_get_url)
+    data = request.json()
+    data["refresh_token"], data["access_token"] = create_tokens(user.username)
+    user.refresh_token = data["refresh_token"]["token"]
+    user.access_token = data["access_token"]["token"]
+    user.save()
+    return data
+
+def invalid_user(user_service_url, user_create_data):
+    user_create_url = f"{user_service_url}/user/intra_create/"
+    request = requests.post(user_create_url, json=user_create_data)
+    data = request.json()
+    data["refresh_token"], data["access_token"] = create_tokens(user_create_data["username"])
+    user = Users.objects.create(
+        username=user_create_data["username"],
+        email=user_create_data["email"],
+        is_active=True,
+        refresh_token = data["refresh_token"]["token"],
+        access_token = data["access_token"]["token"]
+    )
+    return data

@@ -37,13 +37,3 @@ Authorization: Bearer {{signin.response.body.data.access_token.token}}
 GET {{url}}/auth/refresh-token/ HTTP/1.1
 Accept-Language: tr
 Authorization: Bearer {{refresh.response.body.data.refresh_token.token}}
-
-###
-# @name intra
-GET {{url}}/auth/intra/ HTTP/1.1
-Accept-Language: tr
-
-###
-#
-GET https://api.intra.42.fr/v2/me
-Authorization: Bearer 9f03d359ec6a2b08a3b0250891cdf0acfc1154e7f4243d5e819e93f9e054af56
