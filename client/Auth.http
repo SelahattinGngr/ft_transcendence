@@ -6,13 +6,16 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "email": "deneme@mail.com",
+    "email": "denem1e@mail.com",
     "password": "P4ssword.",
-    "username": "deneme1"
+    "username": "deneme11",
+    "first_name": "Deneme1",
+    "last_name": "Deneme1",
+    "avatar_url": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
 }
 
 ###
-GET {{url}}/auth/verify-account/09e408bf-751c-473a-a064-d9e0d33c2b20 HTTP/1.1
+GET {{url}}/auth/verify-account/5b563103-ad66-41e3-a2a6-25b7b5271911 HTTP/1.1
 Accept-Language: tr
 
 ###

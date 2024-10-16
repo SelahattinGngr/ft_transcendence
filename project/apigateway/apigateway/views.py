@@ -4,7 +4,9 @@ from django.http import JsonResponse
 
 logger = logging.getLogger(__name__)
 
-# Mikroservislerin URL'lerini burada bir dictionary olarak tanımla
+# TODO: auth işlemleri harici tüm servislere access token kontrolü eklenecek
+# TODO: auth işlemlerinde bazı durumlar için access ve refresh token kontrolü yapılacak
+
 MICROSERVICES = {
     "auth": "http://authservice:8000",
     "user": "http://userservice:8000",

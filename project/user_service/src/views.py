@@ -9,7 +9,6 @@ from .ResponseService import ResponseService
 
 logger = logging.getLogger(__name__)
 
-
 def get_user(request, username):
     language = request.headers.get("Accept-Language", "en")
     if request.method != "GET":
@@ -36,8 +35,8 @@ def get_user(request, username):
 
 
 def create_user(request):
+    language = request.headers.get("Accept-Language", "en")
     if request.method != "POST":
-        language = request.headers.get("Accept-Language", "en")
         return ResponseService.create_error_response(
             Messages.INVALID_REQUEST_METHOD, language, 405
         )
@@ -45,15 +44,15 @@ def create_user(request):
     try:
         data = json.loads(request.body.decode("utf-8"))
         avatar_url = data.get("avatar_url", "https://hizliresim.com/d0crqf0")
+        logger.fatal(f"avatar_url: {data}")
         avatar = Avatar.objects.create(url=avatar_url)
         user = Users.objects.create(
             username=data["username"],
             email=data["email"],
             first_name=data.get("first_name"),
             last_name=data.get("last_name"),
-            password=data.get("password"),
             source="auth_service",
-            source_id=data.get("id"),
+            source_id=str(data.get("id")),
             status=True,
             avatar_id=avatar,
         )
@@ -67,7 +66,6 @@ def create_user(request):
         )
 
     except Exception as e:
-        language = request.headers.get("Accept-Language", "en")
         logger.error(f"Error creating user: {str(e)}")
         return ResponseService.create_error_response(
             Messages.USER_CREATION_FAILED, language, 500
@@ -130,3 +128,50 @@ def intra_create(request):
         "micro_avatar": users.avatar_id.micro_url,
     }
     return ResponseService.create_success_response(user, 201)
+
+def update_profile(request, username):
+    language = request.headers.get("Accept-Language", "en")
+    if request.method != "PUT":
+        return ResponseService.create_error_response(
+            Messages.INVALID_REQUEST_METHOD, language, 405
+        )
+
+    try:
+        user = Users.objects.filter(username=username).first()
+        if not user:
+            return ResponseService.create_error_response(
+                Messages.USER_NOT_FOUND, language, 404
+            )
+
+        data = json.loads(request.body.decode("utf-8"))
+
+        bio = data.get("bio", user.bio)
+        avatar_url = data.get("avatar_url", user.avatar_id.url)
+
+        if len(bio) > 255:
+            return ResponseService.create_error_response(
+                Messages.INVALID_BIO_LENGTH, language, 400
+            )
+
+        avatar = Avatar.objects.filter(id=user.avatar_id.id).first()
+        if avatar:
+            avatar.url = avatar_url
+            avatar.save()
+
+        user.bio = bio
+        user.save()
+
+        updated_user = {
+            "id": user.id,
+            "username": user.username,
+            "bio": user.bio,
+            "avatar_url": avatar.url,
+        }
+
+        return ResponseService.create_success_response(updated_user, 200)
+
+    except Exception as e:
+        logger.error(f"Error updating profile: {str(e)}")
+        return ResponseService.create_error_response(
+            Messages.PROFILE_UPDATE_FAILED, language, 500
+        )

@@ -38,6 +38,7 @@ def signup(request):
         username = data.get("username")
         email = data.get("email")
         password = data.get("password")
+        logger.fatal(f"Signup request received for {username} with email {email} and password {password}")
 
         if (
             len(password) < 8
@@ -86,16 +87,19 @@ def signup(request):
 
             # UserService'e kullanıcıyı kaydetme
             user_service_url = os.environ.get("USER_SERVICE_URL")
+            user_create_url = f"{user_service_url}/user/create/"
+            headers = {"Accept-Language": language, "Accept": "application/json"}
             user_data = {
                 "username": username,
                 "email": email,
                 "first_name": data.get("first_name", ""),
-                "last_name": data.get("last_name", "")
+                "last_name": data.get("last_name", ""),
+                "source_id": user.id,
+                "avatar_url": data.get("avatar_url", ""),              
             }
             user_service_response = requests.post(
-                f"{user_service_url}/user/create/", json=user_data
+                user_create_url, json=user_data, headers=headers
             )
-
             if user_service_response.status_code != 201:
                 user.delete()  # Eğer UserService kaydetmede hata alırsa, auth service'deki kullanıcıyı sil.
                 return ResponseService.create_error_response(
@@ -301,7 +305,7 @@ def verifyAccount(request, verify_token):
     except Exception as e:
         logger.error(f"Error during account verification: {str(e)}")
         return ResponseService.create_error_response(
-            "error", Messages.AN_ERROR_OCCURRED, language, 500
+            Messages.AN_ERROR_OCCURRED, language, 500
         )
 
 
@@ -366,7 +370,7 @@ def intra_user(api_url, access_token):
         "last_name": json_data.get("last_name"),
         "source": "intra",
         "source_id": json_data.get("id"),
-        "avatar": json_data.get("image"),
+        "avatar_url": json_data.get("image"),
     }
 
     # Kullanıcı daha önce oluşturulmuşsa bilgileri getir

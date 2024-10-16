@@ -1,5 +1,7 @@
-import Link from "next/Link";
+import Link from "next/link";
 import { Intra } from "./42intra";
+import { Button } from "@/components/ui/button";
+
 type Props = {
   searchParams: { code?: string };
 };
@@ -14,7 +16,14 @@ export default async function Home({ searchParams }: Props) {
       {searchParams.code ? (
         <Intra code={searchParams.code} />
       ) : (
-        <Link href={data.data.url}>Login with Intra</Link>
+        <>
+          <Button>
+            <Link href={data.data.url}>Login with Intra</Link>
+          </Button>
+          <Button>
+            <Link href="/auth/signup">Signup</Link>
+          </Button>
+        </>
       )}
     </div>
   );
