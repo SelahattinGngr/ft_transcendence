@@ -9,6 +9,8 @@ class Messages(Enum):
     NO_PENDING_REQUEST = ("No pending request found.", "Bekleyen istek bulunamadı.")
     REQUEST_ACCEPTED = ("Friend request accepted.", "Arkadaşlık isteği kabul edildi.")
     REQUEST_REJECTED = ("Friend request rejected.", "Arkadaşlık isteği reddedildi.")
+    NO_ACCESS_TOKEN = ("No access token provided.", "Token sağlanmadı.")
+    INVALID_ACCESS_TOKEN = ("Invalid access token.", "Geçersiz token.")
     
     def get_message(message_enum, language="en"):
         lang_index = {'en' : 0, 'tr' : 1}

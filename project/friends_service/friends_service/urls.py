@@ -3,6 +3,6 @@ from src import views
 
 urlpatterns = [
     path("friends/send-request/", views.send_friend_request),
-    path("friends/respond-request/", views.respond_to_friend_request),
-    path("friends/list/<int:user_id>/", views.list_friends),
+    path("friends/reject-request/<int:id>", views.reject_to_friend_request),
+    path("friends/accept-request/<int:id>", views.accept_friend_request),
 ]

@@ -10,17 +10,17 @@ access_secret_key = os.environ.get("ACCESS_TOKEN_SECRET")
 
 class TokenService:
 
-    def generate_access_token(user_email):
+    def generate_access_token(username):
         exp = TokenService.create_expiration_date(15)
         access_token = jwt.encode(
-            {"user_email": user_email, "exp": exp}, access_secret_key, algorithm="HS256"
+            {"username": username, "exp": exp}, access_secret_key, algorithm="HS256"
         )
         return access_token, exp
 
-    def generate_refresh_token(user_email):
+    def generate_refresh_token(username):
         exp = TokenService.create_expiration_date(60 * 24 * 7)
         refresh_token = jwt.encode(
-            {"user_email": user_email, "exp": exp},
+            {"username": username, "exp": exp},
             refresh_secret_key,
             algorithm="HS256",
         )
@@ -35,7 +35,7 @@ class TokenService:
             decoded_token = jwt.decode(
                 access_token, access_secret_key, algorithms=["HS256"]
             )
-            return decoded_token["user_email"], None
+            return decoded_token["username"], None
         except jwt.ExpiredSignatureError:
             return None, "Access token expired"
         except jwt.InvalidTokenError:
@@ -47,7 +47,7 @@ class TokenService:
             decoded_token = jwt.decode(
                 refresh_token, refresh_secret_key, algorithms=["HS256"]
             )
-            return decoded_token["user_email"], None
+            return decoded_token["username"], None
         except jwt.ExpiredSignatureError:
             return None, "Refresh token expired"
         except jwt.InvalidTokenError:

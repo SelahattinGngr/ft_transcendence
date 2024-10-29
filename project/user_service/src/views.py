@@ -175,13 +175,17 @@ def update_profile(request, username):
         )
 
 # friend servisinden istek atılacak istek kabul edilirse buraya gelip arkadas oldukları tabloda işlenecek
-def pending_friend_requests(request, username, friendname):
+def add_friend(request):
     language = request.headers.get("Accept-Language", "en")
     if request.method != "POST":
         return ResponseService.create_error_response(
             Messages.INVALID_REQUEST_METHOD, language, 405
         )
     
+    data = json.loads(request.body)
+    username = data.get("username")
+    friendname = data.get("friend_username")
+
     user = Users.objects.filter(username=username).first()
     friend = Users.objects.filter(username=friendname).first()
 

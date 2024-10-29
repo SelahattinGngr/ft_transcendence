@@ -13,7 +13,7 @@ Accept: application/json
 
 ###
 # @name user
-GET {{url}}/user/segungor HTTP/1.1
+GET {{url}}/user/deneme1 HTTP/1.1
 Accept-Language: tr
 Authorization: Bearer {{signin.response.body.data.access_token.token}}
 

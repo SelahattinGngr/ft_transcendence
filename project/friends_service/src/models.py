@@ -9,8 +9,8 @@ class friend_requests(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    sender_id = models.IntegerField()
-    receiver_id = models.IntegerField()
+    sender_username = models.CharField(max_length=255)
+    receiver_username = models.CharField(max_length=255)
     status = models.CharField(max_length=20, choices=REQUEST_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -151,8 +151,8 @@ def signin(request):
                 Messages.INVALID_CREDENTIALS, language, 400
             )
 
-        access_token, access_exp = TokenService.generate_access_token(user.email)
-        refresh_token, refresh_exp = TokenService.generate_refresh_token(user.email)
+        access_token, access_exp = TokenService.generate_access_token(user.username)
+        refresh_token, refresh_exp = TokenService.generate_refresh_token(user.username)
 
         token = {
             "access_token": {"token": access_token, "expiration_date": access_exp},
@@ -228,10 +228,10 @@ def refreshToken(request):
                 )
 
             new_access_token, access_exp = TokenService.generate_access_token(
-                user.email
+                user.username
             )
             new_refresh_token, refresh_exp = TokenService.generate_refresh_token(
-                user.email
+                user.username
             )
 
             user.access_token = new_access_token
@@ -449,3 +449,31 @@ def invalid_user(user_service_url, user_create_data):
         access_token=data["access_token"]["token"],
     )
     return data
+
+
+# diger servislerden access token uzerinden username almak icin kullanilacak
+def get_accesstoken_by_username(request):
+    language = request.headers.get("Accept-Language", "en")
+    if request.method == "GET":
+        access_token = request.headers.get("Authorization")
+        if not access_token:
+            return ResponseService.create_error_response(
+                Messages.MISSING_TOKEN, language, status_code=400
+            )
+        username = TokenService.validate_access_token(access_token)
+        if not username:
+            return ResponseService.create_error_response(
+                Messages.INVALID_ACCESS_TOKEN, language, status_code=400
+            )
+        user = Users.objects.get(username=username)
+        if not user:
+            return ResponseService.create_error_response(
+                Messages.USER_NOT_FOUND, language, status_code=400
+            )
+        return ResponseService.create_success_response(
+            {"username": user.username}, 200
+        )
+
+    return ResponseService.create_error_response(
+        Messages.INVALID_REQUEST_METHOD, language, status_code=405
+    )

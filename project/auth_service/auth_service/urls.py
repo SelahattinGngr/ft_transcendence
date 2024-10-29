@@ -9,6 +9,7 @@ urlpatterns = [
     path('auth/signout/', views.signout),
     path('auth/refresh-token/', views.refreshToken),
     path('auth/validate-token/', views.validate_token),
+    path('auth/access-token-by-username/', views.get_accesstoken_by_username),
     path('auth/verify-account/<str:verify_token>/', views.verifyAccount),
     # path('auth/reset-password/', views.deneme),
     # path('auth/forgot-password/', views.deneme),
