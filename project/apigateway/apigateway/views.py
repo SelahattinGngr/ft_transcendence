@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 # TODO: auth işlemleri harici tüm servislere access token kontrolü eklenecek
 # TODO: auth işlemlerinde bazı durumlar için access ve refresh token kontrolü yapılacak
 
+# http://localhost:8000/auth/signup/
 MICROSERVICES = {
     "auth": "http://authservice:8000",
     "user": "http://userservice:8000",

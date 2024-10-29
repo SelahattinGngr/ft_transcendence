@@ -20,6 +20,7 @@ services:
       - "8000:8000"
     networks:
       - backend
+
   authservice:
     container_name: authservice
     build: ./auth_service
@@ -28,6 +29,7 @@ services:
     hostname: authservice
     networks:
       - backend
+
   userservice:
     container_name: userservice
     build: ./user_service
@@ -36,7 +38,16 @@ services:
     hostname: userservice
     networks:
       - backend
-    
+
+  friendservice:
+    container_name: friendservice
+    build: ./friends_service
+    env_file:
+      - .env
+    hostname: friendservice
+    networks:
+      - backend
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4

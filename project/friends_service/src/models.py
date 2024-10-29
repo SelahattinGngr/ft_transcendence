@@ -1,3 +1,16 @@
 from django.db import models
 
-# Create your models here.
+
+class friend_requests(models.Model):
+    REQUEST_CHOICES = [
+        ("pending", "Pending"),
+        ("accepted", "Accepted"),
+        ("rejected", "Rejected"),
+    ]
+
+    id = models.AutoField(primary_key=True)
+    sender_id = models.IntegerField()
+    receiver_id = models.IntegerField()
+    status = models.CharField(max_length=20, choices=REQUEST_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

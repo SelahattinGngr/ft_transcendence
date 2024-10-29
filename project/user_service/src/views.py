@@ -1,10 +1,8 @@
 import json
 import logging
 
-from django.http import JsonResponse
-
 from .Messages import Messages
-from .models import Avatar, Users
+from .models import Avatar, Friends, Users
 from .ResponseService import ResponseService
 
 logger = logging.getLogger(__name__)
@@ -97,7 +95,7 @@ def intra_create(request):
     last_name = data.get("last_name")
     source_id = data.get("source_id")
     source = data.get("source")
-    avatar_obj = data.get("avatar")
+    avatar_obj = data.get("avatar_url")
 
     avatar = Avatar.objects.create(
         url=avatar_obj.get("link"),
@@ -175,3 +173,33 @@ def update_profile(request, username):
         return ResponseService.create_error_response(
             Messages.PROFILE_UPDATE_FAILED, language, 500
         )
+
+# friend servisinden istek atılacak istek kabul edilirse buraya gelip arkadas oldukları tabloda işlenecek
+def pending_friend_requests(request, username, friendname):
+    language = request.headers.get("Accept-Language", "en")
+    if request.method != "POST":
+        return ResponseService.create_error_response(
+            Messages.INVALID_REQUEST_METHOD, language, 405
+        )
+    
+    user = Users.objects.filter(username=username).first()
+    friend = Users.objects.filter(username=friendname).first()
+
+    if not user or not friend:
+        return ResponseService.create_error_response(
+            Messages.USER_NOT_FOUND, language, 404
+        )
+    
+    if user == friend:
+        return ResponseService.create_error_response(
+            Messages.CANNOT_ADD_YOURSELF_AS_FRIEND, language, 400
+        )
+    
+    friend_model = Friends.objects.create(user_id=user, friend_id=friend)
+    if friend_model:
+        return ResponseService.create_success_response({}, 201)
+    
+    return ResponseService.create_error_response(
+        Messages.USER_CREATION_FAILED, language, 500
+    )
+

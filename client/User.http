@@ -1,0 +1,29 @@
+@url = http://localhost:8000
+
+###
+# @name signin
+POST {{url}}/auth/signin/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "signin": "deneme@mail.com",
+    "password": "P4ssword."
+}
+
+###
+# @name user
+GET {{url}}/user/segungor HTTP/1.1
+Accept-Language: tr
+Authorization: Bearer {{signin.response.body.data.access_token.token}}
+
+###
+# @name update
+PUT {{url}}/user/update/segungor/ HTTP/1.1
+Accept-Language: tr
+Authorization: Bearer {{signin.response.body.data.access_token.token}}
+Accept: application/json
+
+{
+    "bio": "Hello, I'm Segungor"
+}

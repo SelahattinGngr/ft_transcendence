@@ -6,11 +6,11 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "email": "denem1e@mail.com",
+    "email": "deneme@mail.com",
     "password": "P4ssword.",
-    "username": "deneme11",
-    "first_name": "Deneme1",
-    "last_name": "Deneme1",
+    "username": "deneme1",
+    "first_name": "Deneme",
+    "last_name": "Deneme",
     "avatar_url": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
 }
 

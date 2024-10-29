@@ -38,7 +38,9 @@ def signup(request):
         username = data.get("username")
         email = data.get("email")
         password = data.get("password")
-        logger.fatal(f"Signup request received for {username} with email {email} and password {password}")
+        logger.fatal(
+            f"Signup request received for {username} with email {email} and password {password}"
+        )
 
         if (
             len(password) < 8
@@ -95,7 +97,7 @@ def signup(request):
                 "first_name": data.get("first_name", ""),
                 "last_name": data.get("last_name", ""),
                 "source_id": user.id,
-                "avatar_url": data.get("avatar_url", ""),              
+                "avatar_url": data.get("avatar_url", ""),
             }
             user_service_response = requests.post(
                 user_create_url, json=user_data, headers=headers
@@ -309,6 +311,32 @@ def verifyAccount(request, verify_token):
         )
 
 
+def validate_token(request):
+    language = request.headers.get("Accept-Language", "en")
+    if request.method == "GET":
+        access_token = request.headers.get("Authorization")
+        refresh_token = request.headers.get("Refresh")
+
+        if not access_token and not refresh_token:
+            return ResponseService.create_error_response(
+                Messages.MISSING_TOKEN, language, status_code=400
+            )
+
+        if access_token and TokenService.validate_access_token(access_token):
+            return ResponseService.create_success_response({"valid": True})
+
+        if refresh_token and TokenService.validate_refresh_token(refresh_token):
+            return ResponseService.create_success_response({"valid": True})
+
+        return ResponseService.create_error_response(
+            Messages.INVALID_OR_EXPIRED_VERIFICATION_TOKEN, language, status_code=401
+        )
+
+    return ResponseService.create_error_response(
+        Messages.INVALID_REQUEST_METHOD, language, status_code=405
+    )
+
+
 def intra(request):
     return ResponseService.create_success_response(
         {"url": os.environ.get("INTRA_REDIRECT_URL")}
@@ -376,11 +404,15 @@ def intra_user(api_url, access_token):
     # Kullanıcı daha önce oluşturulmuşsa bilgileri getir
     user = Users.objects.filter(username=user_create_data["username"]).first()
     if user:
-        return ResponseService.create_success_response(valid_user(user, user_service_url), 200)
+        return ResponseService.create_success_response(
+            valid_user(user, user_service_url), 200
+        )
 
     # Kullanıcı daha önce oluşturulmamışsa oluştur
-    
-    return ResponseService.create_success_response(invalid_user(user_service_url, user_create_data), 201)
+
+    return ResponseService.create_success_response(
+        invalid_user(user_service_url, user_create_data), 201
+    )
 
 
 def create_tokens(username):
@@ -389,6 +421,7 @@ def create_tokens(username):
     refresh_token = {"token": rtoken, "expiration_date": exp}
     access_token = {"token": atoken, "expiration_date": exp}
     return refresh_token, access_token
+
 
 def valid_user(user, user_service_url):
     user_get_url = f"{user_service_url}/user/{user.username}"
@@ -400,16 +433,19 @@ def valid_user(user, user_service_url):
     user.save()
     return data
 
+
 def invalid_user(user_service_url, user_create_data):
     user_create_url = f"{user_service_url}/user/intra_create/"
     request = requests.post(user_create_url, json=user_create_data)
     data = request.json()
-    data["refresh_token"], data["access_token"] = create_tokens(user_create_data["username"])
+    data["refresh_token"], data["access_token"] = create_tokens(
+        user_create_data["username"]
+    )
     user = Users.objects.create(
         username=user_create_data["username"],
         email=user_create_data["email"],
         is_active=True,
-        refresh_token = data["refresh_token"]["token"],
-        access_token = data["access_token"]["token"]
+        refresh_token=data["refresh_token"]["token"],
+        access_token=data["access_token"]["token"],
     )
     return data

@@ -9,6 +9,9 @@ class Messages(Enum):
     USER_CREATION_FAILED = ("User creation failed", "Kullanıcı oluşturma başarısız")
     PROFILE_UPDATE_FAILED = ("Profile update failed", "Profil güncelleme başarısız")
     INVALID_BIO_LENGTH = ("Bio length must be between 0 and 255", "Bio uzunluğu 0 ile 255 arasında olmalıdır")
+    CANNOT_ADD_YOURSELF_AS_FRIEND = ("You cannot add yourself as a friend", "Kendinizi arkadaş olarak ekleyemezsiniz")
+    FRIEND_ADD_FAILED = ("Friend add failed", "Arkadaş ekleme başarısız")
+
     def get_message(message_enum, language="en"):
         lang_index = {'en' : 0, 'tr' : 1}
         return message_enum.value[lang_index[language]]

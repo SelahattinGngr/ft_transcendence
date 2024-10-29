@@ -36,7 +36,7 @@ MIDDLEWARE = [
     # 'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'apigateway.middleware.RequestRouterMiddleware',
+    'apigateway.middleware.TokenValidationMiddleware'
 ]
 
 ROOT_URLCONF = 'apigateway.urls'
