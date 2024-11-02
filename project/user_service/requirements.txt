@@ -4,3 +4,4 @@ PyJWT
 requests
 django-cors-headers
 psycopg
+kafka-python

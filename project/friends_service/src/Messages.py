@@ -11,6 +11,9 @@ class Messages(Enum):
     REQUEST_REJECTED = ("Friend request rejected.", "Arkadaşlık isteği reddedildi.")
     NO_ACCESS_TOKEN = ("No access token provided.", "Token sağlanmadı.")
     INVALID_ACCESS_TOKEN = ("Invalid access token.", "Geçersiz token.")
+    REQUEST_ALREADY_ANSWERED = ("Friend request already answered.", "Arkadaşlık isteği zaten yanıtlandı.")
+    REQUEST_ALREADY_SENT = ("Friend request already sent.", "Arkadaşlık isteği zaten gönderildi.")
+    REQUEST_NOT_FOUND = ("Friend request not found.", "Arkadaşlık isteği bulunamadı.")
     
     def get_message(message_enum, language="en"):
         lang_index = {'en' : 0, 'tr' : 1}

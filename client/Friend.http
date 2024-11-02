@@ -1,0 +1,35 @@
+@url = http://localhost:8000
+
+###
+# @name signin
+POST {{url}}/auth/signin/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "signin": "deneme1@mail.com",
+    "password": "P4ssword."
+}
+
+###
+# @name add_friend
+POST {{url}}/friend/send-request/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+Authorization: Bearer {{signin.response.body.data.access_token.token}}
+
+{
+    "friend_username": "deneme2"
+}
+
+###
+# @name accept_friend
+GET {{url}}/friend/accept-request/1 HTTP/1.1
+Accept-Language: tr
+Authorization: Bearer {{signin.response.body.data.access_token.token}}
+
+###
+# @name reject_friend
+GET {{url}}/friend/reject-request/1 HTTP/1.1
+Accept-Language: tr
+Authorization: Bearer {{signin.response.body.data.access_token.token}}

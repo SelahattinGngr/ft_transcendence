@@ -7,13 +7,13 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "signin": "deneme@mail.com",
+    "signin": "deneme2@mail.com",
     "password": "P4ssword."
 }
 
 ###
 # @name user
-GET {{url}}/user/deneme1 HTTP/1.1
+GET {{url}}/user/deneme2 HTTP/1.1
 Accept-Language: tr
 Authorization: Bearer {{signin.response.body.data.access_token.token}}
 

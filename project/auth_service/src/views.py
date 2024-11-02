@@ -460,12 +460,13 @@ def get_accesstoken_by_username(request):
             return ResponseService.create_error_response(
                 Messages.MISSING_TOKEN, language, status_code=400
             )
-        username = TokenService.validate_access_token(access_token)
+        username = TokenService.validate_access_token(access_token.split(" ")[1])
         if not username:
             return ResponseService.create_error_response(
                 Messages.INVALID_ACCESS_TOKEN, language, status_code=400
             )
-        user = Users.objects.get(username=username)
+        logger.fatal(f"Username retrieved by access token: {username}")
+        user = Users.objects.filter(username=username).first()
         if not user:
             return ResponseService.create_error_response(
                 Messages.USER_NOT_FOUND, language, status_code=400

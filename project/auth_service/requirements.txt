@@ -3,4 +3,5 @@ djangorestframework
 PyJWT
 requests
 django-cors-headers
+kafka-python
 psycopg

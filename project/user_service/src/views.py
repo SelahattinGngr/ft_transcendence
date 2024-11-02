@@ -25,6 +25,7 @@ def get_user(request, username):
         "first_name": users.first_name,
         "last_name": users.last_name,
         "bio": users.bio,
+        "avatar_url": users.avatar_id.url,
         "medium_avatar": users.avatar_id.medium_url,
         "small_avatar": users.avatar_id.small_url,
         "micro_avatar": users.avatar_id.micro_url,
@@ -200,9 +201,14 @@ def add_friend(request):
         )
     
     friend_model = Friends.objects.create(user_id=user, friend_id=friend)
-    if friend_model:
+    friend_model2 = Friends.objects.create(user_id=friend, friend_id=user)
+    if friend_model and friend_model2:
         return ResponseService.create_success_response({}, 201)
     
+    if friend_model:
+        friend_model.delete()
+    if friend_model2:
+        friend_model2.delete()
     return ResponseService.create_error_response(
         Messages.USER_CREATION_FAILED, language, 500
     )

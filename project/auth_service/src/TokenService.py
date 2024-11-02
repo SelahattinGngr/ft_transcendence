@@ -35,7 +35,7 @@ class TokenService:
             decoded_token = jwt.decode(
                 access_token, access_secret_key, algorithms=["HS256"]
             )
-            return decoded_token["username"], None
+            return decoded_token["username"]
         except jwt.ExpiredSignatureError:
             return None, "Access token expired"
         except jwt.InvalidTokenError:
@@ -47,7 +47,7 @@ class TokenService:
             decoded_token = jwt.decode(
                 refresh_token, refresh_secret_key, algorithms=["HS256"]
             )
-            return decoded_token["username"], None
+            return decoded_token["username"]
         except jwt.ExpiredSignatureError:
             return None, "Refresh token expired"
         except jwt.InvalidTokenError:
