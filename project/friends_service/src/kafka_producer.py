@@ -6,7 +6,7 @@ class KafkaProducerService:
     def __init__(self):
         # Kafka broker URL'sini ortam değişkenlerinden alıyoruz
         self.producer = KafkaProducer(
-            bootstrap_servers=os.getenv('KAFKA_BROKER_URL', 'localhost:9092'),
+            bootstrap_servers=os.getenv('KAFKA_BROKER_URL'),
             value_serializer=lambda v: json.dumps(v).encode('utf-8')  # JSON serileştirici
         )
 
