@@ -57,6 +57,15 @@ services:
     networks:
       - backend
 
+  mailservice:
+    container_name: mailservice
+    build: ./mail_service
+    env_file:
+      - .env
+    hostname: mailservice
+    networks:
+      - backend
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
