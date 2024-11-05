@@ -15,7 +15,7 @@ Accept: application/json
 }
 
 ###
-GET {{url}}/auth/verify-account/45849485-e84a-40c8-8d50-cd62b5c12c60 HTTP/1.1
+GET {{url}}/auth/verify-account/8ab62074-c57c-4a0c-bf39-3288a4838e88 HTTP/1.1
 Accept-Language: tr
 
 ###

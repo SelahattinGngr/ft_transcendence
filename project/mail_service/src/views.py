@@ -1,11 +1,7 @@
-from django.shortcuts import render
 import json
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import JsonResponse
-
-def home(request):
-    return render(request, 'home.html')
 
 def mail_service(request):
     if request.method == "POST":
@@ -17,7 +13,7 @@ def mail_service(request):
         email = data.get('user_email')
         
         try:
-            send_mail(subject, message, from_email, email)
+            send_mail(subject, message, from_email, [email])
             return JsonResponse({"message" : "mail recieved successfully"}, status=200)
         except Exception as e:
             return JsonResponse({"message": f"An error occurred: {str(e)}"}, status=500)

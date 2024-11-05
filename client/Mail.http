@@ -1,7 +1,20 @@
 @url = http://localhost:8000
 
-POST {{url}}/send_mail/
+###
+# @name signin
+POST {{url}}/auth/signin/ HTTP/1.1
+Accept-Language: tr
 Accept: application/json
+
+{
+    "signin": "deneme2@mail.com",
+    "password": "P4ssword."
+}
+
+###
+POST {{url}}/mail/send-mail/
+Accept: application/json
+Authorization: Bearer {{signin.response.body.data.access_token.token}}
 Accept-Language: tr
 
 {
