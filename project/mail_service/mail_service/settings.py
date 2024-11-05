@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -121,3 +122,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+EMAIL_HOST = os.getenv("EMAIL_HOST") #kullanılıcak sunucunun adresi
+EMAIL_PORT = os.getenv("EMAIL_PORT") #smtp default 
+EMAIL_USE_TLS = True #güvenli olup olmadığını belirtir
+EMAIL_HOST_USER = os.getenv("EMAIL_PASSWORD") #maillerin gönderiliceği mail adresi
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD") #şifresi

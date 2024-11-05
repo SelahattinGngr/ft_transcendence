@@ -1,0 +1,11 @@
+@url = http://localhost:8000
+
+POST {{url}}/send_mail/
+Accept: application/json
+Accept-Language: tr
+
+{
+    "subject" : "konu",
+    "message" : "mesajjj",
+    "user_email" : "bestegursoy52@hotmail.com"
+}
