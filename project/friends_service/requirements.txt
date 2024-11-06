@@ -5,3 +5,4 @@ requests
 django-cors-headers
 psycopg
 kafka-python
+confluent-kafka

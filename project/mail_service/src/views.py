@@ -1,22 +1,42 @@
 import json
+import logging
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import JsonResponse
+
+logger = logging.getLogger(__name__)
+
+def send_email(email, subject, message):
+    from_email = settings.EMAIL_HOST_USER
+    try:
+        send_mail(subject, message, from_email, [email])
+        logger.fatal(f"Email sent to {email} with subject '{subject}'")
+    except Exception as e:
+        logger.fatal(f"Failed to send email to {email}: {str(e)}")
+
 
 def mail_service(request):
     if request.method == "POST":
         data = json.loads(request.body)
         
+        # Verileri JSON'dan al
         subject = data.get('subject')
         message = data.get('message')
-        from_email = settings.EMAIL_HOST_USER
         email = data.get('user_email')
         
-        try:
-            send_mail(subject, message, from_email, [email])
-            return JsonResponse({"message" : "mail recieved successfully"}, status=200)
-        except Exception as e:
-            return JsonResponse({"message": f"An error occurred: {str(e)}"}, status=500)
-            
-    else:
-        return JsonResponse({"message" : "invalid request"}, status=400)
+        if not all([subject, message, email]):
+            return JsonResponse({"message": "Missing email parameters"}, status=400)
+        
+        # E-posta gönderimi
+        send_email(email, subject, message)
+        return JsonResponse({"message": "Email sent successfully"}, status=200)
+
+    return JsonResponse({"message": "Invalid request"}, status=400)
+
+
+# KafkaConsumer.py içinde çağrı örneği
+def send_verification_email(email, token):
+    subject = "Email Verification"
+    message = f"Please verify your email using this token: {token}"
+    send_email(email, subject, message)

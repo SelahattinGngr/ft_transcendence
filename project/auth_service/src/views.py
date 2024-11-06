@@ -7,6 +7,7 @@ import requests
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from .KafkaProducer import send_kafka_message
 
 from .Messages import Messages
 from .models import MailTokens, Users
@@ -16,21 +17,6 @@ from .TokenService import TokenService
 logger = logging.getLogger(__name__)
 
 
-def send_verification_email(user, token):
-    # Mail servisine API isteği gönderme kısmı yorum satırı olarak bırakıldı
-    # Bu kısım daha sonra gerçek mail servisine entegre edilecek
-    # Example: Send POST request to the mail microservice
-    # mail_service_url = "http://mailservice/send_verification"
-    # response = requests.post(mail_service_url, json={"email": user.email, "token": token})
-    # if response.status_code == 200:
-    #     logger.info(f"Verification email sent to {user.email}")
-    # else:
-    #     logger.error(f"Failed to send email to {user.email}: {response.text}")
-
-    # Şu an için dümenden mail gönderim
-    logger.fatal(f"Verification email sent to {user.email} with token: {token}")
-
-
 def signup(request):
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
@@ -38,9 +24,6 @@ def signup(request):
         username = data.get("username")
         email = data.get("email")
         password = data.get("password")
-        logger.fatal(
-            f"Signup request received for {username} with email {email} and password {password}"
-        )
 
         if (
             len(password) < 8
@@ -84,8 +67,16 @@ def signup(request):
                 type="verify",
                 expiration=TokenService.create_expiration_date(60 * 24),  # 1 gün
             )
-
-            send_verification_email(user, token)
+            try:
+                send_kafka_message(
+                    "user-registration-events", {"email": email, "token": token}
+                )
+                logger.fatal(f"Verification email sent to {email}")
+            except Exception as e:
+                logger.error(f"Error during sending verification email: {str(e)}")
+                return ResponseService.create_error_response(
+                    Messages.EMAIL_SENDING_FAILED, language, 500
+                )
 
             # UserService'e kullanıcıyı kaydetme
             user_service_url = os.environ.get("USER_SERVICE_URL")
@@ -284,7 +275,7 @@ def verifyAccount(request, verify_token):
                 expiration=TokenService.create_expiration_date(60 * 24),
             )
 
-            send_verification_email(mail_token.user, new_token)
+            # send_verification_email(mail_token.user, new_token)
 
             return ResponseService.create_error_response(
                 Messages.TOKEN_EXPIRED_NEW_SENT, language, 400
@@ -471,9 +462,7 @@ def get_accesstoken_by_username(request):
             return ResponseService.create_error_response(
                 Messages.USER_NOT_FOUND, language, status_code=400
             )
-        return ResponseService.create_success_response(
-            {"username": user.username}, 200
-        )
+        return ResponseService.create_success_response({"username": user.username}, 200)
 
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, status_code=405

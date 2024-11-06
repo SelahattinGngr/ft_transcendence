@@ -60,6 +60,8 @@ services:
   mailservice:
     container_name: mailservice
     build: ./mail_service
+    depends_on:
+      - kafka
     env_file:
       - .env
     hostname: mailservice
@@ -79,10 +81,13 @@ services:
 
   zookeeper:
     image: bitnami/zookeeper:latest
+    ports:
+      - "2181:2181"
     env_file:
       - .env
     networks:
       - kafka-net
+      - backend
     
   kafka:
     image: bitnami/kafka:latest
@@ -92,6 +97,7 @@ services:
       - zookeeper
     networks:
       - kafka-net
+      - backend
     env_file:
       - .env
     

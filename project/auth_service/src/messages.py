@@ -28,6 +28,7 @@ class Messages(Enum):
     AUTHORIZATION_CODE_NOT_PROVIDED = ("Authorization code not provided", "Yetkilendirme kodu sağlanmadı")
     USER_CREATION_FAILED = ("User creation failed", "Kullanıcı oluşturma başarısız")
     MISSING_TOKEN = ("Missing token", "Token eksik")
+    EMAIL_SENDING_FAILED = ("Email sending failed", "E-posta gönderme başarısız oldu")
     
     def get_message(message_enum, language="en"):
         lang_index = {'en' : 0, 'tr' : 1}
