@@ -5,6 +5,10 @@ RUN apt-get update && \
 
 COPY . /app/user_service
 
+COPY .conf/pg_hba.conf /etc/postgresql/13/main/pg_hba.conf
+
+COPY .conf/postgresql.conf /etc/postgresql/13/main/postgresql.conf
+
 RUN dos2unix /app/user_service/start.sh
 
 RUN dos2unix /app/user_service/db.sh

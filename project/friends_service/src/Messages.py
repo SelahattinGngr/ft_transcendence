@@ -15,6 +15,16 @@ class Messages(Enum):
     REQUEST_ALREADY_SENT = ("Friend request already sent.", "Arkadaşlık isteği zaten gönderildi.")
     REQUEST_NOT_FOUND = ("Friend request not found.", "Arkadaşlık isteği bulunamadı.")
     
+    @staticmethod
     def get_message(message_enum, language="en"):
-        lang_index = {'en' : 0, 'tr' : 1}
+        def normalize_language_code(language_code):
+            return language_code.split(';')[0].split(',')[0].split('-')[0]
+
+        language = normalize_language_code(language)
+
+        lang_index = {'en': 0, 'tr': 1}
+
+        if language not in lang_index:
+            language = 'en'
+
         return message_enum.value[lang_index[language]]

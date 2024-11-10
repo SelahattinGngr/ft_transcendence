@@ -1,14 +1,16 @@
 import json
 import logging
+import os
 
-from django.conf import settings
 from django.core.mail import send_mail
 from django.http import JsonResponse
 
 logger = logging.getLogger(__name__)
 
 def send_email(email, subject, message):
-    from_email = settings.EMAIL_HOST_USER
+    from_email = os.getenv("EMAIL_HOST_USER")
+    logger.fatal(f"Sending email to {email} with subject '{subject}'")
+    logger.fatal("ANANI SIKIYIM ANANI O MESAJ GONDERMEYEN CARIKLI ANANI SIKIYIM")
     try:
         send_mail(subject, message, from_email, [email])
         logger.fatal(f"Email sent to {email} with subject '{subject}'")

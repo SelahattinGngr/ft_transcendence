@@ -1,8 +1,15 @@
-from kafka import KafkaProducer
 import json
 import os
+import logging
+
+from kafka import KafkaProducer
+logger = logging.getLogger(__name__)
+
 
 def send_kafka_message(topic, data):
+    logger.fatal("Sending Kafka Message")
+    logger.fatal("KAFKA_BROKERCONNECT: %s", os.getenv("KAFKA_BROKERCONNECT"))
+    
     producer = KafkaProducer(
         bootstrap_servers=os.getenv("KAFKA_BROKERCONNECT"),
         value_serializer=lambda v: json.dumps(v).encode('utf-8')

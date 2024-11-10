@@ -29,7 +29,18 @@ class Messages(Enum):
     USER_CREATION_FAILED = ("User creation failed", "Kullanıcı oluşturma başarısız")
     MISSING_TOKEN = ("Missing token", "Token eksik")
     EMAIL_SENDING_FAILED = ("Email sending failed", "E-posta gönderme başarısız oldu")
+    VERIFICATION_EMAIL_SENT = ("Verification email sent", "Doğrulama e-postası gönderildi")
     
+    @staticmethod
     def get_message(message_enum, language="en"):
-        lang_index = {'en' : 0, 'tr' : 1}
+        def normalize_language_code(language_code):
+            return language_code.split(';')[0].split(',')[0].split('-')[0]
+
+        language = normalize_language_code(language)
+
+        lang_index = {'en': 0, 'tr': 1}
+
+        if language not in lang_index:
+            language = 'en'
+
         return message_enum.value[lang_index[language]]

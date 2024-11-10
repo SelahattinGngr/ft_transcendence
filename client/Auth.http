@@ -6,19 +6,28 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "email": "selahattingungor53@hotmail.com",
+    "email": "selahattin_gungor53@hotmail.com",
     "password": "P4ssword.",
-    "username": "deneme23",
-    "first_name": "deneme2",
-    "last_name": "deneme2",
+    "username": "deneme1",
+    "first_name": "deneme1",
+    "last_name": "deneme1",
     "avatar_url": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
 }
 
-###
-GET {{url}}/auth/verify-account/8ab62074-c57c-4a0c-bf39-3288a4838e88 HTTP/1.1
+### verify-account
+GET {{url}}/auth/verify-account/9341b697-fdfb-408a-921b-38e15ac2fcc1 HTTP/1.1
 Accept-Language: tr
 
-###
+### retry-verify-account
+POST {{url}}/auth/retry-verify-account/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "email": "selahattin_gungor53@hotmail.com"
+}
+
+### signin
 # @name signin
 POST {{url}}/auth/signin/ HTTP/1.1
 Accept-Language: tr
@@ -29,13 +38,13 @@ Accept: application/json
     "password": "P4ssword."
 }
 
-###
+### signout
 # @name signout
 GET {{url}}/auth/signout/ HTTP/1.1
 Accept-Language: tr
 Authorization: Bearer {{signin.response.body.data.access_token.token}}
 
-###
+### refresh
 # @name refresh
 GET {{url}}/auth/refresh-token/ HTTP/1.1
 Accept-Language: tr

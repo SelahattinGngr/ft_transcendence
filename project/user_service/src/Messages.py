@@ -12,6 +12,16 @@ class Messages(Enum):
     CANNOT_ADD_YOURSELF_AS_FRIEND = ("You cannot add yourself as a friend", "Kendinizi arkadaş olarak ekleyemezsiniz")
     FRIEND_ADD_FAILED = ("Friend add failed", "Arkadaş ekleme başarısız")
 
+    @staticmethod
     def get_message(message_enum, language="en"):
-        lang_index = {'en' : 0, 'tr' : 1}
+        def normalize_language_code(language_code):
+            return language_code.split(';')[0].split(',')[0].split('-')[0]
+
+        language = normalize_language_code(language)
+
+        lang_index = {'en': 0, 'tr': 1}
+
+        if language not in lang_index:
+            language = 'en'
+
         return message_enum.value[lang_index[language]]

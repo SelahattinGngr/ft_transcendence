@@ -69,14 +69,11 @@ def signup(request):
             )
             try:
                 send_kafka_message(
-                    "user-registration-events", {"email": email, "token": token}
+                    "user-registration-events", {"email": email, "token": f"http://localhost:8000/auth/verify-account/{token}"}
                 )
                 logger.fatal(f"Verification email sent to {email}")
             except Exception as e:
                 logger.error(f"Error during sending verification email: {str(e)}")
-                return ResponseService.create_error_response(
-                    Messages.EMAIL_SENDING_FAILED, language, 500
-                )
 
             # UserService'e kullanıcıyı kaydetme
             user_service_url = os.environ.get("USER_SERVICE_URL")
@@ -355,6 +352,7 @@ def intraCallback(request):
     }
 
     response = requests.post(token_url, data=payload)
+    logger.fatal(f"Response from token endpoint: {response.json()}")
     if response.status_code != 200:
         return ResponseService.create_error_response(
             Messages.FAILED_TO_RETRIEVE_TOKEN, language, response.status_code
@@ -466,4 +464,59 @@ def get_accesstoken_by_username(request):
 
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, status_code=405
+    )
+
+def retry_verification_account(request):
+    language = request.headers.get("Accept-Language", "en")
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        email = data.get("email")
+        try:
+            user = Users.objects.get(email=email)
+            mail_token = MailTokens.objects.get(user=user, type="verify", status=True)
+            if TokenService.is_mail_token_expired(mail_token.expiration):
+                mail_token.status = False
+                mail_token.save()
+
+                new_token = str(uuid.uuid4())
+                MailTokens.objects.create(
+                    user=user,
+                    token=new_token,
+                    type="verify",
+                    expiration=TokenService.create_expiration_date(60 * 24),
+                )
+
+                # send_verification_email(mail_token.user, new_token)
+
+                return ResponseService.create_error_response(
+                    Messages.TOKEN_EXPIRED_NEW_SENT, language, 400
+                )
+
+            try:
+                send_kafka_message(
+                    "user-registration-events", {"email": email, "token": f"http://localhost:8000/auth/verify-account/{mail_token.token}"}
+                )
+                logger.fatal(f"Verification email sent to {email}")
+            except Exception as e:
+                logger.error(f"Error during sending verification email: {str(e)}")
+
+            return ResponseService.create_response(
+                True, "success", Messages.VERIFICATION_EMAIL_SENT, language, 200
+            )
+        except Users.DoesNotExist:
+            return ResponseService.create_error_response(
+                Messages.USER_NOT_FOUND, language, 400
+            )
+        except MailTokens.DoesNotExist:
+            return ResponseService.create_error_response(
+                Messages.INVALID_OR_EXPIRED_VERIFICATION_TOKEN, language, 400
+            )
+        except Exception as e:
+            logger.error(f"Error during retry_verification_email: {str(e)}")
+            return ResponseService.create_error_response(
+                Messages.AN_ERROR_OCCURRED, language, 500
+            )
+
+    return ResponseService.create_error_response(
+        Messages.INVALID_REQUEST_METHOD, language, 405
     )

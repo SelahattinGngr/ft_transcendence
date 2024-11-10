@@ -24,27 +24,39 @@ services:
   authservice:
     container_name: authservice
     build: ./auth_service
+    depends_on:
+      - apigateway
     env_file:
       - .env
     hostname: authservice
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
     networks:
       - backend
 
   userservice:
     container_name: userservice
     build: ./user_service
+    depends_on:
+      - authservice
     env_file:
       - .env
     hostname: userservice
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
     networks:
       - backend
 
   friendservice:
     container_name: friendservice
     build: ./friends_service
+    depends_on:
+      - userservice
     env_file:
       - .env
     hostname: friendservice
+    volumes:
+      - friend_db_data:/var/lib/postgresql/data
     networks:
       - backend
 
@@ -54,6 +66,8 @@ services:
     env_file:
       - .env
     hostname: notificationservice
+    volumes:
+      - notification_db_data:/var/lib/postgresql/data
     networks:
       - backend
 
@@ -61,6 +75,7 @@ services:
     container_name: mailservice
     build: ./mail_service
     depends_on:
+      - authservice
       - kafka
     env_file:
       - .env
@@ -80,6 +95,7 @@ services:
       - backend
 
   zookeeper:
+    container_name: zookeeper
     image: bitnami/zookeeper:latest
     ports:
       - "2181:2181"
@@ -90,18 +106,20 @@ services:
       - backend
     
   kafka:
+    container_name: kafka
     image: bitnami/kafka:latest
     ports:
       - "9092:9092"
     depends_on:
       - zookeeper
+    env_file:
+      - .env
     networks:
       - kafka-net
       - backend
-    env_file:
-      - .env
-    
+
   kafdrop:
+    container_name: kafdrop
     image: obsidiandynamics/kafdrop:latest
     ports:
       - "9000:9000"
@@ -117,3 +135,9 @@ networks:
     driver: bridge
   kafka-net:
     driver: bridge
+
+volumes:
+  auth_db_data:
+  user_db_data:
+  friend_db_data:
+  notification_db_data:
