@@ -1,14 +1,4 @@
 services:
-  frontend:
-    container_name: frontend
-    build: ./dumendenfront
-    env_file:
-      - .env
-    hostname: frontend
-    ports:
-      - "3000:3000"
-    networks:
-      - backend
 
   apigateway:
     container_name: apigateway
@@ -66,6 +56,8 @@ services:
     env_file:
       - .env
     hostname: notificationservice
+    depends_on:
+      - apigateway
     volumes:
       - notification_db_data:/var/lib/postgresql/data
     networks:
@@ -80,6 +72,18 @@ services:
     env_file:
       - .env
     hostname: mailservice
+    networks:
+      - backend
+  
+  gameservice:
+    container_name: gameservice
+    build: ./game_service
+    depends_on:
+      - userservice
+      - kafka
+    env_file:
+      - .env
+    hostname: gameservice
     networks:
       - backend
 
