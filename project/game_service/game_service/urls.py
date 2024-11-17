@@ -1,19 +1,21 @@
 from django.urls import path
-from src.views import GameListCreateAPIView, TournamentListCreateAPIView, TournamentGamesAPIView, MatchListCreateAPIView, MatchScoreAPIView, GameReplayAPIView, UserGamesListView
+from src import views
 
 urlpatterns = [
-    # Oyunlar için
-    path('games/', GameListCreateAPIView.as_view(), name='game-list-create'),  # Oyunları listeleme ve oluşturma
-    path('games/user/<str:user_id>/', UserGamesListView.as_view(), name='user-games-list'),  # Kullanıcıya ait oyunları listeleme
+    # Game URLs
+    path('games/', views.GameListView.as_view(), name='game-list'),
+    path('games/<str:game_id>/', views.GameDetailView.as_view(), name='game-detail'),
+    path('games/create/', views.GameCreateView.as_view(), name='game-create'),
+    path('games/<str:game_id>/update/', views.GameUpdateView.as_view(), name='game-update'),
 
-    # Turnuvalar için
-    path('tournaments/', TournamentListCreateAPIView.as_view(), name='tournament-list-create'),  # Turnuvaları listeleme ve oluşturma
-    path('tournaments/<int:tournament_id>/games/', TournamentGamesAPIView.as_view(), name='tournament-games'),  # Belirli bir turnuvaya ait oyunları listeleme
+    # Move URLs
+    path('games/<str:game_id>/moves/', views.MoveCreateView.as_view(), name='move-create'),
 
-    # Maçlar ve Skorlar için
-    path('matches/', MatchListCreateAPIView.as_view(), name='match-list-create'),  # Maçları listeleme ve oluşturma
-    path('matches/<int:match_id>/scores/', MatchScoreAPIView.as_view(), name='match-scores'),  # Skorları eklemek veya güncellemek için
+    # Tournament URLs
+    path('tournaments/', views.TournamentListView.as_view(), name='tournament-list'),
+    path('tournaments/create/', views.TournamentCreateView.as_view(), name='tournament-create'),
 
-    # Oyun tekrarları (Replay) için
-    path('matches/<int:match_id>/replays/', GameReplayAPIView.as_view(), name='game-replay'),  # Oyun tekrarlarını listeleme ve ekleme
+    # Matchmaking URLs
+    path('matchmaking/', views.MatchmakingCreateView.as_view(), name='matchmaking-create'),
+    path('matchmaking/status/', views.MatchmakingStatusView.as_view(), name='matchmaking-status'),
 ]

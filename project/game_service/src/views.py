@@ -1,18 +1,38 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Game, Tournament, TournamentGame, Player, Match, MatchScore, GameReplay
-from .serializers import GameSerializer, TournamentSerializer, TournamentGameSerializer, MatchSerializer, MatchScoreSerializer, GameReplaySerializer
+from .models import Game, Move
+from .serializers import GameSerializer, MoveSerializer
 
-# Oyun listeleme ve oyun oluşturma
-class GameListCreateAPIView(APIView):
+"""
+    frontend de oyun oynansın backend sadece kimlerin oynadığını ve oyunun durumunu tutsun
+    front da oyuncuya davet atılsın kafi
+"""
+
+# Game API Views
+class GameListView(APIView):
+    """
+    Liste halinde mevcut tüm oyunları getirir.
+    """
     def get(self, request):
         games = Game.objects.all()
         serializer = GameSerializer(games, many=True)
         return Response(serializer.data)
 
+class GameDetailView(APIView):
+    """
+    Belirli bir oyunun detaylarını gösterir.
+    """
+    def get(self, request, game_id):
+        game = get_object_or_404(Game, game_id=game_id)
+        serializer = GameSerializer(game)
+        return Response(serializer.data)
+
+class GameCreateView(APIView):
+    """
+    Yeni bir oyun başlatır.
+    """
     def post(self, request):
         serializer = GameSerializer(data=request.data)
         if serializer.is_valid():
@@ -20,81 +40,61 @@ class GameListCreateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Turnuva listeleme ve turnuva oluşturma
-class TournamentListCreateAPIView(APIView):
-    def get(self, request):
-        tournaments = Tournament.objects.all()
-        serializer = TournamentSerializer(tournaments, many=True)
-        return Response(serializer.data)
+class GameUpdateView(APIView):
+    """
+    Mevcut bir oyunun durumunu günceller (örneğin, oyuncu hamlesi).
+    """
+    def put(self, request, game_id):
+        game = get_object_or_404(Game, game_id=game_id)
+        serializer = GameSerializer(game, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Move API Views
+class MoveCreateView(APIView):
+    """
+    Oyuna yeni bir hamle ekler.
+    """
+    def post(self, request, game_id):
+        game = get_object_or_404(Game, game_id=game_id)
+        serializer = MoveSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(game=game)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Tournament API Views
+class TournamentCreateView(APIView):
+    """
+    Yeni bir turnuva oluşturur.
+    """
     def post(self, request):
-        serializer = TournamentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Turnuva oluşturma işlemleri
+        return Response({"message": "Turnuva başarıyla oluşturuldu!"}, status=status.HTTP_201_CREATED)
 
-# Belirli bir turnuvaya ait oyunları listeleme
-class TournamentGamesAPIView(APIView):
-    def get(self, request, tournament_id):
-        tournament = Tournament.objects.get(id=tournament_id)
-        tournament_games = TournamentGame.objects.filter(tournament_id=tournament)
-        serializer = TournamentGameSerializer(tournament_games, many=True)
-        return Response(serializer.data)
-
-# Maç ve Skorlar
-class MatchListCreateAPIView(APIView):
+class TournamentListView(APIView):
+    """
+    Mevcut tüm turnuvaları listeler.
+    """
     def get(self, request):
-        matches = Match.objects.all()
-        serializer = MatchSerializer(matches, many=True)
-        return Response(serializer.data)
+        # Turnuva listesi çekme işlemleri
+        return Response({"message": "Turnuva listesi burada!"}, status=status.HTTP_200_OK)
 
+# Matchmaking API Views
+class MatchmakingCreateView(APIView):
+    """
+    İki oyuncuyu eşleştirir.
+    """
     def post(self, request):
-        serializer = MatchSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Eşleştirme işlemleri
+        return Response({"message": "Eşleştirme başarıyla yapıldı!"}, status=status.HTTP_201_CREATED)
 
-# Skorları eklemek veya güncellemek için
-class MatchScoreAPIView(APIView):
-    def get(self, request, match_id):
-        scores = MatchScore.objects.filter(match_id=match_id)
-        serializer = MatchScoreSerializer(scores, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, match_id):
-        data = request.data
-        data['match_id'] = match_id
-        serializer = MatchScoreSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# Oyun Tekrarları (Game Replay)
-class GameReplayAPIView(APIView):
-    def get(self, request, match_id):
-        replays = GameReplay.objects.filter(match_id=match_id)
-        serializer = GameReplaySerializer(replays, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, match_id):
-        data = request.data
-        data['match_id'] = match_id
-        serializer = GameReplaySerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# Kullanıcıya ait oyunları listeleme
-class UserGamesListView(APIView):
-    def get(self, request, user_id):
-        # Kullanıcıya ait oyunları player1_id ve player2_id'ye göre filtreliyoruz
-        games_player1 = Game.objects.filter(player1_id=user_id)
-        games_player2 = Game.objects.filter(player2_id=user_id)
-        # Kullanıcıya ait oyunları birleştirip sıralıyoruz
-        games = games_player1 | games_player2
-        serializer = GameSerializer(games, many=True)
-        return Response(serializer.data)
+class MatchmakingStatusView(APIView):
+    """
+    Eşleştirme durumunu kontrol eder.
+    """
+    def get(self, request):
+        # Eşleştirme durumu kontrol işlemleri
+        return Response({"message": "Eşleştirme durumu!"}, status=status.HTTP_200_OK)

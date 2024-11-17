@@ -1,4 +1,4 @@
-@url = http://localhost:8000
+@url = http://localhost:8000/api
 
 ### signup
 POST {{url}}/auth/signup/ HTTP/1.1
@@ -6,7 +6,7 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "email": "selahattin_gungor53@hotmail.com",
+    "email": "selahattingungor53@hotmail.com",
     "password": "P4ssword.",
     "username": "deneme1",
     "first_name": "deneme1",
@@ -34,7 +34,7 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "signin": "deneme1@mail.com",
+    "signin": "deneme1",
     "password": "P4ssword."
 }
 

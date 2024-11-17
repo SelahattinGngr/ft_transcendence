@@ -1,32 +1,12 @@
 from rest_framework import serializers
-from .models import Game, Tournament, TournamentGame, Match, MatchScore, GameReplay
+from .models import Game, Move
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = '__all__'
+        fields = ['game_id', 'player1_id', 'player1_username', 'player2_id', 'player2_username', 'state', 'is_active', 'created_at', 'updated_at']
 
-class TournamentSerializer(serializers.ModelSerializer):
+class MoveSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tournament
-        fields = '__all__'
-
-class TournamentGameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TournamentGame
-        fields = '__all__'
-
-class MatchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Match
-        fields = '__all__'
-
-class MatchScoreSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MatchScore
-        fields = '__all__'
-
-class GameReplaySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GameReplay
-        fields = '__all__'
+        model = Move
+        fields = ['move_id', 'game', 'player_id', 'player_username', 'move_details', 'created_at']

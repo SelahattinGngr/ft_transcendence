@@ -4,7 +4,7 @@
 /app/auth_service/db.sh &
 
 # PostgreSQL'in başlatılmasını beklemek için biraz zaman tanı
-sleep 5
+sleep 10
 
 # Auth servisini başlat
 cd /app/auth_service

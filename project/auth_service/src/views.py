@@ -112,6 +112,9 @@ def signup(request):
 
 
 def signin(request):
+    logger.fatal("Signin request received")
+    logger.fatal(request.headers)
+    logger.fatal(request.body)
     language = request.headers.get("Accept-Language", "en")
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
@@ -143,6 +146,7 @@ def signin(request):
         refresh_token, refresh_exp = TokenService.generate_refresh_token(user.username)
 
         token = {
+            "username": user.username,
             "access_token": {"token": access_token, "expiration_date": access_exp},
             "refresh_token": {
                 "token": refresh_token,
@@ -505,7 +509,7 @@ def retry_verification_account(request):
             )
         except Users.DoesNotExist:
             return ResponseService.create_error_response(
-                Messages.USER_NOT_FOUND, language, 400
+                Messages.USER_NOT_FOUND, language, 404
             )
         except MailTokens.DoesNotExist:
             return ResponseService.create_error_response(
