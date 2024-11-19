@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'channels',
 ]
 
+ASGI_APPLICATION = 'config.asgi.application'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -58,10 +58,23 @@ services:
     hostname: notificationservice
     depends_on:
       - apigateway
+      - redis
     volumes:
       - notification_db_data:/var/lib/postgresql/data
     networks:
       - backend
+    
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - redis_data:/data
+      
 
   mailservice:
     container_name: mailservice
@@ -145,3 +158,4 @@ volumes:
   user_db_data:
   friend_db_data:
   notification_db_data:
+  redis_data:
