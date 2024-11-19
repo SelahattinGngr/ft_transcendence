@@ -5,3 +5,5 @@ requests
 django-cors-headers
 kafka-python
 psycopg
+django-notifications-hq
+channels
