@@ -68,8 +68,9 @@ def signup(request):
                 expiration=TokenService.create_expiration_date(60 * 24),  # 1 gün
             )
             try:
+                frontend_url = os.environ.get("FRONTEND_URL")
                 send_kafka_message(
-                    "user-registration-events", {"email": email, "token": f"http://localhost:8000/auth/verify-account/{token}"}
+                    "user-registration-events", {"email": email, "token": f"{frontend_url}/#verify-account?{token}"}
                 )
                 logger.fatal(f"Verification email sent to {email}")
             except Exception as e:
@@ -497,8 +498,9 @@ def retry_verification_account(request):
                 )
 
             try:
+                frontend_url = os.environ.get("FRONTEND_URL")
                 send_kafka_message(
-                    "user-registration-events", {"email": email, "token": f"http://localhost:8000/auth/verify-account/{mail_token.token}"}
+                    "user-registration-events", {"email": email, "token": f"{frontend_url}/#verify-account?{mail_token.token}"}
                 )
                 logger.fatal(f"Verification email sent to {email}")
             except Exception as e:

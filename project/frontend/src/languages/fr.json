@@ -1,0 +1,14 @@
+{
+    "index": {
+        "nav": {
+            "game": {
+                "title": "Fransızca Oyunlar"
+            }
+        }
+    },
+    "home": {
+        "hero": {
+            "description": "Fransızca Ecole 42 bitirme projemiz olan basit bir pong oyunu içeren basit bir web sitesi :D"
+        }
+    }
+}

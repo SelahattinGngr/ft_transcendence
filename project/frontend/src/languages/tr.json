@@ -1,0 +1,14 @@
+{
+    "index": {
+        "nav": {
+            "game": {
+                "title": "Oyunlar"
+            }
+        }
+    },
+    "home": {
+        "hero": {
+            "description": "Ecole 42 bitirme projemiz olan basit bir pong oyunu içeren basit bir web sitesi :D"
+        }
+    }
+}

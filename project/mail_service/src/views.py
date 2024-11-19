@@ -9,8 +9,6 @@ logger = logging.getLogger(__name__)
 
 def send_email(email, subject, message):
     from_email = os.getenv("EMAIL_HOST_USER")
-    logger.fatal(f"Sending email to {email} with subject '{subject}'")
-    logger.fatal("ANANI SIKIYIM ANANI O MESAJ GONDERMEYEN CARIKLI ANANI SIKIYIM")
     try:
         send_mail(subject, message, from_email, [email])
         logger.fatal(f"Email sent to {email} with subject '{subject}'")

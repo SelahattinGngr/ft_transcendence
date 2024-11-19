@@ -1,0 +1,14 @@
+{
+    "index": {
+        "nav": {
+            "game": {
+                "title": "Games"
+            }
+        }
+    },
+    "home": {
+        "hero": {
+            "description": "A simple website containing a simple pong game, which is our Ecole 42 graduation project :D"
+        }
+    }
+}
