@@ -1,5 +1,6 @@
 import { homeActions } from "./src/pages/home/home.js";
 import { loadProfile } from "./src/pages/profile/profile.js";
+import { retryVerifyAccount } from "./src/pages/retry-verify-account/retry.js";
 import { handleSignin } from "./src/pages/signin/signin.js";
 import { handleSignup } from "./src/pages/signup/signup.js";
 import { verificationCode } from "./src/pages/verify-account/verification.js";
@@ -67,6 +68,10 @@ function setupPageActions(page) {
     document.getElementById(
       "not-found-image"
     ).src = `/src/assets/errors/${randomNumber}.svg`;
+  } else if (page === "retry-verify-account") {
+    document
+      .getElementById("retryForm")
+      .addEventListener("submit", retryVerifyAccount);
   }
 }
 

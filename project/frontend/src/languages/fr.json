@@ -1,14 +1,32 @@
 {
     "index": {
         "nav": {
+            "about-us": "A propos de nous",
             "game": {
-                "title": "Fransızca Oyunlar"
-            }
+                "title": "Jeux",
+                "dropdown": {
+                    "localetournament": "Jouer au tournoi local",
+                    "locale": "Jouer localement",
+                    "online": "Jouer en ligne",
+                    "ai": "Jouer avec IA"
+                }
+            },
+            "profile": {
+                "dropdown": {
+                    "profile": "Profil",
+                    "notifications": "Notifications",
+                    "signout": "Se déconnecter"
+                }
+            },
+            "signin": "Se connecter",
+            "signup": "S'inscrire"
         }
     },
     "home": {
         "hero": {
-            "description": "Fransızca Ecole 42 bitirme projemiz olan basit bir pong oyunu içeren basit bir web sitesi :D"
+            "description": "Un site Web simple avec un jeu de pong basique, qui est notre projet de fin d'études à l'Ecole 42 :D",
+            "ai": "Jouer avec IA",
+            "locale": "Jouer localement"
         }
     }
 }

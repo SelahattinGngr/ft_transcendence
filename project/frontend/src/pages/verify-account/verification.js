@@ -28,8 +28,7 @@ export async function verificationCode() {
       theme: "danger",
       message: data.error,
     });
-    // TODO: retry verify account page yapılacak ve oraya yönlendirilecek
-    window.location.hash = "home";
+    window.location.hash = "retry-verify-account";
   } catch (error) {
     console.error("Error during verification:", error);
   }

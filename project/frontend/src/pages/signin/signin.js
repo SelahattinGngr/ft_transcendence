@@ -24,6 +24,7 @@ export async function handleSignin(event) {
       });
     }
     localStorage.setItem("access_token", data.data.access_token.token);
+    localStorage.setItem("refresh_token", data.data.refresh_token.token);
     localStorage.setItem("username", data.data.username);
     Toast({
       title: "Success",
