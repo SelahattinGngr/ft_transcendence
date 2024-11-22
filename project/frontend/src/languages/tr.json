@@ -1,14 +1,32 @@
 {
     "index": {
         "nav": {
+            "about-us": "Hakkımızda",
             "game": {
-                "title": "Oyunlar"
-            }
+                "title": "Oyunlar",
+                "dropdown": {
+                    "localetournament": "Yerel Turnuva Oyna",
+                    "locale": "Yerelde oyna",
+                    "online": "Online oyna",
+                    "ai": "Yapay Zeka ile oyna"
+                }
+            },
+            "profile": {
+                "dropdown": {
+                    "profile": "Profil",
+                    "notifications": "Bildirimler",
+                    "signout": "Çıkış yap"
+                }
+            },
+            "signin": "Giriş yap",
+            "signup": "Kayıt ol"
         }
     },
     "home": {
         "hero": {
-            "description": "Ecole 42 bitirme projemiz olan basit bir pong oyunu içeren basit bir web sitesi :D"
+            "description": "Ecole 42 bitirme projemiz olan basit bir pong oyunu içeren basit bir web sitesi :D",
+            "ai": "Yapay Zeka ile oyna",
+            "locale": "Yerelde oyna"
         }
     }
 }

@@ -20,40 +20,27 @@
       </button>
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">TRANSCENDENCE</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" data-lang-path="">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link active" aria-current="page" href="#about-us" data-lang-path="">Hakkımızda</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                Dropdown
+                Oyna
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
+                <li><a class="dropdown-item" href="#games/locale-tournament" data-lang-path="">local turnuva</a></li>
+                <li><a class="dropdown-item" href="#games/locale" data-lang-path="">local</a></li>
+                <li><a class="dropdown-item" href="#games/online" data-lang-path="">online</a></li>
+                <li><a class="dropdown-item" href="#games/ai" data-lang-path="">ai</a></li>
               </ul>
             </li>
           </ul>
-          <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
         </div>
       </div>
     </div>
@@ -66,7 +53,7 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#about-us">Hakkımızda</a>
+            <a class="nav-link" href="#about-us" data-lang-path="index.nav.about-us">Hakkımızda</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -74,10 +61,13 @@
               Oyna
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#games/locale-tournament">local turnuva</a></li>
-              <li><a class="dropdown-item" href="#games/locale">local</a></li>
-              <li><a class="dropdown-item" href="#games/online">online</a></li>
-              <li><a class="dropdown-item" href="#games/ai">ai</a></li>
+              <li><a class="dropdown-item" href="#games/locale-tournament"
+                  data-lang-path="index.nav.game.dropdown.localetournament">local turnuva</a></li>
+              <li><a class="dropdown-item" href="#games/locale"
+                  data-lang-path="index.nav.game.dropdown.locale">local</a></li>
+              <li><a class="dropdown-item" href="#games/online"
+                  data-lang-path="index.nav.game.dropdown.online">online</a></li>
+              <li><a class="dropdown-item" href="#games/ai" data-lang-path="index.nav.game.dropdown.ai">ai</a></li>
             </ul>
           </li>
         </ul>
@@ -89,17 +79,19 @@
             <img src="https://i.hizliresim.com/d0crqf0.jpeg" alt="mdo" width="32" height="32" class="rounded-circle">
           </a>
           <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="#">Profil</a></li>
-            <li><a class="dropdown-item" href="#">bildirimler</a></li>
+            <li><a class="dropdown-item" href="#profile" data-lang-path="index.nav.profile.dropdown.profile">Profil</a>
+            </li>
+            <li><a class="dropdown-item" href="#"
+                data-lang-path="index.nav.profile.dropdown.notifications">bildirimler</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">Çıkış yap</a></li>
+            <li><a class="dropdown-item" href="#" data-lang-path="index.nav.profile.dropdown.signout">Çıkış yap</a></li>
           </ul>
         </div>
         <div id="auth">
-          <a href="#signin" class="btn btn-outline-light me-2">Sign in</a>
-          <a href="#signup" class="btn btn-warning">Sign up</a>
+          <a href="#signin" class="btn btn-outline-light me-2" data-lang-path="index.nav.signin">Sign in</a>
+          <a href="#signup" class="btn btn-warning" data-lang-path="index.nav.signup">Sign up</a>
         </div>
         <ul class="navbar-nav">
           <li class="nav-item dropdown">

@@ -1,14 +1,32 @@
 {
     "index": {
         "nav": {
+            "about-us": "About us",
             "game": {
-                "title": "Games"
-            }
+                "title": "Games",
+                "dropdown": {
+                    "localetournament": "Play Local Tournament",
+                    "locale": "Play Locally",
+                    "online": "Play Online",
+                    "ai": "Play with AI"
+                }
+            },
+            "profile": {
+                "dropdown": {
+                    "profile": "Profile",
+                    "notifications": "Notifications",
+                    "signout": "Sign out"
+                }
+            },
+            "signin": "Sign in",
+            "signup": "Sign up"
         }
     },
     "home": {
         "hero": {
-            "description": "A simple website containing a simple pong game, which is our Ecole 42 graduation project :D"
+            "description": "A simple website featuring a basic pong game, which is our Ecole 42 graduation project :D",
+            "ai": "Play with AI",
+            "locale": "Play Locally"
         }
     }
 }
