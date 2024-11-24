@@ -19,7 +19,7 @@ Accept: application/json
 Authorization: Bearer {{signin.response.body.data.access_token.token}}
 
 {
-    "friend_username": "deneme2"
+    "friend_username": "bkas"
 }
 
 ###

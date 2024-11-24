@@ -1,0 +1,8 @@
+input.form-control, input.form-control:focus {
+    background-color: #444;
+    color: #fff;
+}
+
+input.form-control::placeholder {
+    color: #aaa;
+}

@@ -17,25 +17,21 @@ export async function handleSignin(event) {
 
     const data = await response.json();
     if (!response.ok) {
-      return Toast({
-        title: "Error",
-        message: data.error,
-        theme: "danger",
-      });
+      throw new Error(data.error);
     }
     localStorage.setItem("access_token", data.data.access_token.token);
     localStorage.setItem("refresh_token", data.data.refresh_token.token);
     localStorage.setItem("username", data.data.username);
     Toast({
       title: "Success",
-      message: "Sign in successful",
+      message: "You have successfully signed in.",
       theme: "success",
     });
     window.location.hash = "home";
   } catch (error) {
     Toast({
       title: "Error",
-      message: "Sign in failed",
+      message: error.message,
       theme: "danger",
     });
     console.error("Error during sign in:", error);

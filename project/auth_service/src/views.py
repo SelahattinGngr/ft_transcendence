@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 def signup(request):
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
-        language = request.headers.get("Accept-Language", "en")
+        language = request.headers.get("Accept-Language", "tr")
         username = data.get("username")
         email = data.get("email")
         password = data.get("password")
@@ -116,7 +116,7 @@ def signin(request):
     logger.fatal("Signin request received")
     logger.fatal(request.headers)
     logger.fatal(request.body)
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
         signin = data.get("signin")
@@ -165,7 +165,7 @@ def signin(request):
 
 
 def signout(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method == "GET":
         try:
             auth_header = request.headers.get("Authorization")
@@ -202,7 +202,7 @@ def signout(request):
 
 
 def refreshToken(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method == "GET":
         try:
             auth_header = request.headers.get("Authorization")
@@ -260,7 +260,7 @@ def refreshToken(request):
 
 def verifyAccount(request, verify_token):
     try:
-        language = request.headers.get("Accept-Language", "en")
+        language = request.headers.get("Accept-Language", "tr")
         mail_token = MailTokens.objects.get(
             token=verify_token, type="verify", status=True
         )
@@ -305,7 +305,7 @@ def verifyAccount(request, verify_token):
 
 
 def validate_token(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method == "GET":
         access_token = request.headers.get("Authorization")
         refresh_token = request.headers.get("Refresh")
@@ -337,7 +337,7 @@ def intra(request):
 
 
 def intraCallback(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     data = json.loads(request.body.decode("utf-8"))
     code = data.get("code")
 
@@ -447,7 +447,7 @@ def invalid_user(user_service_url, user_create_data):
 
 # diger servislerden access token uzerinden username almak icin kullanilacak
 def get_accesstoken_by_username(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method == "GET":
         access_token = request.headers.get("Authorization")
         if not access_token:
@@ -472,7 +472,7 @@ def get_accesstoken_by_username(request):
     )
 
 def retry_verification_account(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
         email = data.get("email")

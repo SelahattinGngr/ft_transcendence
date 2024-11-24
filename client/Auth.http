@@ -34,8 +34,8 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "signin": "deneme1",
-    "password": "P4ssword."
+    "signin": "segungor",
+    "password": "Sg27.09.2000"
 }
 
 ### signout

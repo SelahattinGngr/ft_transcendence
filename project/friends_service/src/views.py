@@ -2,6 +2,7 @@
 import json
 import logging
 import os
+from turtle import goto
 
 import requests
 
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 # arkadaslık isteği gönderme
 def send_friend_request(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
 
     if request.method == "POST":
         access_token = request.headers.get("Authorization")
@@ -71,9 +72,12 @@ def send_friend_request(request):
             "friend_request_id": friend_requests_obj.id,
             "message": f"{username} wants to be your friend.",
         }
-
-        # Kafka'daki 'notifications' topiğine mesaj gönderiliyor
+    
+        # try:
+        #     producer.send_message("notifications", notification_message)
+        # except Exception as e:
         producer.send_message("notifications", notification_message)
+        # Kafka'daki 'notifications' topiğine mesaj gönderiliyor
 
         return ResponseService.create_success_response(
             Messages.get_message(Messages.REQUEST_SENT_SUCCESS, language), 201
@@ -84,7 +88,7 @@ def send_friend_request(request):
 
 # arkadaslık isteğini reddetme
 def reject_to_friend_request(request, id):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
 
     if request.method == "GET":
         # access token ile kontrol eklenecek
@@ -104,7 +108,7 @@ def reject_to_friend_request(request, id):
 
 # arkadaslık isteğini kabul etme
 def accept_friend_request(request, id):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
 
     if request.method == "GET":
         # access token ile kontrol eklenecek
