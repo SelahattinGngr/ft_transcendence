@@ -1,16 +1,29 @@
-<div class="container mt-5">
-  <h2>Sign In</h2>
-  <form id="signinForm">
-    <div class="mb-3">
-      <label for="signinUsername" class="form-label">Username</label>
-      <input type="text" class="form-control" id="signinUsername" required />
-    </div>
-    <div class="mb-3">
-      <label for="signinPassword" class="form-label">Password</label>
-      <input type="password" class="form-control" id="signinPassword" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Sign In</button>
-    <a href="#signup" class="btn btn-link"> Don't have an account? Sign up </a>
-    <a href="#retry-verify-account" class="btn btn-link">Doğrulama Maili Gelmedi mi?</a>
-  </form>
-</div>
+<link rel="stylesheet" href="/src/pages/signin/signin.css">
+<form class="form mx-auto" id="signinForm">
+  <div class="flex-column">
+    <label>Email </label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/at.svg" alt="">
+    <input type="text" class="input" id="signinUsername" placeholder="Enter your Email" required autocomplete="email" />
+  </div>
+
+  <div class="flex-column">
+    <label>Password </label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/lock.svg" alt="">
+    <input type="password" class="input" id="signinPassword" placeholder="Enter your Password" required
+      autocomplete="current-password" />
+  </div>
+
+  <button class="button-submit">Sign In</button>
+  <p class="p">Don't have an account? <a class="span" href="#signup">Sign Up</a></p>
+  <p class="p">Haven't received your verification email? <a class="span" href="#retry-verify-account">Retry Mail</a></p>
+  <p class="p line">Or With</p>
+  <div class="flex-row">
+    <button type="button" class="btn" id="ecole-button-submit">
+      <img src="/src/assets/icons/42_Logo.svg" alt="">
+    </button>
+  </div>
+</form>

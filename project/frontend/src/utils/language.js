@@ -41,3 +41,5 @@ export function changelanguage(language) {
   languageTitle.innerHTML = language;
   setuplanguage();
 }
+
+export const getLanguage = () => localStorage.getItem("language");

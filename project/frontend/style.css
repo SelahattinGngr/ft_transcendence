@@ -1,0 +1,13 @@
+input.form-control, input.form-control:focus {
+    background-color: #444;
+    color: #fff;
+}
+
+input.form-control::placeholder {
+    color: #aaa;
+}
+
+img[src$=".svg"]:not([src*="errors/"]) {
+    width: 1.5rem;
+    height: 1.5rem;
+}

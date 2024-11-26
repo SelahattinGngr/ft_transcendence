@@ -16,7 +16,7 @@ def deneme(request):
     return JsonResponse({'message': 'Hello, World!'})
 
 def notification_type_request(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
 
     if request.method == "POST":
         data = json.loads(request.body)

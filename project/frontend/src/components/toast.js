@@ -1,5 +1,4 @@
 export function Toast({ title = "Error", message, theme = "warning" }) {
-  console.log("Toast message:", message);
   const toastContainer = document.getElementById("toastContainer");
   const toast = document.createElement("div");
   toast.id = "liveToast";

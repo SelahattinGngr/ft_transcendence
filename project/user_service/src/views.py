@@ -8,7 +8,7 @@ from .ResponseService import ResponseService
 logger = logging.getLogger(__name__)
 
 def get_user(request, username):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method != "GET":
         return ResponseService.create_error_response(
             Messages.INVALID_REQUEST_METHOD, language, 405
@@ -34,7 +34,7 @@ def get_user(request, username):
 
 
 def create_user(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method != "POST":
         return ResponseService.create_error_response(
             Messages.INVALID_REQUEST_METHOD, language, 405
@@ -72,7 +72,7 @@ def create_user(request):
 
 
 def intra_create(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method != "POST":
         return ResponseService.create_error_response(
             Messages.INVALID_REQUEST_METHOD, language, 405
@@ -129,7 +129,7 @@ def intra_create(request):
     return ResponseService.create_success_response(user, 201)
 
 def update_profile(request, username):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method != "PUT":
         return ResponseService.create_error_response(
             Messages.INVALID_REQUEST_METHOD, language, 405
@@ -177,7 +177,7 @@ def update_profile(request, username):
 
 # friend servisinden istek atılacak istek kabul edilirse buraya gelip arkadas oldukları tabloda işlenecek
 def add_friend(request):
-    language = request.headers.get("Accept-Language", "en")
+    language = request.headers.get("Accept-Language", "tr")
     if request.method != "POST":
         return ResponseService.create_error_response(
             Messages.INVALID_REQUEST_METHOD, language, 405
