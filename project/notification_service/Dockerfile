@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN apt-get update && \
-    apt-get install -y dos2unix postgresql postgresql-contrib curl python3 python3-pip
+    apt-get install -y dos2unix postgresql postgresql-contrib curl python3 python3-pip libpq-dev python3-dev build-essential
 
 COPY . /app/notification_service
 

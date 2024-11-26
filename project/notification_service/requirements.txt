@@ -9,3 +9,4 @@ psycopg2
 django-notifications-hq
 channels
 channels-redis
+#asgiref
