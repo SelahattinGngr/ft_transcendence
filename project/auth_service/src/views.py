@@ -340,7 +340,8 @@ def intraCallback(request):
     language = request.headers.get("Accept-Language", "tr")
     data = json.loads(request.body.decode("utf-8"))
     code = data.get("code")
-
+    logger.fatal(f"Code retrieved from request body: {code}")
+    
     if not code:
         return ResponseService.create_error_response(
             Messages.AUTHORIZATION_CODE_NOT_PROVIDED, language, 400

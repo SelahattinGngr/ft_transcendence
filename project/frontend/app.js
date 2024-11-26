@@ -6,10 +6,10 @@ import { localeGameSetup } from "./src/pages/games/locale/localeGameSetup.js";
 import { homeActions } from "./src/pages/home/home.js";
 import { loadProfile } from "./src/pages/profile/profile.js";
 import { retryVerifyAccount } from "./src/pages/retry-verify-account/retry.js";
-import { handleSignin } from "./src/pages/signin/signin.js";
+import { handleSignin, intraSignin } from "./src/pages/signin/signin.js";
 import { handleSignup } from "./src/pages/signup/signup.js";
 import { verificationCode } from "./src/pages/verify-account/verification.js";
-import { active } from "./src/utils/Active.js";
+import { active } from "./src/utils/active.js";
 import { isAuth } from "./src/utils/isAuth.js";
 import {
   setuplanguage,
@@ -60,6 +60,9 @@ function setupPageActions(page) {
     homeActions();
   } else if (page === "signin") {
     submitHandler("signinForm", handleSignin);
+    document
+      .querySelector("#ecole-button-submit")
+      .addEventListener("click", intraSignin);
   } else if (page === "signup") {
     submitHandler("signupForm", handleSignup);
   } else if (page === "profile") {

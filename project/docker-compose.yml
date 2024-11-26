@@ -1,4 +1,16 @@
 services:
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    depends_on:
+      - apigateway
+    env_file:
+      - .env
+    hostname: frontend
+    ports:
+      - "80:80"
+    networks:
+      - backend
 
   apigateway:
     container_name: apigateway
@@ -134,6 +146,7 @@ services:
     networks:
       - kafka-net
       - backend
+    restart: unless-stopped
 
   kafdrop:
     container_name: kafdrop
@@ -146,6 +159,7 @@ services:
       - kafka
     networks:
       - kafka-net
+    restart: unless-stopped
 
 networks:
   backend:
