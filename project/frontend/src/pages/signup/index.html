@@ -1,36 +1,69 @@
-<div class="card text-start col-12 col-md-6 mx-auto text-bg-warning">
-  <div class="card-body">
-    <h4 class="card-title">Sign Up</h4>
-    <form id="signupForm">
-      <div class="mb-3">
-        <label for="signupUsername" class="form-label">Username</label>
-        <input type="text" class="form-control" id="signupUsername" required />
-      </div>
-      <div class="mb-3">
-        <label for="signupEmail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="signupEmail" required />
-      </div>
-      <div class="mb-3">
-        <label for="signupPassword" class="form-label">Password</label>
-        <input type="password" class="form-control" id="signupPassword" required />
-      </div>
-      <div class="mb-3">
-        <label for="signupFirstName" class="form-label">First Name</label>
-        <input type="text" class="form-control" id="signupFirstName" required />
-      </div>
-      <div class="mb-3">
-        <label for="signupLastName" class="form-label">Last Name</label>
-        <input type="text" class="form-control" id="signupLastName" required />
-      </div>
-      <div class="mb-3">
-        <label for="signupAvatarUrl" class="form-label">Avatar URL (optional)</label>
-        <input type="url" class="form-control" id="signupAvatarUrl"
-          placeholder="https://i.hizliresim.com/d0crqf0.jpeg" />
-      </div>
-      <button type="submit" class="btn btn-outline-dark">Sign Up</button>
-      <a href="#signin" class="btn btn-link text-dark">
-        Already have an account? Sign in
-      </a>
-    </form>
+<link rel="stylesheet" href="/src/pages/signup/signup.css">
+<form class="form mx-auto" id="signupForm">
+  <div class="flex-column">
+    <label>Username</label>
   </div>
-</div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/at.svg" alt="">
+    <input type="text" class="input" id="signupUsername" placeholder="Enter your Username" required
+      autocomplete="username" />
+  </div>
+  <div class="flex-column">
+    <label>Email </label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/at.svg" alt="">
+    <input type="text" class="input" id="signupEmail" placeholder="Enter your Username" required
+      autocomplete="username" />
+  </div>
+  <div class="flex-column">
+    <label>Password </label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/lock.svg" alt="">
+    <input type="text" class="input" id="signupPassword" placeholder="Enter your Username" required
+      autocomplete="username" />
+  </div>
+  <div class="flex-column">
+    <label>Repeat Password </label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/lock.svg" alt="">
+    <input type="text" class="input" id="signupRepeatPassword" placeholder="Enter your Username" required
+      autocomplete="username" />
+  </div>
+  <div class="flex-column">
+    <label>First Name </label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/at.svg" alt="">
+    <input type="text" class="input" id="signupFirstName" placeholder="Enter your Username" required
+      autocomplete="username" />
+  </div>
+  <div class="flex-column">
+    <label>Last Name</label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/at.svg" alt="">
+    <input type="text" class="input" id="signupLastName" placeholder="Enter your Username" required
+      autocomplete="username" />
+  </div>
+  <div class="flex-column">
+    <label>Avatar </label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/at.svg" alt="">
+    <input type="text" class="input" id="signupAvatarUrl" placeholder="Enter your Username" required
+      autocomplete="username" />
+  </div>
+
+  <button class="button-submit">Sign In</button>
+  <p class="p">Don't have an account? <a class="span" href="#signup">Sign Up</a></p>
+  <p class="p">Haven't received your verification email? <a class="span" href="#retry-verify-account">Retry Mail</a></p>
+  <p class="p line">Or With</p>
+  <div class="flex-row">
+    <button type="button" class="btn" id="ecole-button-submit">
+      <img src="/src/assets/icons/42_Logo.svg" alt="">
+    </button>
+  </div>
+</form>
