@@ -1,7 +1,7 @@
 import { Toast } from "./src/components/toast.js";
 import { aiGameSetup } from "./src/pages/games/ai/aiGameSetup.js";
 import { localeTournamentSetup } from "./src/pages/games/locale-tournament/localeTournamentGameSetup.js";
-import { canvasSetup } from "./src/pages/games/locale/game/game.js";
+import { Game } from "./src/pages/games/locale/game/game.js";
 import { localeGameSetup } from "./src/pages/games/locale/localeGameSetup.js";
 import { homeActions } from "./src/pages/home/home.js";
 import { loadProfile } from "./src/pages/profile/profile.js";
@@ -96,7 +96,13 @@ function setupPageActions(page) {
     putRange("#gameDifficulty", "#difficultyRangeValue");
     submitHandler("aiGamesForm", aiGameSetup);
   } else if (page === "games/locale/game") {
-    canvasSetup();
+    try {
+      new Game("gameCanvas");
+    } catch (error) {
+      if (window.location.hash === "#games/locale/game") {
+        console.error(error);
+      }
+    }
   }
 }
 

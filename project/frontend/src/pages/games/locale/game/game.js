@@ -1,90 +1,230 @@
-// import { getTemporaryData } from "../../../../utils/temporaryLocaleStorage.js";
+import { getTemporaryData } from "../../../../utils/temporaryLocaleStorage.js";
 
-// const Canvas = {
-//   canvas: {
-//     width: 1000,
-//     height: 500,
-//   },
-// };
+export class Game {
+  #canvas = document.getElementById("gameCanvas");
+  #ctx = this.#canvas.getContext("2d");
+  #data;
+  #player1 = { name: "Player 1", score: 0 };
+  #player2 = { name: "Player 2", score: 0 };
+  #gameSettings = {
+    ballSpeed: 1,
+    ballSize: 10,
+    paddleHeight: 100,
+    paddleWidth: 10,
+    paddleSpeed: 1.5,
+    winScore: 5,
+  };
+  #isGameStarted = false;
+  #rightPaddle = {
+    x: this.#canvas.width - this.#gameSettings.paddleWidth,
+    y: this.#canvas.height / 2 - this.#gameSettings.paddleHeight / 2,
+    dy: 0,
+  };
+  #leftPaddle = {
+    x: 0,
+    y: this.#canvas.height / 2 - this.#gameSettings.paddleHeight / 2,
+    dy: 0,
+  };
+  #ball = {
+    x: this.#canvas.width / 2,
+    y: this.#canvas.height / 2,
+    radius: this.#gameSettings.ballSize,
+    speedX: this.#gameSettings.ballSpeed,
+    speedY: this.#gameSettings.ballSpeed,
+  };
 
-// const Player1 = {
-//   name: "Player 1",
-//   score: 0,
-// };
+  constructor() {
+    this.#data = getTemporaryData("localeGameData");
+    if (!this.#data) {
+      window.location.hash = "games/locale";
+      return;
+    }
+    this.#player1 = {
+      name: this.#data.users[0],
+      score: 0,
+    };
+    this.#player2 = {
+      name: this.#data.users[1],
+      score: 0,
+    };
+    this.#gameSettings = {
+      ...this.#gameSettings,
+      ballSpeed: parseInt(this.#data.ballSpeed, 10),
+      paddleHeight: parseInt(this.#data.paddleHeight, 10),
+      paddleSpeed: parseInt(this.#data.ballSpeed, 10) * 1.5,
+      winScore: parseInt(this.#data.winScore, 10),
+    };
+    this.#startGame();
+  }
 
-// const Player2 = {
-//   name: "Player 2",
-//   score: 0,
-// };
+  #startGame() {
+    if (this.#isGameStarted) return;
+    this.#isGameStarted = true;
 
-// /* Game settings */
-// function setLocalGame(newLocalGame) {
-//   LocalGame = { ...LocalGame, ...newLocalGame };
-// }
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "w")
+        this.#leftPaddle.dy = -this.#gameSettings.paddleSpeed;
+      if (event.key === "s")
+        this.#leftPaddle.dy = this.#gameSettings.paddleSpeed;
+      if (event.key === "ArrowUp")
+        this.#rightPaddle.dy = -this.#gameSettings.paddleSpeed;
+      if (event.key === "ArrowDown")
+        this.#rightPaddle.dy = this.#gameSettings.paddleSpeed;
+    });
 
-// const LocalGame = {
-//   winScore: 5,
+    document.addEventListener("keyup", (event) => {
+      if (event.key === "w" || event.key === "s") this.#leftPaddle.dy = 0;
+      if (event.key === "ArrowUp" || event.key === "ArrowDown")
+        this.#rightPaddle.dy = 0;
+    });
+    this.#userSettings();
+    this.#update();
+  }
 
-//   ballSpeed: 5,
-//   ballSize: 10,
+  #update() {
+    if (!this.#isGameStarted) return;
 
-//   paddleWidth: 10,
-//   paddleHeight: 100,
-// };
-// /* Game settings */
+    // Update paddle positions
+    this.#leftPaddle.y += this.#leftPaddle.dy;
+    this.#rightPaddle.y += this.#rightPaddle.dy;
 
-// const rightPaddle = {
-//   x: Canvas.canvas.width - paddleWidth - 20,
-//   y: Canvas.canvas.height / 2 - paddleHeight / 2,
-//   dy: 0,
-// };
+    // Constrain paddles within the canvas
+    if (this.#leftPaddle.y < 0) this.#leftPaddle.y = 0;
+    else if (
+      this.#leftPaddle.y + this.#gameSettings.paddleHeight >
+      this.#canvas.height
+    )
+      this.#leftPaddle.y =
+        this.#canvas.height - this.#gameSettings.paddleHeight;
 
-// const leftPaddle = {
-//   x: 20,
-//   y: Canvas.canvas.height / 2 - paddleHeight / 2,
-//   dy: 0,
-// };
+    if (this.#rightPaddle.y < 0) this.#rightPaddle.y = 0;
+    else if (
+      this.#rightPaddle.y + this.#gameSettings.paddleHeight >
+      this.#canvas.height
+    )
+      this.#rightPaddle.y =
+        this.#canvas.height - this.#gameSettings.paddleHeight;
 
-// const ball = {
-//   x: Canvas.canvas.width / 2,
-//   y: Canvas.canvas.height / 2,
-//   radius: ballSize,
-//   speedX: 5,
-//   speedY: 5,
-// };
+    // Update ball position
+    this.#ball.x += this.#ball.speedX;
+    this.#ball.y += this.#ball.speedY;
 
-export function canvasSetup() {
-  //   try {
-  //     const data = getTemporaryData("localeGameData");
-  //     if (!data) {
-  //       window.location.hash = "games/locale";
-  //       return;
-  //     }
-  //     const {
-  //       users: [player1name, player2name],
-  //       ballSpeed,
-  //       paddleHeight,
-  //       winScore,
-  //     } = data;
-  //     Canvas.canvas = document.querySelector("#gameCanvas");
-  //     const ctx = Canvas.canvas.getContext("2d");
-  //     setLocalGame({ ballSpeed, paddleHeight, winScore });
-  //     Player1.name = player1name;
-  //     Player2.name = player2name;
-  //     userSettings();
-  //   } catch (error) {
-  //     if (window.location.hash === "#games/locale/game") {
-  //       console.error(error);
-  //     }
-  //   }
+    // Ball collision with top and bottom walls
+    if (
+      this.#ball.y - this.#ball.radius <= 0 ||
+      this.#ball.y + this.#ball.radius >= this.#canvas.height
+    ) {
+      this.#ball.speedY = -this.#ball.speedY;
+    }
+
+    // Ball collision with paddles
+    if (
+      this.#ball.x - this.#ball.radius <=
+        this.#leftPaddle.x + this.#gameSettings.paddleWidth &&
+      this.#ball.y > this.#leftPaddle.y &&
+      this.#ball.y < this.#leftPaddle.y + this.#gameSettings.paddleHeight
+    ) {
+      this.#ball.speedX = -this.#ball.speedX;
+    }
+
+    if (
+      this.#ball.x + this.#ball.radius >= this.#rightPaddle.x &&
+      this.#ball.y > this.#rightPaddle.y &&
+      this.#ball.y < this.#rightPaddle.y + this.#gameSettings.paddleHeight
+    ) {
+      this.#ball.speedX = -this.#ball.speedX;
+    }
+
+    // Scoring system
+    if (this.#ball.x - this.#ball.radius <= 0) {
+      this.#player2.score++;
+      this.#updateScores();
+      this.#resetBall();
+    }
+
+    if (this.#ball.x + this.#ball.radius >= this.#canvas.width) {
+      this.#player1.score++;
+      this.#updateScores();
+      this.#resetBall();
+    }
+
+    // Clear canvas
+    this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
+
+    // Draw game elements
+    this.#drawPaddles();
+    this.#createField();
+    this.#createBall();
+
+    requestAnimationFrame(this.#update.bind(this));
+  }
+
+  #drawPaddles() {
+    this.#ctx.fillStyle = "#60A5FA";
+    this.#ctx.fillRect(
+      this.#leftPaddle.x,
+      this.#leftPaddle.y,
+      this.#gameSettings.paddleWidth,
+      this.#gameSettings.paddleHeight
+    );
+    this.#ctx.fillRect(
+      this.#rightPaddle.x,
+      this.#rightPaddle.y,
+      this.#gameSettings.paddleWidth,
+      this.#gameSettings.paddleHeight
+    );
+  }
+
+  #createBall() {
+    this.#ctx.fillStyle = "#F87171";
+    this.#ctx.beginPath();
+    this.#ctx.arc(
+      this.#ball.x,
+      this.#ball.y,
+      this.#ball.radius,
+      0,
+      Math.PI * 2
+    );
+    this.#ctx.fill();
+  }
+
+  #createField() {
+    this.#ctx.setLineDash([5, 5]);
+    this.#ctx.beginPath();
+    this.#ctx.moveTo(this.#canvas.width / 2, 0);
+    this.#ctx.lineTo(this.#canvas.width / 2, this.#canvas.height);
+    this.#ctx.strokeStyle = "white";
+    this.#ctx.stroke();
+  }
+
+  #resetBall() {
+    this.#ball.x = this.#canvas.width / 2;
+    this.#ball.y = this.#canvas.height / 2;
+    this.#ball.speedX =
+      this.#gameSettings.ballSpeed * (Math.random() < 0.5 ? 1 : -1);
+    this.#ball.speedY =
+      this.#gameSettings.ballSpeed * (Math.random() < 0.5 ? 1 : -1);
+  }
+
+  #userSettings() {
+    document.querySelector("#player1username").innerText = this.#player1.name;
+    document.querySelector("#player2username").innerText = this.#player2.name;
+  }
+
+  #updateScores() {
+    document.querySelector("#player1score").innerText = this.#player1.score;
+    document.querySelector("#player2score").innerText = this.#player2.score;
+    if (this.#player1.score >= this.#gameSettings.winScore) {
+      this.#isGameStarted = false;
+      this.#gameOver(this.#player1.name);
+    } else if (this.#player2.score >= this.#gameSettings.winScore) {
+      this.#isGameStarted = false;
+      this.#gameOver(this.#player2.name);
+    }
+  }
+
+  #gameOver(winner) {
+    alert(`${winner} wins!`);
+    window.location.hash = "games/locale";
+  }
 }
-
-// function userSettings() {
-//   document.querySelector("#player1username").textContent = Player1.name;
-//   document.querySelector("#player2username").textContent = Player2.name;
-// }
-
-// function updateScores() {
-//   document.querySelector("#player1score").textContent = Player1.score;
-//   document.querySelector("#player2score").textContent = Player2.score;
-// }
