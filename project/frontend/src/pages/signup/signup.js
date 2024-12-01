@@ -5,11 +5,19 @@ export async function handleSignup(event) {
   const username = document.getElementById("signupUsername").value;
   const email = document.getElementById("signupEmail").value;
   const password = document.getElementById("signupPassword").value;
+  const repeatPassword = document.getElementById("signupRepeatPassword").value;
   const first_name = document.getElementById("signupFirstName").value;
   const last_name = document.getElementById("signupLastName").value;
   const avatar_url = document.getElementById("signupAvatarUrl").value;
 
   try {
+    if (password !== repeatPassword) {
+      return Toast({
+        title: "Error",
+        message: "Passwords do not match",
+        theme: "danger",
+      });
+    }
     const response = await fetch("http://localhost:8000/auth/signup/", {
       method: "POST",
       headers: {

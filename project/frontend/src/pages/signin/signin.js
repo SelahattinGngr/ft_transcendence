@@ -107,6 +107,7 @@ function closePopupSettings(popup) {
       if (!responseBackend.ok) {
         throw new Error(data.error);
       }
+      console.error("Data:", data);
       localStorage.setItem("access_token", data.data.access_token.token);
       localStorage.setItem("refresh_token", data.data.refresh_token.token);
       localStorage.setItem("username", data.data.username);

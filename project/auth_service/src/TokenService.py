@@ -11,14 +11,14 @@ access_secret_key = os.environ.get("ACCESS_TOKEN_SECRET")
 class TokenService:
 
     def generate_access_token(username):
-        exp = TokenService.create_expiration_date(15)
+        exp = TokenService.create_expiration_date(60 * 24 * 7)
         access_token = jwt.encode(
             {"username": username, "exp": exp}, access_secret_key, algorithm="HS256"
         )
         return access_token, exp
 
     def generate_refresh_token(username):
-        exp = TokenService.create_expiration_date(60 * 24 * 7)
+        exp = TokenService.create_expiration_date(60 * 24 * 30)
         refresh_token = jwt.encode(
             {"username": username, "exp": exp},
             refresh_secret_key,

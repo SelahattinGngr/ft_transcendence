@@ -51,7 +51,7 @@ def create_user(request):
             first_name=data.get("first_name"),
             last_name=data.get("last_name"),
             source="auth_service",
-            source_id=str(data.get("id")),
+            source_id=str(data.get("source_id")),
             status=True,
             avatar_id=avatar,
         )

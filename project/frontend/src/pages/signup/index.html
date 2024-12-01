@@ -4,8 +4,8 @@
     <label>Username</label>
   </div>
   <div class="inputForm">
-    <img src="/src/assets/icons/at.svg" alt="">
-    <input type="text" class="input" id="signupUsername" placeholder="Enter your Username" required
+    <img src="/src/assets/icons/person.svg" alt="">
+    <input type="text" class="input" maxlength="20" id="signupUsername" placeholder="Enter your Username" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
@@ -13,15 +13,14 @@
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/at.svg" alt="">
-    <input type="text" class="input" id="signupEmail" placeholder="Enter your Username" required
-      autocomplete="username" />
+    <input type="text" class="input" id="signupEmail" placeholder="Enter your Email" required autocomplete="username" />
   </div>
   <div class="flex-column">
     <label>Password </label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/lock.svg" alt="">
-    <input type="text" class="input" id="signupPassword" placeholder="Enter your Username" required
+    <input type="password" class="input" id="signupPassword" placeholder="Enter your Password" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
@@ -29,41 +28,34 @@
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/lock.svg" alt="">
-    <input type="text" class="input" id="signupRepeatPassword" placeholder="Enter your Username" required
+    <input type="password" class="input" id="signupRepeatPassword" placeholder="Enter your Repeat Password" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
     <label>First Name </label>
   </div>
   <div class="inputForm">
-    <img src="/src/assets/icons/at.svg" alt="">
-    <input type="text" class="input" id="signupFirstName" placeholder="Enter your Username" required
+    <img src="/src/assets/icons/file-earmark-person.svg" alt="">
+    <input type="text" class="input" id="signupFirstName" placeholder="Enter your First Name" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
     <label>Last Name</label>
   </div>
   <div class="inputForm">
-    <img src="/src/assets/icons/at.svg" alt="">
-    <input type="text" class="input" id="signupLastName" placeholder="Enter your Username" required
+    <img src="/src/assets/icons/file-earmark-person.svg" alt="">
+    <input type="text" class="input" id="signupLastName" placeholder="Enter your Last Name" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
-    <label>Avatar </label>
+    <label>Avatar (Optional)</label>
   </div>
   <div class="inputForm">
-    <img src="/src/assets/icons/at.svg" alt="">
-    <input type="text" class="input" id="signupAvatarUrl" placeholder="Enter your Username" required
+    <img src="/src/assets/icons/person-bounding-box.svg" alt="">
+    <input type="url" class="input" id="signupAvatarUrl" placeholder="https://i.hizliresim.com/d0crqf0.jpeg"
       autocomplete="username" />
   </div>
 
-  <button class="button-submit">Sign In</button>
-  <p class="p">Don't have an account? <a class="span" href="#signup">Sign Up</a></p>
-  <p class="p">Haven't received your verification email? <a class="span" href="#retry-verify-account">Retry Mail</a></p>
-  <p class="p line">Or With</p>
-  <div class="flex-row">
-    <button type="button" class="btn" id="ecole-button-submit">
-      <img src="/src/assets/icons/42_Logo.svg" alt="">
-    </button>
-  </div>
+  <button class="button-submit">Sign Up</button>
+  <p class="p">Already have an account? <a class="span" href="#signin">Sign In</a></p>
 </form>

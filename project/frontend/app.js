@@ -38,6 +38,11 @@ window.addEventListener("hashchange", async function () {
 
 async function loadPage(page) {
   try {
+    // TODO: window.location.pathname kullanarak sayfa yolunu değiştirebilirsiniz.
+    if (page === "") {
+      page = "home";
+      window.location.hash = "#home";
+    }
     const filePath = `/src/pages/${page}/`;
     const response = await fetch(filePath);
     if (!response.ok) {
@@ -56,6 +61,10 @@ async function loadPage(page) {
 
 function setupPageActions(page) {
   authButtons();
+  if (page === "") {
+    // window.location.pathname kullanarak sayfa yolunu değiştirebilirsiniz.
+    window.location.hash = "home";
+  }
   if (page === "home") {
     homeActions();
   } else if (page === "signin") {

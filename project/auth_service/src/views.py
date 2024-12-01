@@ -423,6 +423,7 @@ def valid_user(user, user_service_url):
     request = requests.get(user_get_url)
     data = request.json()
     data["refresh_token"], data["access_token"] = create_tokens(user.username)
+    data["username"] = user.username
     user.refresh_token = data["refresh_token"]["token"]
     user.access_token = data["access_token"]["token"]
     user.save()
@@ -436,6 +437,7 @@ def invalid_user(user_service_url, user_create_data):
     data["refresh_token"], data["access_token"] = create_tokens(
         user_create_data["username"]
     )
+    data["username"] = user_create_data["username"]
     user = Users.objects.create(
         username=user_create_data["username"],
         email=user_create_data["email"],
