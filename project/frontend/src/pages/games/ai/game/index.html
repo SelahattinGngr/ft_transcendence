@@ -1,1 +1,22 @@
-<h1>Aİ</h1>
+<link rel="stylesheet" href="/src/pages/games/game.css">
+<div class="mx-auto d-flex flex-column align-items-center justify-content-center gap-4">
+    <!-- Kazanan Mesajı -->
+    <h1 id="winner" style="display: none;"></h1>
+    <p id="winner-text" style="display: none;"></p>
+    <!-- Oyun Bitince Tekrar Başlat Butonu -->
+    <button id="restart" type="button" class="btn btn-outline-warning" style="display: none;">Tekrar Oyna</button>
+
+    <!-- Skorlar ve Kullanıcı Adları -->
+    <div class="d-flex gap-2 fs-3">
+        <p id="player1username"></p>
+        <p id="player1score">0</p>
+        <p>-</p>
+        <p id="aiscore">0</p>
+        <p id="aiusername"></p>
+    </div>
+
+    <!-- Oyun Alanı (Canvas) -->
+    <canvas id="gameCanvas" width="1000px" height="500px" class="">
+        Tarayıcınız HTML5 canvas etiketini desteklemiyor.
+    </canvas>
+</div>

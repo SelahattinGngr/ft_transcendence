@@ -24,3 +24,8 @@ export function getTemporaryData(key) {
 
   return item.value;
 }
+
+// Veriyi silme fonksiyonu
+export function removeTemporaryData(key) {
+  localStorage.removeItem(key);
+}

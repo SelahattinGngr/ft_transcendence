@@ -1,5 +1,6 @@
 import { Toast } from "./src/components/toast.js";
 import { aiGameSetup } from "./src/pages/games/ai/aiGameSetup.js";
+import { AiGame } from "./src/pages/games/ai/game/game.js";
 import { localeTournamentSetup } from "./src/pages/games/locale-tournament/localeTournamentGameSetup.js";
 import { Game } from "./src/pages/games/locale/game/game.js";
 import { localeGameSetup } from "./src/pages/games/locale/localeGameSetup.js";
@@ -95,9 +96,17 @@ function setupPageActions(page) {
     putRange("#ballSpeed", "#rangeValue");
     putRange("#gameDifficulty", "#difficultyRangeValue");
     submitHandler("aiGamesForm", aiGameSetup);
+  } else if (page === "games/ai/game") {
+    try {
+      new AiGame();
+    } catch (error) {
+      if (window.location.hash === "#games/ai/game") {
+        console.error(error);
+      }
+    }
   } else if (page === "games/locale/game") {
     try {
-      new Game("gameCanvas");
+      new Game();
     } catch (error) {
       if (window.location.hash === "#games/locale/game") {
         console.error(error);

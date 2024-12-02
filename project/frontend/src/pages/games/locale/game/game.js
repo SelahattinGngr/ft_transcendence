@@ -4,41 +4,14 @@ export class Game {
   #canvas = document.getElementById("gameCanvas");
   #ctx = this.#canvas.getContext("2d");
   #data;
-  #player1 = { name: "Player 1", score: 0 };
-  #player2 = { name: "Player 2", score: 0 };
-  #gameSettings = {
-    ballSpeed: 1,
-    ballSize: 10,
-    paddleHeight: 100,
-    paddleWidth: 10,
-    paddleSpeed: 1.5,
-    winScore: 5,
-  };
-  #isGameStarted = false;
-  #rightPaddle = {
-    x: this.#canvas.width - this.#gameSettings.paddleWidth,
-    y: this.#canvas.height / 2 - this.#gameSettings.paddleHeight / 2,
-    dy: 0,
-  };
-  #leftPaddle = {
-    x: 0,
-    y: this.#canvas.height / 2 - this.#gameSettings.paddleHeight / 2,
-    dy: 0,
-  };
-  #ball = {
-    x: this.#canvas.width / 2,
-    y: this.#canvas.height / 2,
-    radius: this.#gameSettings.ballSize,
-    speedX: this.#gameSettings.ballSpeed,
-    speedY: this.#gameSettings.ballSpeed,
-  };
-
   constructor() {
     this.#data = getTemporaryData("localeGameData");
     if (!this.#data) {
       window.location.hash = "games/locale";
       return;
     }
+    console.log(this.#gameSettings);
+    console.log(this.#data);
     this.#player1 = {
       name: this.#data.users[0],
       score: 0,
@@ -56,6 +29,34 @@ export class Game {
     };
     this.#startGame();
   }
+  #player1 = { name: "Player 1", score: 0 };
+  #player2 = { name: "Player 2", score: 0 };
+  #gameSettings = {
+    ballSpeed: 1,
+    ballSize: 10,
+    paddleHeight: 100,
+    paddleWidth: 10,
+    paddleSpeed: 1.5,
+    winScore: 5,
+  };
+  #isGameStarted = false;
+  #ball = {
+    x: this.#canvas.width / 2,
+    y: this.#canvas.height / 2,
+    radius: this.#gameSettings.ballSize,
+    speedX: this.#gameSettings.ballSpeed,
+    speedY: this.#gameSettings.ballSpeed,
+  };
+  #rightPaddle = {
+    x: this.#canvas.width - this.#gameSettings.paddleWidth,
+    y: this.#canvas.height / 2 - this.#gameSettings.paddleHeight / 2,
+    dy: 0,
+  };
+  #leftPaddle = {
+    x: 0,
+    y: this.#canvas.height / 2 - this.#gameSettings.paddleHeight / 2,
+    dy: 0,
+  };
 
   #startGame() {
     if (this.#isGameStarted) return;

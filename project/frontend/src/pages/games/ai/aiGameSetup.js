@@ -1,4 +1,4 @@
-import { aiGame } from "./game/game.js";
+import { setTemporaryData } from "../../../utils/temporaryLocaleStorage.js";
 
 export async function aiGameSetup(event) {
   event.preventDefault();
@@ -8,5 +8,10 @@ export async function aiGameSetup(event) {
   const paddleHeight = document.getElementById("paddleHeight").value;
   const winScore = document.getElementById("winScore").value;
 
-  aiGame(user, ballSpeed, gameDifficulty, paddleHeight, winScore);
+  setTemporaryData(
+    "aiGameData",
+    { users: [user], ballSpeed, gameDifficulty, paddleHeight, winScore },
+    2
+  );
+  window.location.hash = "games/ai/game";
 }
