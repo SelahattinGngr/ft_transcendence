@@ -45,10 +45,10 @@ INSTALLED_APPS = [
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('localhost', 6379)],#redis olan kısmı localhost
-        },
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        #'CONFIG': {
+        #    'hosts': [('localhost', 6379)],#redis olan kısmı localhost
+        #},
     }
 }
 

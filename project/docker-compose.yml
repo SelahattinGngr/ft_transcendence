@@ -111,6 +111,20 @@ services:
     hostname: gameservice
     networks:
       - backend
+    
+  chatservice:
+    container_name: chatservice
+    build: ./chat_service
+    ports:
+      - "8001:8000"
+    #depends_on:
+    #  - userservice
+    #  - kafka
+    env_file:
+      - .env
+    hostname: chatservice
+    networks:
+      - backend
 
   pgadmin:
     container_name: pgadmin
@@ -172,4 +186,5 @@ volumes:
   user_db_data:
   friend_db_data:
   notification_db_data:
+  chat_db_data:
   redis_data:

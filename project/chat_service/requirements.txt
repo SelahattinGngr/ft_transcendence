@@ -1,0 +1,11 @@
+Django
+daphne
+djangorestframework
+PyJWT
+requests
+django-cors-headers
+kafka-python
+psycopg
+psycopg2
+channels
+channels-redis
