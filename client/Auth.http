@@ -6,16 +6,16 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "email": "selahattin_gungor53@gmail.com",
+    "email": "selahattin_gungor53@hotmail.com",
     "password": "P4ssword.",
-    "username": "selahattin1",
+    "username": "selahattin11",
     "first_name": "selahattin1",
     "last_name": "selahattin1",
     "avatar_url": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
 }
 
 ### verify-account
-GET {{url}}/auth/verify-account/70984b2f-6e99-437b-8048-a7ee0e1a97b4 HTTP/1.1
+GET {{url}}/auth/verify-account/d9033395-4962-4419-9984-90048341fb30 HTTP/1.1
 Accept-Language: tr
 
 ### retry-verify-account
@@ -34,8 +34,8 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "signin": "segungor",
-    "password": "Sg27.09.2000"
+    "signin": "selahattin11",
+    "password": "P4ssword."
 }
 
 ### signout

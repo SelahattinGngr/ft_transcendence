@@ -40,3 +40,8 @@ def send_verification_email(email, token):
     subject = "Email Verification"
     message = f"Please verify your email using this token: {token}"
     send_email(email, subject, message)
+
+def send_2fa_email(email, code):
+    subject = "2FA Code"
+    message = f"Your 2FA code is: {code}"
+    send_email(email, subject, message)

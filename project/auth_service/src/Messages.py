@@ -30,7 +30,9 @@ class Messages(Enum):
     MISSING_TOKEN = ("Missing token", "Token eksik")
     EMAIL_SENDING_FAILED = ("Email sending failed", "E-posta gönderme başarısız oldu")
     VERIFICATION_EMAIL_SENT = ("Verification email sent", "Doğrulama e-postası gönderildi")
-    
+    INVALID_CODE = ("Invalid code", "Geçersiz kod")
+    TOKEN_EXPIRED= ("Token expired", "Token süresi doldu")
+
     @staticmethod
     def get_message(message_enum, language="en"):
         def normalize_language_code(language_code):

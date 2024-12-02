@@ -17,3 +17,20 @@ class Message(models.Model):
     def get_short_date(self):
         local_time = localtime(self.created_at)#django timezone kullanarak tarih ve saat bilgisini al
         return f"{local_time.hour}:{local_time.minute:02d}"
+    
+"""
+class Room(models.Model):
+    id = models.AutoField(primary_key=True)
+    first_user_id = models.IntegerField(verbose_name="İlk Kullanıcı ID")
+    second_user_id = models.IntegerField(verbose_name="İkinci Kullanıcı ID")
+
+class Message(models.Model):
+    user_id = models.IntegerField(verbose_name="Kullanıcı ID")
+    room = models.ForeignKey(Room, related_name="messages", verbose_name="Oda", on_delete=models.CASCADE)
+    content = models.TextField(verbose_name="Mesaj İçeriği")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_short_date(self):
+        local_time = localtime(self.created_at)
+        return f"{local_time.hour}:{local_time.minute:02d}"
+"""

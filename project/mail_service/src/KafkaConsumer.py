@@ -5,7 +5,7 @@ import time
 
 from kafka import KafkaConsumer
 
-from .views import send_verification_email
+from .views import send_2fa_email, send_verification_email
 
 logger = logging.getLogger(__name__)
 
@@ -15,6 +15,7 @@ def start_consumer():
         try:
             consumer = KafkaConsumer(
                 'user-registration-events',
+                'user-2fa-events',
                 bootstrap_servers=[os.getenv("KAFKA_BROKERCONNECT")],
                 group_id='mailservice-group',
                 value_deserializer=lambda x: json.loads(x.decode('utf-8'))
@@ -31,8 +32,14 @@ def start_consumer():
         logger.fatal("Message: %s", message)
         logger.fatal("Message Value: %s", message.value)
         logger.fatal("consumer: %s", consumer)
-        email_data = message.value
-        email = email_data["email"]
-        token = email_data["token"]
-        # E-posta gönderme işlemini burada çağırabilirsiniz
-        send_verification_email(email, token)
+        if (message.topic == "user-registration-events"):
+            email_data = message.value
+            email = email_data["email"]
+            token = email_data["token"]
+            # E-posta gönderme işlemini burada çağırabilirsiniz
+            send_verification_email(email, token)
+        elif (message.topic == "user-2fa-events"):
+            email_data = message.value
+            email = email_data["email"]
+            code = email_data["code"]
+            send_2fa_email(email, code)

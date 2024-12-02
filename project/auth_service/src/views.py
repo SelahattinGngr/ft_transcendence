@@ -1,3 +1,4 @@
+from email import message
 import json
 import logging
 import os
@@ -10,9 +11,10 @@ from django.core.validators import validate_email
 from .KafkaProducer import send_kafka_message
 
 from .Messages import Messages
-from .models import MailTokens, Users
+from .models import MailTokens, TwofactorCodes, Users
 from .ResponseService import ResponseService
 from .TokenService import TokenService
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -142,6 +144,62 @@ def signin(request):
             return ResponseService.create_error_response(
                 Messages.INVALID_CREDENTIALS, language, 400
             )
+        
+        code = generate_random_code()
+
+        TwofactorCodes.objects.create(
+            user=user,
+            code=code,
+            expiration=TokenService.create_expiration_date(15),
+        )
+        try:
+            send_kafka_message(
+                "user-2fa-events", {"email": user.email, "code": code}
+            )
+            logger.fatal(f"Two factorial code email sent to {user.email}")
+        except Exception as e:
+            logger.error(f"Error during sending Two factorial code email: {str(e)}")
+        return ResponseService.create_success_response({"username": user.username, "message": "Two factorial code sent to your email."})
+
+    return ResponseService.create_error_response(
+        Messages.INVALID_REQUEST_METHOD, language, 405
+    )
+
+def generate_random_code():
+    return ''.join([str(random.randint(0, 9)) for _ in range(4)])
+
+def twofactor(request):
+    language = request.headers.get("Accept-Language", "tr")
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        username = data.get("username")
+        code = data.get("code")
+
+        try:
+            user = Users.objects.get(username=username)
+        except Users.DoesNotExist:
+            return ResponseService.create_error_response(
+                Messages.USER_NOT_FOUND, language, 400
+            )
+
+        if not user.is_active:
+            return ResponseService.create_error_response(
+                Messages.UNACTIVATE_ACCOUNT, language, 400
+            )
+        
+        try:
+            twofactor = TwofactorCodes.objects.get(user=user, code=code, status=True)
+            if TokenService.is_mail_token_expired(twofactor.expiration):
+                twofactor.status = False
+                twofactor.save()
+                return ResponseService.create_error_response(
+                    Messages.TOKEN_EXPIRED, language, 400
+                )
+        except TwofactorCodes.DoesNotExist:
+            return ResponseService.create_error_response(
+                Messages.INVALID_CODE, language, 400
+            )
+
 
         access_token, access_exp = TokenService.generate_access_token(user.username)
         refresh_token, refresh_exp = TokenService.generate_refresh_token(user.username)
@@ -157,11 +215,11 @@ def signin(request):
         user.refresh_token = refresh_token
         user.access_token = access_token
         user.save()
-        return ResponseService.create_success_response(token)
 
-    return ResponseService.create_error_response(
-        Messages.INVALID_REQUEST_METHOD, language, 405
-    )
+        twofactor.status = False
+        twofactor.save()
+
+        return ResponseService.create_success_response(token)
 
 
 def signout(request):
