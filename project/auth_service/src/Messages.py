@@ -32,6 +32,7 @@ class Messages(Enum):
     VERIFICATION_EMAIL_SENT = ("Verification email sent", "Doğrulama e-postası gönderildi")
     INVALID_CODE = ("Invalid code", "Geçersiz kod")
     TOKEN_EXPIRED= ("Token expired", "Token süresi doldu")
+    TWO_FACTORIAL_CODE_FAILED= ("Two factorial code failed, try again later", "İki faktörlü kod başarısız oldu, daha sonra tekrar deneyin")
 
     @staticmethod
     def get_message(message_enum, language="en"):

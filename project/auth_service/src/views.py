@@ -152,18 +152,32 @@ def signin(request):
             code=code,
             expiration=TokenService.create_expiration_date(15),
         )
-        try:
+        
+        return twofa_mail(user, code, language)
+
+    return ResponseService.create_error_response(
+        Messages.INVALID_REQUEST_METHOD, language, 405
+    )
+
+def twofa_mail(user, code, language):
+    try:
+        send_kafka_message(
+            "user-2fa-events", {"email": user.email, "code": code}
+        )
+        logger.fatal(f"Two factorial code email sent to {user.email}")
+    except Exception as e:
+        logger.error(f"Error during sending Two factorial code email: {str(e)}, system will try to send it again")
+        try: #kodun gitmeme durumunda ikinci deneme
             send_kafka_message(
                 "user-2fa-events", {"email": user.email, "code": code}
             )
             logger.fatal(f"Two factorial code email sent to {user.email}")
         except Exception as e:
             logger.error(f"Error during sending Two factorial code email: {str(e)}")
-        return ResponseService.create_success_response({"username": user.username, "message": "Two factorial code sent to your email."})
-
-    return ResponseService.create_error_response(
-        Messages.INVALID_REQUEST_METHOD, language, 405
-    )
+            return ResponseService.create_error_response(
+                Messages.TWO_FACTORIAL_CODE_FAILED, language, 500
+            )
+    return ResponseService.create_success_response({"username": user.username, "message": "Two factorial code sent to your email."})
 
 def generate_random_code():
     return ''.join([str(random.randint(0, 9)) for _ in range(4)])
@@ -192,14 +206,15 @@ def twofactor(request):
             if TokenService.is_mail_token_expired(twofactor.expiration):
                 twofactor.status = False
                 twofactor.save()
+                twofa_mail(user, code, language)
                 return ResponseService.create_error_response(
-                    Messages.TOKEN_EXPIRED, language, 400
+                    Messages.TOKEN_EXPIRED_NEW_SENT, language, 400
                 )
         except TwofactorCodes.DoesNotExist:
             return ResponseService.create_error_response(
                 Messages.INVALID_CODE, language, 400
             )
-
+        
 
         access_token, access_exp = TokenService.generate_access_token(user.username)
         refresh_token, refresh_exp = TokenService.generate_refresh_token(user.username)
