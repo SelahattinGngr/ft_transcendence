@@ -1,3 +1,4 @@
+import { Toast } from "../../../../components/toast.js";
 import {
   getTemporaryData,
   removeTemporaryData,
@@ -6,15 +7,12 @@ import {
 export class AiGame {
   #canvas = document.getElementById("gameCanvas");
   #ctx = this.#canvas.getContext("2d");
-  #data;
+  #data = getTemporaryData("aiGameData");
   constructor() {
-    this.#data = getTemporaryData("aiGameData");
     if (!this.#data) {
       window.location.hash = "games/ai";
       return;
     }
-    console.log(this.#gameSettings);
-    console.log(this.#data);
     this.#player1 = {
       name: this.#data.users[0],
       score: 0,
@@ -23,84 +21,46 @@ export class AiGame {
       name: "MOULINETTE",
       score: 0,
     };
-    this.#gameSettings = {
-      ...this.#gameSettings,
-      ballSpeed: parseInt(this.#data.ballSpeed, 10),
-      paddleHeight: parseInt(this.#data.paddleHeight, 10),
-      paddleSpeed: parseInt(this.#data.ballSpeed, 10) * 1.5,
-      winScore: parseInt(this.#data.winScore, 10),
-      aiSpeedMultiplier: parseInt(this.#data.gameDifficulty, 10),
-    };
-
-    this.#setBallSpeed();
     this.#setAiDifficulty();
-
     this.#startGame();
   }
+
   #player1 = { name: "Player 1", score: 0 };
   #aiPlayer = { name: "MOULINETTE", score: 0 };
-  #gameSettings = {
-    ballSpeed: 1,
-    ballSize: 10,
-    paddleHeight: 100,
-    paddleWidth: 10,
-    paddleSpeed: 1.5,
-    winScore: 5,
-    aiSpeedMultiplier: 1,
-  };
+  #ballSpeed = parseInt(this.#data.ballSpeed, 10);
+  #ballSize = 7.5;
+  #paddleHeight = parseInt(this.#data.paddleHeight, 10) / 2;
+  #paddleWidth = 10;
+  #paddleSpeed = parseInt(this.#data.ballSpeed, 10) * 1.75;
+  #winScore = parseInt(this.#data.winScore, 10);
+  #aiSpeedMultiplier = parseInt(this.#data.gameDifficulty, 10);
+
   #isGameStarted = false;
   #ball = {
     x: this.#canvas.width / 2,
     y: this.#canvas.height / 2,
-    radius: this.#gameSettings.ballSize,
-    speedX: this.#gameSettings.ballSpeed,
-    speedY: this.#gameSettings.ballSpeed,
+    radius: this.#ballSize,
+    speedX: this.#ballSpeed,
+    speedY: this.#ballSpeed,
   };
   #playerPaddle = {
     x: 0,
-    y: this.#canvas.height / 2 - this.#gameSettings.paddleHeight / 2,
+    y: this.#canvas.height / 2 - this.#paddleHeight / 2,
     dy: 0,
   };
   #aiPaddle = {
-    x: this.#canvas.width - this.#gameSettings.paddleWidth,
-    y: this.#canvas.height / 2 - this.#gameSettings.paddleHeight / 2,
-    dy: this.#ball.speedY * this.#gameSettings.aiSpeedMultiplier,
+    x: this.#canvas.width - this.#paddleWidth,
+    y: this.#canvas.height / 2 - this.#paddleHeight / 2,
+    dy: this.#ball.speedY * this.#aiSpeedMultiplier,
   };
-
-  #setBallSpeed() {
-    this.#ball.speedX = this.#gameSettings.ballSpeed;
-    this.#ball.speedY = this.#gameSettings.ballSpeed;
-  }
-
-  #setAiDifficulty() {
-    switch (this.#gameSettings.aiSpeedMultiplier) {
-      case 1:
-        this.#aiPaddle.dy = this.#ball.speedY * 0.01;
-        break;
-      case 2:
-        this.#aiPaddle.dy = this.#ball.speedY * 0.05;
-        break;
-      case 3:
-        this.#aiPaddle.dy = this.#ball.speedY * 0.1;
-        break;
-      case 4:
-        this.#aiPaddle.dy = this.#ball.speedY * 0.5;
-        break;
-      default:
-        this.#aiPaddle.dy = this.#ball.speedY * 1;
-        break;
-    }
-  }
 
   #startGame() {
     if (this.#isGameStarted) return;
     this.#isGameStarted = true;
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "w")
-        this.#playerPaddle.dy = -this.#gameSettings.paddleSpeed;
-      if (event.key === "s")
-        this.#playerPaddle.dy = this.#gameSettings.paddleSpeed;
+      if (event.key === "w") this.#playerPaddle.dy = -this.#paddleSpeed;
+      if (event.key === "s") this.#playerPaddle.dy = this.#paddleSpeed;
     });
 
     document.addEventListener("keyup", (event) => {
@@ -119,22 +79,15 @@ export class AiGame {
 
     // Constrain player paddle within the canvas
     if (this.#playerPaddle.y < 0) this.#playerPaddle.y = 0;
-    else if (
-      this.#playerPaddle.y + this.#gameSettings.paddleHeight >
-      this.#canvas.height
-    )
-      this.#playerPaddle.y =
-        this.#canvas.height - this.#gameSettings.paddleHeight;
+    else if (this.#playerPaddle.y + this.#paddleHeight > this.#canvas.height)
+      this.#playerPaddle.y = this.#canvas.height - this.#paddleHeight;
 
     // Update AI paddle position based on difficulty level
     this.#aiPaddle.y += (this.#ball.y - this.#aiPaddle.y) * this.#aiPaddle.dy;
 
     if (this.#aiPaddle.y < 0) this.#aiPaddle.y = 0;
-    else if (
-      this.#aiPaddle.y + this.#gameSettings.paddleHeight >
-      this.#canvas.height
-    )
-      this.#aiPaddle.y = this.#canvas.height - this.#gameSettings.paddleHeight;
+    else if (this.#aiPaddle.y + this.#paddleHeight > this.#canvas.height)
+      this.#aiPaddle.y = this.#canvas.height - this.#paddleHeight;
 
     // Update ball position
     this.#ball.x += this.#ball.speedX;
@@ -151,19 +104,23 @@ export class AiGame {
     // Ball collision with paddles
     if (
       this.#ball.x - this.#ball.radius <=
-        this.#playerPaddle.x + this.#gameSettings.paddleWidth &&
+        this.#playerPaddle.x + this.#paddleWidth &&
       this.#ball.y > this.#playerPaddle.y &&
-      this.#ball.y < this.#playerPaddle.y + this.#gameSettings.paddleHeight
+      this.#ball.y < this.#playerPaddle.y + this.#paddleHeight
     ) {
       this.#ball.speedX = -this.#ball.speedX;
+      // Randomize the vertical speed after collision
+      this.#ball.speedY += (Math.random() - 0.5) * 2;
     }
 
     if (
       this.#ball.x + this.#ball.radius >= this.#aiPaddle.x &&
       this.#ball.y > this.#aiPaddle.y &&
-      this.#ball.y < this.#aiPaddle.y + this.#gameSettings.paddleHeight
+      this.#ball.y < this.#aiPaddle.y + this.#paddleHeight
     ) {
       this.#ball.speedX = -this.#ball.speedX;
+      // Randomize the vertical speed after collision
+      this.#ball.speedY += (Math.random() - 0.5) * 2;
     }
 
     // Scoring system
@@ -195,14 +152,14 @@ export class AiGame {
     this.#ctx.fillRect(
       this.#playerPaddle.x,
       this.#playerPaddle.y,
-      this.#gameSettings.paddleWidth,
-      this.#gameSettings.paddleHeight
+      this.#paddleWidth,
+      this.#paddleHeight
     );
     this.#ctx.fillRect(
       this.#aiPaddle.x,
       this.#aiPaddle.y,
-      this.#gameSettings.paddleWidth,
-      this.#gameSettings.paddleHeight
+      this.#paddleWidth,
+      this.#paddleHeight
     );
   }
 
@@ -231,10 +188,9 @@ export class AiGame {
   #resetBall() {
     this.#ball.x = this.#canvas.width / 2;
     this.#ball.y = this.#canvas.height / 2;
-    this.#ball.speedX =
-      this.#gameSettings.ballSpeed * (Math.random() < 0.5 ? 1 : -1);
-    this.#ball.speedY =
-      this.#gameSettings.ballSpeed * (Math.random() < 0.5 ? 1 : -1);
+    this.#ball.speedX = this.#ballSpeed * (Math.random() < 0.5 ? 1 : -1);
+    this.#ball.speedY = this.#ballSpeed * (Math.random() < 0.5 ? 1 : -1);
+    this.#ball.speedY += (Math.random() - 0.5) * 0.5;
   }
 
   #userSettings() {
@@ -243,20 +199,47 @@ export class AiGame {
   }
 
   #updateScores() {
-    document.querySelector("#player1score").innerText = this.#player1.score;
-    document.querySelector("#aiscore").innerText = this.#aiPlayer.score;
-    if (this.#player1.score >= this.#gameSettings.winScore) {
+    document.querySelector("#player1score").textContent = this.#player1.score;
+    document.querySelector("#aiscore").textContent = this.#aiPlayer.score;
+    if (this.#player1.score >= this.#winScore) {
       this.#isGameStarted = false;
       this.#gameOver(this.#player1.name);
-    } else if (this.#aiPlayer.score >= this.#gameSettings.winScore) {
+    } else if (this.#aiPlayer.score >= this.#winScore) {
       this.#isGameStarted = false;
       this.#gameOver(this.#aiPlayer.name);
     }
   }
 
+  #setAiDifficulty() {
+    switch (this.#aiSpeedMultiplier) {
+      case 1:
+        this.#aiPaddle.dy = this.#ball.speedY * 0.02;
+        break;
+      case 2:
+        this.#aiPaddle.dy = this.#ball.speedY * 0.04;
+        break;
+      case 3:
+        this.#aiPaddle.dy = this.#ball.speedY * 0.06;
+        break;
+      case 4:
+        this.#aiPaddle.dy = this.#ball.speedY * 0.08;
+        break;
+      default:
+        this.#aiPaddle.dy = this.#ball.speedY * 0.12;
+        break;
+    }
+  }
+
   #gameOver(winner) {
+    this.#isGameStarted = false;
     removeTemporaryData("aiGameData");
-    alert(`${winner} wins!`);
-    window.location.hash = "games/ai";
+    Toast({
+      title: "Game Over",
+      message: `${winner} wins!`,
+      type: "success",
+    });
+    setTimeout(() => {
+      window.location.hash = "games/ai";
+    }, 3000);
   }
 }

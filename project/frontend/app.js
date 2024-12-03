@@ -1,6 +1,7 @@
 import { Toast } from "./src/components/toast.js";
+import { otp } from "./src/pages/2fa/2fa.js";
 import { aiGameSetup } from "./src/pages/games/ai/aiGameSetup.js";
-import { AiGame } from "./src/pages/games/ai/game/game.js";
+import { AiGame } from "./src/pages/games/ai/game/aiGame.js";
 import { localeTournamentSetup } from "./src/pages/games/locale-tournament/localeTournamentGameSetup.js";
 import { Game } from "./src/pages/games/locale/game/game.js";
 import { localeGameSetup } from "./src/pages/games/locale/localeGameSetup.js";
@@ -112,6 +113,8 @@ function setupPageActions(page) {
         console.error(error);
       }
     }
+  } else if (page === "2fa") {
+    submitHandler("2faForm", otp);
   }
 }
 
