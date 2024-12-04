@@ -13,6 +13,7 @@ import { handleSignup } from "./src/pages/signup/signup.js";
 import { verificationCode } from "./src/pages/verify-account/verification.js";
 import { active } from "./src/utils/active.js";
 import { authButtons } from "./src/utils/authButtons.js";
+import { authController, unAuthController } from "./src/utils/isAuth.js";
 import {
   setuplanguage,
   loadlanguage,
@@ -62,59 +63,72 @@ async function loadPage(page) {
 }
 
 function setupPageActions(page) {
-  authButtons();
-  if (page === "") {
-    // window.location.pathname kullanarak sayfa yolunu değiştirebilirsiniz.
-    window.location.hash = "home";
-  }
-  if (page === "home") {
-    homeActions();
-  } else if (page === "signin") {
-    submitHandler("signinForm", handleSignin);
-    document
-      .querySelector("#ecole-button-submit")
-      .addEventListener("click", intraSignin);
-  } else if (page === "signup") {
-    submitHandler("signupForm", handleSignup);
-  } else if (page === "profile") {
-    loadProfile();
-  } else if (page === "verify-account") {
-    verificationCode();
-  } else if (page === "not-found") {
-    const randomNumber = Math.floor(Math.random() * 33) + 1;
-    document.getElementById(
-      "not-found-image"
-    ).src = `/src/assets/errors/${randomNumber}.svg`;
-  } else if (page === "retry-verify-account") {
-    submitHandler("retryForm", retryVerifyAccount);
-  } else if (page === "games/locale") {
-    putRange("#ballSpeed", "#rangeValue");
-    submitHandler("localeGamesForm", localeGameSetup);
-  } else if (page === "games/locale-tournament") {
-    putRange("#ballSpeed", "#rangeValue");
-    submitHandler("localeTournamentGamesForm", localeTournamentSetup);
-  } else if (page === "games/ai") {
-    putRange("#ballSpeed", "#rangeValue");
-    putRange("#gameDifficulty", "#difficultyRangeValue");
-    submitHandler("aiGamesForm", aiGameSetup);
-  } else if (page === "games/ai/game") {
-    try {
-      new AiGame();
-    } catch (error) {
-      if (window.location.hash === "#games/ai/game") {
-        console.error(error);
+  try {
+    authButtons();
+    if (page === "") {
+      // window.location.pathname kullanarak sayfa yolunu değiştirebilirsiniz.
+      window.location.hash = "home";
+    }
+    if (page === "home") {
+      homeActions();
+    } else if (page === "signin") {
+      unAuthController();
+      submitHandler("signinForm", handleSignin);
+      document
+        .querySelector("#ecole-button-submit")
+        .addEventListener("click", intraSignin);
+    } else if (page === "2fa") {
+      unAuthController();
+      submitHandler("otpForm", otp);
+    } else if (page === "signup") {
+      unAuthController();
+      submitHandler("signupForm", handleSignup);
+    } else if (page === "profile") {
+      loadProfile();
+    } else if (page === "verify-account") {
+      verificationCode();
+    } else if (page === "not-found") {
+      const randomNumber = Math.floor(Math.random() * 33) + 1;
+      document.getElementById(
+        "not-found-image"
+      ).src = `/src/assets/errors/${randomNumber}.svg`;
+    } else if (page === "retry-verify-account") {
+      submitHandler("retryForm", retryVerifyAccount);
+    } else if (page === "games/locale") {
+      putRange("#ballSpeed", "#rangeValue");
+      submitHandler("localeGamesForm", localeGameSetup);
+    } else if (page === "games/locale-tournament") {
+      putRange("#ballSpeed", "#rangeValue");
+      submitHandler("localeTournamentGamesForm", localeTournamentSetup);
+    } else if (page === "games/ai") {
+      authController();
+      putRange("#ballSpeed", "#rangeValue");
+      putRange("#gameDifficulty", "#difficultyRangeValue");
+      submitHandler("aiGamesForm", aiGameSetup);
+    } else if (page === "games/ai/game") {
+      try {
+        new AiGame();
+      } catch (error) {
+        if (window.location.hash === "#games/ai/game") {
+          console.error(error);
+        }
+      }
+    } else if (page === "games/locale/game") {
+      try {
+        new Game();
+      } catch (error) {
+        if (window.location.hash === "#games/locale/game") {
+          console.error(error);
+        }
       }
     }
-  } else if (page === "games/locale/game") {
-    try {
-      new Game();
-    } catch (error) {
-      if (window.location.hash === "#games/locale/game") {
-        console.error(error);
-      }
-    }
-  } else if (page === "2fa") {
-    submitHandler("otpForm", otp);
+  } catch (error) {
+    Toast({
+      title: "Error",
+      message: error.message,
+      theme: "danger",
+    });
+    console.error("Error setting up page actions:", error);
   }
 }
 window.moveToNext = moveToNext;
@@ -162,7 +176,7 @@ async function signout() {
     console.error("Error during logout:", error);
     Toast({
       title: "Error",
-      message: data.error,
+      message: error.message,
       theme: "danger",
     });
   }

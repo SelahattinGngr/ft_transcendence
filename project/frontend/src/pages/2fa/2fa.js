@@ -1,5 +1,6 @@
 import { authButtons } from "../../utils/authButtons.js";
 import { getLanguage } from "../../utils/language.js";
+import { Toast } from "../../components/toast.js";
 
 export async function otp(event) {
   event.preventDefault();

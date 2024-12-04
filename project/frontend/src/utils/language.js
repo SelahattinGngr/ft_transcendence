@@ -1,4 +1,4 @@
-const languageTitle = document.querySelector("#lang-title");
+const languageTitle = document.querySelector("#langDropdown");
 
 export async function setuplanguage() {
   let language = localStorage.getItem("language");

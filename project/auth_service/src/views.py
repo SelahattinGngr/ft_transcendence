@@ -147,12 +147,12 @@ def signin(request):
         
         code = generate_random_code()
 
+        # TODO: giriş yapmaya calısan kisi tekrar giris yapmaya calısırsa eski kodu false yapmalıyız
         TwofactorCodes.objects.create(
             user=user,
             code=code,
             expiration=TokenService.create_expiration_date(15),
         )
-        
         return twofa_mail(user, code, language)
 
     return ResponseService.create_error_response(

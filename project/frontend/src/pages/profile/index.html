@@ -1,24 +1,25 @@
+<link rel="stylesheet" href="profile.css">
 <div class="container mt-5">
-  <div class="card mx-auto" style="max-width: 600px">
+  <div class="card mx-auto shadow" style="max-width: 600px; background-color: #1f1f1f; color: #f1f1f1">
     <div class="card-body text-center">
       <img id="profile-avatar" src="https://via.placeholder.com/150" alt="Avatar" class="rounded-circle mb-3"
         style="width: 150px; height: 150px; object-fit: cover" />
       <h3 id="profile-username" class="card-title"></h3>
-      <p id="profile-bio" class="text-muted">Bio not provided</p>
+      <p id="profile-bio" class="text-light">Bio not provided</p>
       <ul class="list-group list-group-flush text-start">
-        <li class="list-group-item">
+        <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
           <strong>First Name:</strong> <span id="profile-firstname"></span>
         </li>
-        <li class="list-group-item">
+        <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
           <strong>Last Name:</strong> <span id="profile-lastname"></span>
         </li>
-        <li class="list-group-item">
+        <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
           <strong>Email:</strong> <span id="profile-email"></span>
         </li>
       </ul>
-      <a class="btn btn-primary mt-3" href="#home">
-        Back to Home
-      </a>
+      <button class="btn btn-outline-primary mt-3">
+        Bio güncelle
+      </button>
     </div>
   </div>
 </div>

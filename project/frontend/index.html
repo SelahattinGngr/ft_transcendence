@@ -2,128 +2,101 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ft_transcendence</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ft_transcendence</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="bg-dark text-white">
-  <!-- MOBİL EKRAN -->
-  <nav class="navbar bg-body-tertiary fixed-top d-lg-none" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#home">TRANSCENDENCE</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">TRANSCENDENCE</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">TRANSCENDENCE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about-us" data-lang-path="index.nav.about-us">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="gameDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            data-lang-path="index.nav.game.title">Oyna</a>
+                        <ul class="dropdown-menu" aria-labelledby="gameDropdown">
+                            <li><a class="dropdown-item" href="#games/locale-tournament"
+                                    data-lang-path="index.nav.game.dropdown.localetournament">Local Turnuva</a></li>
+                            <li><a class="dropdown-item" href="#games/locale"
+                                    data-lang-path="index.nav.game.dropdown.locale">Local</a></li>
+                            <li><a class="dropdown-item" href="#games/online"
+                                    data-lang-path="index.nav.game.dropdown.online">Online</a></li>
+                            <li><a class="dropdown-item" href="#games/ai"
+                                    data-lang-path="index.nav.game.dropdown.ai">AI</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex ms-auto gap-3 align-items-center">
+                    <!-- Profile Dropdown -->
+                    <li class="nav-item dropdown" id="profile-dropdown">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="profileDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://i.hizliresim.com/d0crqf0.jpeg" alt="Profile" width="32" height="32"
+                                class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="gameDropdown">
+                            <li><a class="dropdown-item" href="#profile"
+                                    data-lang-path="index.nav.profile.dropdown.profile">Profil</a></li>
+                            <li><a class="dropdown-item" href="#"
+                                    data-lang-path="index.nav.profile.dropdown.notifications">Bildirimler</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><button class="dropdown-item" onclick="signout()"
+                                    data-lang-path="index.nav.profile.dropdown.signout">Çıkış
+                                    Yap</button></li>
+                        </ul>
+                    </li>
+                    <div class="d-flex gap-2 justify-content-center align-items-center">
+                        <!-- Auth Buttons -->
+                        <div id="auth" class="d-none">
+                            <a href="#signin" class="btn btn-outline-light" data-lang-path="index.nav.signin">Sign
+                                in</a>
+                            <a href="#signup" class="btn btn-warning" data-lang-path="index.nav.signup">Sign up</a>
+                        </div>
+                        <!-- Language Dropdown -->
+                        <div class="dropdown-center">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="langDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">TR</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+                                <li><button class="dropdown-item" onclick="changelanguage('TR')">TR</button></li>
+                                <li><button class="dropdown-item" onclick="changelanguage('EN')">EN</button></li>
+                                <li><button class="dropdown-item" onclick="changelanguage('FR')">FR</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#about-us" data-lang-path="">Hakkımızda</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Oyna
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#games/locale-tournament" data-lang-path="">local turnuva</a></li>
-                <li><a class="dropdown-item" href="#games/locale" data-lang-path="">local</a></li>
-                <li><a class="dropdown-item" href="#games/online" data-lang-path="">online</a></li>
-                <li><a class="dropdown-item" href="#games/ai" data-lang-path="">ai</a></li>
-              </ul>
-            </li>
-          </ul>
+    </nav>
+
+    <div class="container my-5 px-4">
+        <div id="app" class="row">
+            <!-- Sayfa içerikleri burada yüklenecek -->
         </div>
-      </div>
     </div>
-  </nav>
 
-  <!-- BİLGİSAYAR EKRAN -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary d-none d-lg-block" data-bs-theme="dark">
-    <div class="container">
-      <a class="navbar-brand" href="#home">TRANSCENDENCE</a>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#about-us" data-lang-path="index.nav.about-us">Hakkımızda</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-              data-lang-path="index.nav.game.title">
-              Oyna
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#games/locale-tournament"
-                  data-lang-path="index.nav.game.dropdown.localetournament">local turnuva</a></li>
-              <li><a class="dropdown-item" href="#games/locale"
-                  data-lang-path="index.nav.game.dropdown.locale">local</a></li>
-              <li><a class="dropdown-item" href="#games/online"
-                  data-lang-path="index.nav.game.dropdown.online">online</a></li>
-              <li><a class="dropdown-item" href="#games/ai" data-lang-path="index.nav.game.dropdown.ai">ai</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <div class="text-end d-flex gap-4 align-items-center">
-        <div id="profile-dropdown" class="dropdown">
-          <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://i.hizliresim.com/d0crqf0.jpeg" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="#profile" data-lang-path="index.nav.profile.dropdown.profile">Profil</a>
-            </li>
-            <li><a class="dropdown-item" href="#"
-                data-lang-path="index.nav.profile.dropdown.notifications">bildirimler</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><button class="dropdown-item" onclick="signout()"
-                data-lang-path="index.nav.profile.dropdown.signout">Çıkış yap</button></li>
-          </ul>
-        </div>
-        <div id="auth">
-          <a href="#signin" class="btn btn-outline-light me-2" data-lang-path="index.nav.signin">Sign in</a>
-          <a href="#signup" class="btn btn-warning" data-lang-path="index.nav.signup">Sign up</a>
-        </div>
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-              id="lang-title">
-              TR
-            </a>
-            <ul class="dropdown-menu">
-              <li><button type="button" class="dropdown-item lang" onclick="changelanguage('TR')">TR</button></li>
-              <li><button type="button" class="dropdown-item lang" onclick="changelanguage('EN')">EN</button></li>
-              <li><button type="button" class="dropdown-item lang" onclick="changelanguage('FR')">FR</button></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+    <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3">
+        <!-- Toast mesajları burada görünecek -->
     </div>
-  </nav>
 
-  <div id="app" class="container py-5">
-    <!-- Diğer sayfaların içeriği buraya yüklenecek -->
-  </div>
-
-  <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3">
-    <!-- TOAST verisi buraya gelecek -->
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-  <script src="app.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="app.js" type="module"></script>
 </body>
 
 </html>
