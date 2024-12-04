@@ -1,5 +1,5 @@
 import { Toast } from "./src/components/toast.js";
-import { otp } from "./src/pages/2fa/2fa.js";
+import { moveToNext, otp } from "./src/pages/2fa/2fa.js";
 import { aiGameSetup } from "./src/pages/games/ai/aiGameSetup.js";
 import { AiGame } from "./src/pages/games/ai/game/aiGame.js";
 import { localeTournamentSetup } from "./src/pages/games/locale-tournament/localeTournamentGameSetup.js";
@@ -12,7 +12,7 @@ import { handleSignin, intraSignin } from "./src/pages/signin/signin.js";
 import { handleSignup } from "./src/pages/signup/signup.js";
 import { verificationCode } from "./src/pages/verify-account/verification.js";
 import { active } from "./src/utils/active.js";
-import { isAuth } from "./src/utils/isAuth.js";
+import { authButtons } from "./src/utils/authButtons.js";
 import {
   setuplanguage,
   loadlanguage,
@@ -114,9 +114,10 @@ function setupPageActions(page) {
       }
     }
   } else if (page === "2fa") {
-    submitHandler("2faForm", otp);
+    submitHandler("otpForm", otp);
   }
 }
+window.moveToNext = moveToNext;
 
 function submitHandler(elementId, eventListener) {
   document.getElementById(elementId).addEventListener("submit", eventListener);
@@ -164,24 +165,5 @@ async function signout() {
       message: data.error,
       theme: "danger",
     });
-  }
-}
-
-function authButtons() {
-  const authContainer = document.querySelector("#auth");
-  const profileDropdown = document.querySelector("#profile-dropdown");
-
-  if (isAuth()) {
-    authContainer.classList.remove("d-flex");
-    authContainer.classList.add("d-none");
-
-    profileDropdown.classList.remove("d-none");
-    profileDropdown.classList.add("d-flex");
-  } else {
-    profileDropdown.classList.remove("d-flex");
-    profileDropdown.classList.add("d-none");
-
-    authContainer.classList.remove("d-none");
-    authContainer.classList.add("d-flex");
   }
 }

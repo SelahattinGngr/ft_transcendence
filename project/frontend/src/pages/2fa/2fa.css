@@ -1,4 +1,4 @@
-#otp.form {
+#otpForm.form {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -12,7 +12,7 @@
     height: 12em;
 }
 
-#otp.content {
+#otpForm .content {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -20,22 +20,22 @@
     margin-bottom: auto;
 }
 
-#otp.form p {
+#otpForm .form p {
     color: #fff;
     font-weight: bolder;
 }
 
-#otp.inp {
+#otpForm .inp {
     margin-left: auto;
     margin-right: auto;
     white-space: 4px;
 }
 
-#otp.input+.input {
+#otpForm .input+.input {
     margin-left: 0.5em
 }
 
-#otp.input {
+#otpForm .input {
     color: #fff;
     height: 2em;
     width: 2em;
@@ -49,18 +49,18 @@
     font-size: larger;
 }
 
-#otp.input:focus {
+#otpForm .input:focus {
     outline: none;
     border: 1px #fff solid;
 }
 
-#otp.input:not(:placeholder-shown) {
+#otpForm .input:not(:placeholder-shown) {
     background-color: #fff;
     width: 1em;
     height: 1em
 }
 
-#otp.form button {
+#otpForm.form button {
     margin-left: auto;
     margin-right: auto;
     background-color: #00000000;
@@ -72,7 +72,7 @@
     transition: all 0.5s ease;
 }
 
-#otp.form button:hover {
+#otpForm.form button:hover {
     background-color: #fff;
     color: #000
 }

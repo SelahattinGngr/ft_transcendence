@@ -20,15 +20,13 @@ export async function handleSignin(event) {
     if (!response.ok) {
       throw new Error(data.error);
     }
-    localStorage.setItem("access_token", data.data.access_token.token);
-    localStorage.setItem("refresh_token", data.data.refresh_token.token);
     localStorage.setItem("username", data.data.username);
     Toast({
       title: "Success",
-      message: "You have successfully signed in.",
+      message: data.data.message,
       theme: "success",
     });
-    window.location.hash = "home";
+    window.location.hash = "2fa";
   } catch (error) {
     Toast({
       title: "Error",

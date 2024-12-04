@@ -3,6 +3,7 @@ from src import views
 
 urlpatterns = [
     path('auth/signin/', views.signin),
+    path('auth/two-factor/', views.twofactor),
     path('auth/signup/', views.signup),
     path('auth/intra/', views.intra),
     path('auth/intra-callback/', views.intraCallback),
