@@ -83,11 +83,10 @@ services:
       - "6379:6379"
     networks:
       - backend
-    restart: always
+    # restart: always
     volumes:
       - redis_data:/data
       
-
   mailservice:
     container_name: mailservice
     build: ./mail_service
