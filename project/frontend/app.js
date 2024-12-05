@@ -2,6 +2,7 @@ import { Toast } from "./src/components/toast.js";
 import { moveToNext, otp } from "./src/pages/2fa/2fa.js";
 import { aiGameSetup } from "./src/pages/games/ai/aiGameSetup.js";
 import { AiGame } from "./src/pages/games/ai/game/aiGame.js";
+import { Tournament } from "./src/pages/games/locale-tournament/game/tournament.js";
 import { localeTournamentSetup } from "./src/pages/games/locale-tournament/localeTournamentGameSetup.js";
 import { Game } from "./src/pages/games/locale/game/game.js";
 import { localeGameSetup } from "./src/pages/games/locale/localeGameSetup.js";
@@ -118,6 +119,14 @@ function setupPageActions(page) {
         new Game();
       } catch (error) {
         if (window.location.hash === "#games/locale/game") {
+          console.error(error);
+        }
+      }
+    } else if (page === "games/locale-tournament/game") {
+      try {
+        new Tournament();
+      } catch (error) {
+        if (window.location.hash === "#games/locale-tournament/game") {
           console.error(error);
         }
       }

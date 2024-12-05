@@ -1,4 +1,4 @@
-import { aiGame } from "./game/game.js";
+import { setTemporaryData } from "../../../utils/temporaryLocaleStorage.js";
 
 export async function localeTournamentSetup(event) {
   event.preventDefault();
@@ -10,6 +10,14 @@ export async function localeTournamentSetup(event) {
   const ballSpeed = document.getElementById("ballSpeed").value;
   const paddleHeight = document.getElementById("paddleHeight").value;
   const winScore = document.getElementById("winScore").value;
+  const players = [user1, user2, user3, user4];
+  // tournamentGame(users, ballSpeed, paddleHeight, winScore);
+  // new Tournament(players, ballSpeed, paddleHeight, winScore);
 
-  aiGame(users, ballSpeed, paddleHeight, winScore);
+  setTemporaryData(
+    "localeTournamentGameData",
+    { users, ballSpeed, paddleHeight, winScore },
+    2
+  );
+  window.location.hash = "games/locale-tournament/game";
 }

@@ -1,38 +1,50 @@
-<div>
-    <div class="card text-start col-12 col-md-6 mx-auto text-bg-warning">
-        <div class="card-body">
-            <div class="d-flex align-items-center gap-2">
-                <img src="/src/assets/icons/gear.svg" alt="" style="width: 25px; height: 25px;">
-                <h4 class="card-title" data-lang-path="">
-                    Ai oyun ayarları
-                </h4>
-            </div>
-            <form id="aiGamesForm">
-                <div class="mb-3">
-                    <label for="gamerusername" class="form-label" data-lang-path="">Oyuncu</label>
-                    <input type="text" class="form-control" id="gamerusername" required />
-                </div>
-                <div class="mb-3">
-                    <label for="ballSpeed" class="form-label" data-lang-path="">Top Hızı</label>
-                    <input type="range" class="form-range" value="1" min="1" max="10" step="0.5" id="ballSpeed">
-                    <p id="rangeValue" class="text-center">1</p>
-                </div>
-                <div class="mb-3">
-                    <label for="gameDifficulty" class="form-label" data-lang-path="">Oyun Zorluğu</label>
-                    <input type="range" class="form-range" value="1" min="1" max="5" step="1" id="gameDifficulty">
-                    <p id="difficultyRangeValue" class="text-center">1</p>
-                </div>
-                <div class="mb-3">
-                    <label for="paddleHeight" class="form-label" data-lang-path="">Paddle Yüksekliği</label>
-                    <input type="number" value="100" min="100" step="10" class="form-control" id="paddleHeight"
-                        required />
-                </div>
-                <div class="mb-3">
-                    <label for="winScore" class="form-label" data-lang-path="">Kazanma Skoru</label>
-                    <input type="number" value="5" min="5" class="form-control" id="winScore" required />
-                </div>
-                <button type="submit" class="btn btn-outline-dark w-100" data-lang-path="">BAŞLA İT</button>
-            </form>
-        </div>
+<link rel="stylesheet" href="/src/pages/games/ai/ai.css">
+
+<form class="form mx-auto col-md-5" id="aiGamesForm">
+    <div class="d-flex align-items-center gap-2">
+        <img src="/src/assets/icons/controller.svg" alt="" style="width: 25px; height: 25px;">
+        <h4 class="card-title" data-lang-path="">
+            Ai oyun ayarları
+        </h4>
     </div>
-</div>
+    <div class="flex-column">
+        <label>Oyuncu</label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/person.svg" alt="">
+        <input type="text" class="input" id="gamerusername" placeholder="Enter your Email" required
+            autocomplete="email" />
+    </div>
+    <div class="flex-column">
+        <label>Top Hızı</label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/speedometer.svg" alt="">
+        <input type="range" class="form-range" value="1" min="1" max="10" step="0.5" id="ballSpeed">
+        <p id="rangeValue" class="text-center">1</p>
+    </div>
+    <div class="flex-column">
+        <label>Oyun Zorluğu</label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/activity.svg" alt="">
+        <input type="range" class="form-range" value="1" min="1" max="5" step="1" id="gameDifficulty">
+        <p id="difficultyRangeValue" class="text-center">1</p>
+    </div>
+    <div class="flex-column">
+        <label>Paddle Yüksekliği </label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/rulers.svg" alt="">
+        <input type="number" value="100" min="100" max="200" step="10" class="input" id="paddleHeight" required />
+    </div>
+    <div class="flex-column">
+        <label>Kazanma Skoru</label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/trophy.svg" alt="">
+        <input type="number" value="5" min="5" max="15" class="input" id="winScore" required />
+    </div>
+
+    <button class="button-submit">Oyna</button>
+</form>
