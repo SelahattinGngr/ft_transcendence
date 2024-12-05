@@ -1,1 +1,17 @@
-<h1>Aİ</h1>
+<link rel="stylesheet" href="/src/pages/games/game.css">
+
+<div id="layout" class="mx-auto d-flex flex-column align-items-center justify-content-center gap-4">
+    <h1 id="winner" style="display: none;"></h1>
+    <p id="winner-text"></p>
+    <button id="restart" type="button" class="btn btn-outline-warning" style="display: none;">Reset</button>
+    <div class="d-flex gap-2 fs-3" id="scoreBoard">
+        <p id="player1username"></p>
+        <p id="player1score">0</p>
+        <p>-</p>
+        <p id="player2score">0</p>
+        <p id="player2username"></p>
+    </div>
+    <canvas id="gameCanvas" width="1000px" height="500px">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+</div>

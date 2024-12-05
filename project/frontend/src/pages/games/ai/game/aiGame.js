@@ -29,7 +29,7 @@ export class AiGame {
   #aiPlayer = { name: "MOULINETTE", score: 0 };
   #ballSpeed = parseInt(this.#data.ballSpeed, 10);
   #ballSize = 7.5;
-  #paddleHeight = parseInt(this.#data.paddleHeight, 10) / 2;
+  #paddleHeight = parseInt(this.#data.paddleHeight, 10) / 1.75;
   #paddleWidth = 10;
   #paddleSpeed = parseInt(this.#data.ballSpeed, 10) * 1.75;
   #winScore = parseInt(this.#data.winScore, 10);
@@ -85,9 +85,18 @@ export class AiGame {
     // Update AI paddle position based on difficulty level
     this.#aiPaddle.y += (this.#ball.y - this.#aiPaddle.y) * this.#aiPaddle.dy;
 
-    if (this.#aiPaddle.y < 0) this.#aiPaddle.y = 0;
-    else if (this.#aiPaddle.y + this.#paddleHeight > this.#canvas.height)
-      this.#aiPaddle.y = this.#canvas.height - this.#paddleHeight;
+    if (this.#aiPaddle.y + parseInt(this.#data.gameDifficulty, 10) * 10 < 0)
+      this.#aiPaddle.y = 0;
+    else if (
+      this.#aiPaddle.y +
+        parseInt(this.#data.gameDifficulty, 10) * 10 +
+        this.#paddleHeight >
+      this.#canvas.height
+    )
+      this.#aiPaddle.y =
+        this.#canvas.height -
+        this.#paddleHeight -
+        parseInt(this.#data.gameDifficulty, 10) * 10;
 
     // Update ball position
     this.#ball.x += this.#ball.speedX;
@@ -110,13 +119,17 @@ export class AiGame {
     ) {
       this.#ball.speedX = -this.#ball.speedX;
       // Randomize the vertical speed after collision
-      this.#ball.speedY += (Math.random() - 0.5) * 2;
+      this.#ball.speedY += (Math.random() - 0.5) * 2.25;
     }
 
     if (
       this.#ball.x + this.#ball.radius >= this.#aiPaddle.x &&
-      this.#ball.y > this.#aiPaddle.y &&
-      this.#ball.y < this.#aiPaddle.y + this.#paddleHeight
+      this.#ball.y >
+        this.#aiPaddle.y - parseInt(this.#data.gameDifficulty, 10) * 5 &&
+      this.#ball.y <
+        this.#aiPaddle.y +
+          this.#paddleHeight +
+          parseInt(this.#data.gameDifficulty, 10) * 5
     ) {
       this.#ball.speedX = -this.#ball.speedX;
       // Randomize the vertical speed after collision
@@ -159,7 +172,7 @@ export class AiGame {
       this.#aiPaddle.x,
       this.#aiPaddle.y,
       this.#paddleWidth,
-      this.#paddleHeight
+      this.#paddleHeight + parseInt(this.#data.gameDifficulty, 10) * 10
     );
   }
 

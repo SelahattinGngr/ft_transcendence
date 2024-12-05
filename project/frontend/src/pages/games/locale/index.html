@@ -1,37 +1,48 @@
-<div>
-    <div class="card text-start col-12 col-md-6 mx-auto text-bg-warning">
-        <div class="card-body">
-            <div class="d-flex align-items-center gap-2">
-                <img src="/src/assets/icons/gear.svg" alt="" style="width: 25px; height: 25px;">
-                <h4 class="card-title" data-lang-path="">
-                    Yerel oyun ayarları
-                </h4>
-            </div>
-            <form id="localeGamesForm">
-                <div class="mb-3">
-                    <label for="gamer1username" class="form-label" data-lang-path="">Oyuncu 1</label>
-                    <input type="text" class="form-control" id="gamer1username" required />
-                </div>
-                <div class="mb-3">
-                    <label for="gamer2username" class="form-label" data-lang-path="">Oyuncu 2</label>
-                    <input type="text" class="form-control" id="gamer2username" required />
-                </div>
-                <div class="mb-3">
-                    <label for="ballSpeed" class="form-label" data-lang-path="">Top Hızı</label>
-                    <input type="range" class="form-range" value="1" min="1" max="10" step="0.5" id="ballSpeed">
-                    <p id="rangeValue" class="text-center">1</p>
-                </div>
-                <div class="mb-3">
-                    <label for="paddleHeight" class="form-label" data-lang-path="">Paddle Yüksekliği</label>
-                    <input type="number" value="100" min="100" step="10" max="150" class="form-control"
-                        id="paddleHeight" required />
-                </div>
-                <div class="mb-3">
-                    <label for="winScore" class="form-label" data-lang-path="">Kazanma Skoru</label>
-                    <input type="number" value="5" min="5" max="15" class="form-control" id="winScore" required />
-                </div>
-                <button type="submit" class="btn btn-outline-dark w-100" data-lang-path="">BAŞLA İT</button>
-            </form>
-        </div>
+<link rel="stylesheet" href="/src/pages/games/locale/locale.css">
+
+<form class="form mx-auto col-md-5" id="localeGamesForm">
+    <div class="d-flex align-items-center gap-2">
+        <img src="/src/assets/icons/controller.svg" alt="" style="width: 25px; height: 25px;">
+        <h4 class="card-title" data-lang-path="">
+            Yerel oyun ayarları
+        </h4>
     </div>
-</div>
+    <div class="flex-column">
+        <label>Oyuncu 1</label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/person.svg" alt="">
+        <input type="text" class="input" id="gamer1username" placeholder="Enter your username" required />
+    </div>
+    <div class="flex-column">
+        <label>Oyuncu 2</label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/person.svg" alt="">
+        <input type="text" class="input" id="gamer2username" placeholder="Enter your username" required />
+    </div>
+    <div class="flex-column">
+        <label>Top Hızı</label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/speedometer.svg" alt="">
+        <input type="range" class="form-range" value="1" min="1" max="10" step="0.5" id="ballSpeed">
+        <p id="rangeValue" class="text-center">1</p>
+    </div>
+    <div class="flex-column">
+        <label>Paddle Yüksekliği </label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/rulers.svg" alt="">
+        <input type="number" value="100" min="100" step="10" max="200" class="input" id="paddleHeight" required />
+    </div>
+    <div class="flex-column">
+        <label>Kazanma Skoru</label>
+    </div>
+    <div class="inputForm">
+        <img src="/src/assets/icons/trophy.svg" alt="">
+        <input type="number" value="5" min="5" max="15" class="input" id="winScore" required />
+    </div>
+
+    <button class="button-submit">Oyna</button>
+</form>
