@@ -8,6 +8,7 @@ import { localeTournamentSetup } from "./src/pages/games/locale-tournament/local
 import { Game } from "./src/pages/games/locale/game/game.js";
 import { localeGameSetup } from "./src/pages/games/locale/localeGameSetup.js";
 import { homeActions } from "./src/pages/home/home.js";
+import { getNotifications } from "./src/pages/notifications/notification.js";
 import { loadProfile } from "./src/pages/profile/profile.js";
 import { retryVerifyAccount } from "./src/pages/retry-verify-account/retry.js";
 import { handleSignin, intraSignin } from "./src/pages/signin/signin.js";
@@ -134,6 +135,8 @@ function setupPageActions(page) {
     } else if (page === "friends") {
       authController();
       submitHandler("friendsForm", sendFriendRequest);
+    } else if (page === "notifications") {
+      getNotifications();
     }
   } catch (error) {
     Toast({

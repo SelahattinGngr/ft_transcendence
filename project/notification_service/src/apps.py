@@ -8,21 +8,32 @@ class MyAppConfig(AppConfig):
     name = 'src'
 
     def ready(self):
-        if getattr(settings, 'ENABLE_KAFKA', False):
-            try:
-                # Kafka consumer'ı bir thread içinde başlatıyoruz
-                kafka_thread = threading.Thread(target=self.start_kafka_consumer, daemon=True)
-                kafka_thread.start()
-                # Thread başlatıldıktan sonra çalışmaya devam ediyoruz
-                logging.info("Kafka Consumer thread başlatıldı.")
-            except Exception as e:
-                logger = logging.getLogger(__name__)
-                logger.error(f"Kafka consumer başlatılırken hata oluştu: {e}")
+        try:
+            # Kafka consumer'ı bir thread içinde başlatıyoruz
+            kafka_thread = threading.Thread(target=self.start_kafka_consumer, daemon=True)
+            kafka_thread.start()
+            # Thread başlatıldıktan sonra çalışmaya devam ediyoruz
+            logging.info("Kafka Consumer thread başlatıldı.")
+        except Exception as e:
+            logger = logging.getLogger(__name__)
+            logger.error(f"Kafka consumer başlatılırken hata oluştu: {e}")
+
+    # def ready(self):
+    #     if getattr(settings, 'ENABLE_KAFKA', False):
+    #         try:
+    #             # Kafka consumer'ı bir thread içinde başlatıyoruz
+    #             kafka_thread = threading.Thread(target=self.start_kafka_consumer, daemon=True)
+    #             kafka_thread.start()
+    #             # Thread başlatıldıktan sonra çalışmaya devam ediyoruz
+    #             logging.info("Kafka Consumer thread başlatıldı.")
+    #         except Exception as e:
+    #             logger = logging.getLogger(__name__)
+    #             logger.error(f"Kafka consumer başlatılırken hata oluştu: {e}")
 
     def start_kafka_consumer(self):
+        from .KafkaConsumer import start_consumer
         """Kafka consumer başlatılır."""
         try:
-            from .KafkaConsumer import start_consumer
             start_consumer()
             logging.info("Kafka Consumer başarıyla başlatıldı.")
         except Exception as e:

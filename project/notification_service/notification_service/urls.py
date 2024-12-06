@@ -19,4 +19,5 @@ from src import views
 
 urlpatterns = [
     path('notification/get-notifications/', views.get_user_notifications),
+    path('notification/read/<int:notification_id>/', views.notification_read),
 ]

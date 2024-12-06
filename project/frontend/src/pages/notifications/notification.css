@@ -1,4 +1,3 @@
-/* Dark Theme Styles */
 #notifications body {
     background-color: #121212;
     color: #e0e0e0;
@@ -36,20 +35,23 @@
     border-radius: 6px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 5px;
     animation: fadeIn 0.5s ease;
 }
 
-#notifications .notification .close-btn {
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    font-size: 18px;
+#notifications .notification a {
+    color: #ff9800;
+    text-decoration: none;
+    font-weight: bold;
     cursor: pointer;
 }
 
-#notifications .add-notification {
+#notifications .notification a:hover {
+    text-decoration: underline;
+}
+
+#notifications .button-submit {
     display: block;
     width: 100%;
     margin-top: 20px;
@@ -63,7 +65,7 @@
     transition: background-color 0.3s ease;
 }
 
-#notifications .add-notification:hover {
+#notifications .button-submit:hover {
     background-color: #ff5722;
 }
 

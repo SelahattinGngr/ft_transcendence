@@ -78,7 +78,7 @@ def send_friend_request(request):
         # Kafka ile bildirim mesajı gönder
         notification_message = {
             "receiver_username": friend_username,
-            "friend_request_id": friend_requests_obj.id,
+            "sender_username": username,
             "message": f"{username} wants to be your friend.",
         }
 
@@ -88,7 +88,8 @@ def send_friend_request(request):
                 {
                     "type": "friend_request",
                     "content": notification_message,
-                    "username": friend_username,
+                    "receiver_username": friend_username,
+                    "sender_username": username,
                 },
             )
         except Exception as e:

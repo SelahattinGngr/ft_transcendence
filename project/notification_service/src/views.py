@@ -26,6 +26,7 @@ def get_user_notifications(request):
         )
 
         username = access_user.json().get("data").get("username")
+        logger.fatal(f"Getting notifications for user: {username}")
 
         notifications = (
             Notification.objects.filter(user_name=username, is_read=False)
@@ -34,3 +35,27 @@ def get_user_notifications(request):
         )
 
         return JsonResponse({"data": list(notifications)}, status=200)
+
+def notification_read(request, notification_id):
+    if request.method == "PATCH":
+        access_token = request.headers.get("Authorization")
+
+        auth_service_url = os.environ.get("AUTH_SERVICE_URL")
+        access_user = requests.get(
+            f"{auth_service_url}/auth/access-token-by-username/",
+            headers={"Authorization": access_token},
+        )
+
+        username = access_user.json().get("data").get("username")
+
+        notification = Notification.objects.get(id=notification_id)
+        if notification.user_name != username:
+            return JsonResponse(
+                {"data": {"message": "You are not authorized to read this notification"}},
+                status=403,
+            )
+
+        notification.is_read = True
+        notification.save()
+
+        return JsonResponse({"data": {"message": "Notification read"}}, status=200)
