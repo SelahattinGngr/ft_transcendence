@@ -17,7 +17,6 @@ Including another URLconf
 from django.urls import path
 from src import views
 
-
 urlpatterns = [
-    path('deneme/', views.deneme),
+    path('notification/get-notifications/', views.get_user_notifications),
 ]

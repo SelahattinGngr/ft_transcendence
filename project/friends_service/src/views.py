@@ -3,15 +3,14 @@ import json
 import logging
 import os
 
+from django.http import JsonResponse
 import requests
 
-from .kafka_producer import KafkaProducerService
+from .kafka_producer import send_message
 from .Messages import Messages
 from .models import friend_requests
 from .ResponseService import ResponseService
 
-# Kafka producer başlatılıyor
-producer = KafkaProducerService()
 logger = logging.getLogger(__name__)
 
 
@@ -42,10 +41,21 @@ def send_friend_request(request):
         username = access_user.json().get("data").get("username")
         friend_username = data.get("friend_username")
 
+        if not friend_username:
+            return ResponseService.create_error_response(
+                Messages.REQUIRED_FIELDS, language, 400
+            )
+
         if username == friend_username:
             return ResponseService.create_error_response(
                 Messages.CANNOT_ADD_SELF, language, 400
             )
+
+        user_service_url = os.environ.get("USER_SERVICE_URL")
+        friend_user = requests.get(f"{user_service_url}/user/{friend_username}/")
+
+        if friend_user.status_code != 200:
+            return JsonResponse(friend_user.json(), status=friend_user.status_code)
 
         # İsteğin zaten mevcut olup olmadığını kontrol eder
         ex_request = friend_requests.objects.filter(
@@ -71,15 +81,22 @@ def send_friend_request(request):
             "friend_request_id": friend_requests_obj.id,
             "message": f"{username} wants to be your friend.",
         }
-    
-        # try:
-        #     producer.send_message("notifications", notification_message)
-        # except Exception as e:
-        producer.send_message("notifications", notification_message)
-        # Kafka'daki 'notifications' topiğine mesaj gönderiliyor
+
+        try:
+            send_message(
+                "user-notification-events",
+                {
+                    "type": "friend_request",
+                    "content": notification_message,
+                    "username": friend_username,
+                },
+            )
+        except Exception as e:
+            logger.error(f"Kafka producer error: {e}")
 
         return ResponseService.create_success_response(
-            Messages.get_message(Messages.REQUEST_SENT_SUCCESS, language), 201
+            {"message": Messages.get_message(Messages.REQUEST_SENT_SUCCESS, language)},
+            201,
         )
 
     return ResponseService.create_error_response(Messages.INVALID_METHOD, language, 405)

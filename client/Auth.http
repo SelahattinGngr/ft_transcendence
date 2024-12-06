@@ -6,7 +6,7 @@ Accept-Language: tr
 Accept: application/json
 
 {
-    "email": "selahattin_gungor53@hotmail.com",
+    "email": "selahattingungor53@hotmail.com",
     "password": "P4ssword.",
     "username": "selahattin111",
     "first_name": "selahattin1",
@@ -15,7 +15,7 @@ Accept: application/json
 }
 
 ### verify-account
-GET {{url}}/auth/verify-account/d9033395-4962-4419-9984-90048341fb30 HTTP/1.1
+GET {{url}}/auth/verify-account/429b8155-6328-4d9b-a084-bd22a2b26a89 HTTP/1.1
 Accept-Language: tr
 
 ### retry-verify-account

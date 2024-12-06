@@ -1,0 +1,29 @@
+@url = http://localhost:8000
+
+###
+# @name signin1
+POST {{url}}/auth/signin/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "signin": "selahattin",
+    "password": "Sg27.09.2000"
+}
+
+###
+# @name signin
+POST {{url}}/auth/two-factor/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "username": "selahattin",
+    "code": "2868"
+}
+
+###
+# @name notification
+GET {{url}}/notification/get-notifications HTTP/1.1
+Accept-Language: tr
+Authorization: Bearer {{signin.response.body.data.access_token.token}}

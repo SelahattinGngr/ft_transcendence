@@ -19,4 +19,4 @@ RUN pip3 install -r /app/notification_service/requirements.txt
 
 RUN chmod +x /app/notification_service/start.sh
 
-CMD [ "/app/notification_service/start.sh" ]
+ENTRYPOINT [ "/app/notification_service/start.sh" ]

@@ -1,35 +1,36 @@
-import json
 import logging
 import requests
 import os
 
 from django.http import JsonResponse
 from .models import Notification
-from .ResponseService import ResponseService
-from .Messages import Messages
 
 
 logger = logging.getLogger(__name__)
 
-def deneme(request):
-    logger.fatal('This is a fatal log message')
-    return JsonResponse({'message': 'Hello, World!'})
+def notification_type_request(user_name, type, content):
+    notification = Notification.objects.create(
+        user_name=user_name, type=type, content=content
+    )
+    logger.fatal(f"Notification created: {notification}")
+    return notification
 
-def notification_type_request(request):
-    language = request.headers.get("Accept-Language", "tr")
+def get_user_notifications(request):
+    if request.method == "GET":
+        access_token = request.headers.get("Authorization")
 
-    if request.method == "POST":
-        data = json.loads(request.body)
-        user_name = data.get("user_name")
-        type = data.get("type")
-        #content = data.get("content")
-        #title = data.get("type")
-        is_read = False
+        auth_service_url = os.environ.get("AUTH_SERVICE_URL")
+        access_user = requests.get(
+            f"{auth_service_url}/auth/access-token-by-username/",
+            headers={"Authorization": access_token},
+        )
 
-        if not user_name:
-            return ResponseService.create_error_response(
-                Messages.USER_NOT_FOUND, language, 400, type
-            )
-            
+        username = access_user.json().get("data").get("username")
 
+        notifications = (
+            Notification.objects.filter(user_name=username, is_read=False)
+            .order_by("-id")[:50]
+            .values()
+        )
 
+        return JsonResponse({"data": list(notifications)}, status=200)

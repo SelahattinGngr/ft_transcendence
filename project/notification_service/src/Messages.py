@@ -13,6 +13,9 @@ class Messages(Enum):
     INVALID_ACCESS_TOKEN = ("Invalid access token.", "Geçersiz token.")
     REQUEST_ALREADY_ANSWERED = ("Friend request already answered.", "Arkadaşlık isteği zaten yanıtlandı."),
     USER_NOT_FOUND = ("User not found.", "Kullanıcı bulunamadı.")
+    TYPE_NOT_FOUND = ("Type not found.", "Tip bulunamadı.")
+    CONTENT_NOT_FOUND = ("Content not found.", "İçerik bulunamadı.")
+
 
     @staticmethod
     def get_message(message_enum, language="en"):

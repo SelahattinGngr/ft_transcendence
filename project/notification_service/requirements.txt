@@ -5,8 +5,3 @@ requests
 django-cors-headers
 kafka-python
 psycopg
-psycopg2
-django-notifications-hq
-channels
-channels-redis
-#asgiref

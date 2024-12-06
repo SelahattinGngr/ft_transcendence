@@ -23,7 +23,7 @@ export class Game {
   #onMatchEnd;
   #ballSpeed = parseInt(this.#data.ballSpeed, 10);
   #ballSize = 7.5;
-  #paddleHeight = parseInt(this.#data.paddleHeight, 10) / 2;
+  #paddleHeight = parseInt(this.#data.paddleHeight, 10) / 1.75;
   #paddleWidth = 10;
   #paddleSpeed = parseInt(this.#data.ballSpeed, 10) * 1.75;
   #winScore = parseInt(this.#data.winScore, 10);
@@ -165,6 +165,7 @@ export class Game {
       this.#ball.y < this.#leftPaddle.y + this.#paddleHeight
     ) {
       this.#ball.speedX = -this.#ball.speedX;
+      this.#ball.speedY += (Math.random() - 0.5) * 2;
     }
 
     if (
@@ -173,6 +174,7 @@ export class Game {
       this.#ball.y < this.#rightPaddle.y + this.#paddleHeight
     ) {
       this.#ball.speedX = -this.#ball.speedX;
+      this.#ball.speedY += (Math.random() - 0.5) * 2;
     }
   }
 

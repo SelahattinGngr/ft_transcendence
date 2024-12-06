@@ -1,7 +1,6 @@
 import os
 import requests
 from django.http import JsonResponse
-from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
 
 class TokenValidationMiddleware(MiddlewareMixin):
