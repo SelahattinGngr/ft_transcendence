@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# PostgreSQL'i başlat
-/app/friends_service/db.sh &
-
 # PostgreSQL'in başlatılmasını beklemek için biraz zaman tanı
 sleep 10
 

@@ -19,4 +19,6 @@ RUN pip3 install -r /app/friends_service/requirements.txt
 
 RUN chmod +x /app/friends_service/start.sh
 
-CMD [ "/app/friends_service/start.sh" ]
+ENTRYPOINT [ "/app/friends_service/db.sh" ]
+
+CMD ["/app/friends_service/start.sh"]

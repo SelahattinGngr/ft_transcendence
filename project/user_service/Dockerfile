@@ -19,4 +19,6 @@ RUN pip3 install -r /app/user_service/requirements.txt
 
 RUN chmod +x /app/user_service/start.sh
 
+ENTRYPOINT [ "/app/user_service/db.sh" ]
+
 CMD [ "/app/user_service/start.sh" ]

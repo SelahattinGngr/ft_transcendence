@@ -11,4 +11,4 @@ RUN chmod +x /app/mail_service/start.sh
 
 RUN pip3 install -r /app/mail_service/requirements.txt
 
-CMD [ "/app/mail_service/start.sh" ]
+ENTRYPOINT [ "/app/mail_service/start.sh" ]

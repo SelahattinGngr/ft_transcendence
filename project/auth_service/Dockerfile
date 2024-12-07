@@ -19,4 +19,5 @@ RUN pip3 install -r /app/auth_service/requirements.txt
 
 RUN chmod +x /app/auth_service/start.sh
 
-CMD [ "/app/auth_service/start.sh" ]
+ENTRYPOINT [ "/app/auth_service/db.sh" ]
+CMD ["/app/auth_service/start.sh"]

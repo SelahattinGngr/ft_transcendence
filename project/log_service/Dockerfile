@@ -19,4 +19,6 @@ RUN pip3 install -r /app/log_service/requirements.txt
 
 RUN chmod +x /app/log_service/start.sh
 
+ENTRYPOINT [ "/app/log_service/db.sh" ]
+
 CMD [ "/app/log_service/start.sh" ]

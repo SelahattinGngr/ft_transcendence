@@ -19,4 +19,6 @@ RUN pip3 install -r /app/chat_service/requirements.txt
 
 RUN chmod +x /app/chat_service/start.sh
 
+ENTRYPOINT [ "/app/chat_service/db.sh" ]
+
 CMD [ "/app/chat_service/start.sh" ]

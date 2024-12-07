@@ -19,4 +19,6 @@ RUN pip3 install -r /app/game_service/requirements.txt
 
 RUN chmod +x /app/game_service/start.sh
 
-CMD [ "/app/game_service/start.sh" ]
+ENTRYPOINT [ "/app/game_service/db.sh" ]
+
+CMD ["/app/game_service/start.sh"]
