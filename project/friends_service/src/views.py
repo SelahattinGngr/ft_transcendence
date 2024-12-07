@@ -11,6 +11,7 @@ from .addLog import Log
 from .Messages import Messages
 from .models import friend_requests
 from .ResponseService import ResponseService
+from asgiref.sync import sync_to_async
 
 logger = logging.getLogger(__name__)
 service_name = "friends_service"
@@ -91,7 +92,7 @@ def send_friend_request(request):
         except Exception as e:
             logger.error(f"Kafka producer error: {e}")
 
-        Log.add_log(service_name, Messages.REQUEST_SENT_SUCCESS, request)
+        sync_to_async(Log.add_log)(service_name, Messages.REQUEST_SENT_SUCCESS, request)
         return ResponseService.create_success_response(
             {"message": Messages.get_message(Messages.REQUEST_SENT_SUCCESS, language)},
             201,
