@@ -1,54 +1,54 @@
 <link rel="stylesheet" href="/src/pages/signup/signup.css">
 <form class="form mx-auto" id="signupForm">
   <div class="flex-column">
-    <label>Username</label>
+    <label data-lang-path = "sup.name">Username</label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/person.svg" alt="">
-    <input type="text" class="input" maxlength="20" id="signupUsername" placeholder="Enter your Username" required
+    <input type="text" class="input" maxlength="20" id="signupUsername"  data-lang-path="sup.placeholder" placeholder="Enter your Username" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
-    <label>Email </label>
+    <label data-lang-path="sup.mail">Email </label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/at.svg" alt="">
-    <input type="text" class="input" id="signupEmail" placeholder="Enter your Email" required autocomplete="username" />
+    <input type="text" class="input" id="signupEmail" data-lang-path="sup.placeholder2" placeholder="Enter your Email" required autocomplete="username" />
   </div>
   <div class="flex-column">
-    <label>Password </label>
+    <label data-lang-path="sup.pass">Password </label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/lock.svg" alt="">
-    <input type="password" class="input" id="signupPassword" placeholder="Enter your Password" required
+    <input type="password" class="input" id="signupPassword" data-lang-path="sup.placeholder3" placeholder="Enter your Password" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
-    <label>Repeat Password </label>
+    <label data-lang-path="sup.retpas">Repeat Password </label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/lock.svg" alt="">
-    <input type="password" class="input" id="signupRepeatPassword" placeholder="Enter your Repeat Password" required
+    <input type="password" class="input" id="signupRepeatPassword" data-lang-path="sup.placeholder4" placeholder="Enter your Repeat Password" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
-    <label>First Name </label>
+    <label data-lang-path="sup.fname">First Name </label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/file-earmark-person.svg" alt="">
-    <input type="text" class="input" id="signupFirstName" placeholder="Enter your First Name" required
+    <input type="text" class="input" id="signupFirstName" data-lang-path="sup.placeholder5" placeholder="Enter your First Name" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
-    <label>Last Name</label>
+    <label data-lang-path="sup.lname">Last Name</label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/file-earmark-person.svg" alt="">
-    <input type="text" class="input" id="signupLastName" placeholder="Enter your Last Name" required
+    <input type="text" class="input" id="signupLastName" data-lang-path="sup.placeholder6" placeholder="Enter your Last Name" required
       autocomplete="username" />
   </div>
   <div class="flex-column">
-    <label>Avatar (Optional)</label>
+    <label data-lang-path="sup.pp">Avatar (Optional)</label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/person-bounding-box.svg" alt="">
@@ -56,6 +56,6 @@
       autocomplete="username" />
   </div>
 
-  <button class="button-submit">Sign Up</button>
-  <p class="p">Already have an account? <a class="span" href="#signin">Sign In</a></p>
+  <button class="button-submit" data-lang-path="sup.signup">Sign Up</button>
+  <p class="p" data-lang-path="sup.al">Already have an account? <a class="span" href="#signin" data-lang-path="sup.signin">Sign In</a></p>
 </form>
