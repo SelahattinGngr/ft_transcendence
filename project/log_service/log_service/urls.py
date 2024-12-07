@@ -18,5 +18,5 @@ from src import views
 from django.urls import path
 
 urlpatterns = [
-    path('log/add-log', views.save_log),
+    path('log/add-log/', views.save_log),
 ]

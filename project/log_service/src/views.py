@@ -8,7 +8,6 @@ class logrequest:
 
 def save_log(logrequest):
     if request.method == 'POST':
-
         Saved_log.objects.create(
             service_name=logrequest.service_name,
             log=logrequest.log

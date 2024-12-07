@@ -1,6 +1,8 @@
+import logging
 import os
 
 import requests
+logger = logging.getLogger(__name__)
 
 class Log:
     def add_log(service_name, log_message, request):
