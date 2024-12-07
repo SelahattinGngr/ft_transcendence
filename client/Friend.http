@@ -12,6 +12,17 @@ Accept: application/json
 }
 
 ###
+# @name signin
+POST {{url}}/auth/two-factor/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "username": "selahattin",
+    "code": "1775"
+}
+
+###
 # @name add_friend
 POST {{url}}/friend/send-request/ HTTP/1.1
 Accept-Language: tr

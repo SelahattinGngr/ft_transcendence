@@ -6,13 +6,14 @@ import os
 from django.http import JsonResponse
 import requests
 
-from .kafka_producer import send_message
+from .addLog import Log
+
 from .Messages import Messages
 from .models import friend_requests
 from .ResponseService import ResponseService
 
 logger = logging.getLogger(__name__)
-
+service_name = "friends_service"
 
 # arkadaslık isteği gönderme
 def send_friend_request(request):
@@ -25,7 +26,6 @@ def send_friend_request(request):
                 Messages.NO_ACCESS_TOKEN, language, 401
             )
 
-        logger.fatal(f"access token -> {access_token}")
         auth_service_url = os.environ.get("AUTH_SERVICE_URL")
         access_user = requests.get(
             f"{auth_service_url}/auth/access-token-by-username/",
@@ -75,26 +75,23 @@ def send_friend_request(request):
             status="pending",
         )
 
-        # Kafka ile bildirim mesajı gönder
-        notification_message = {
-            "receiver_username": friend_username,
-            "sender_username": username,
-            "message": f"{username} wants to be your friend.",
-        }
-
         try:
-            send_message(
-                "user-notification-events",
-                {
+            notification_service_url = os.environ.get("NOTIFICATION_SERVICE_URL")
+            add_notification_url = f"{notification_service_url}/notification/add-notification/"
+            headers = {"Accept": "application/json"}
+            json_data= {
                     "type": "friend_request",
-                    "content": notification_message,
                     "receiver_username": friend_username,
                     "sender_username": username,
-                },
-            )
+                    "content": "sent you a friend request."
+                }
+            response_notification = requests.post(add_notification_url, json=json_data, headers=headers)
+            logger.error(f"Notification service request: {json_data}")
+            logger.error(f"Notification service response: {response_notification}")
         except Exception as e:
             logger.error(f"Kafka producer error: {e}")
 
+        Log.add_log(service_name, Messages.REQUEST_SENT_SUCCESS, request)
         return ResponseService.create_success_response(
             {"message": Messages.get_message(Messages.REQUEST_SENT_SUCCESS, language)},
             201,
@@ -108,11 +105,24 @@ def reject_to_friend_request(request, id):
     language = request.headers.get("Accept-Language", "tr")
 
     if request.method == "GET":
-        # access token ile kontrol eklenecek
+        access_token = request.headers.get("Authorization")
+
+        auth_service_url = os.environ.get("AUTH_SERVICE_URL")
+        access_user = requests.get(
+            f"{auth_service_url}/auth/access-token-by-username/",
+            headers={"Authorization": access_token},
+        )
+
+        username = access_user.json().get("data").get("username")
+
         friend_request = friend_requests.objects.filter(id=id).first()
         if not friend_request:
             return ResponseService.create_error_response(
                 Messages.REQUEST_NOT_FOUND, language, 404
+            )
+        if friend_request.receiver_username != username:
+            return ResponseService.create_error_response(
+                Messages.INVALID_REQUEST, language, 400
             )
         friend_request.delete()
 
@@ -128,7 +138,16 @@ def accept_friend_request(request, id):
     language = request.headers.get("Accept-Language", "tr")
 
     if request.method == "GET":
-        # access token ile kontrol eklenecek
+        access_token = request.headers.get("Authorization")
+
+        auth_service_url = os.environ.get("AUTH_SERVICE_URL")
+        access_user = requests.get(
+            f"{auth_service_url}/auth/access-token-by-username/",
+            headers={"Authorization": access_token},
+        )
+
+        username = access_user.json().get("data").get("username")
+
         friend_request = friend_requests.objects.filter(id=id).first()
         if not friend_request:
             return ResponseService.create_error_response(
@@ -138,18 +157,14 @@ def accept_friend_request(request, id):
             return ResponseService.create_error_response(
                 Messages.REQUEST_ALREADY_ANSWERED, language, 400
             )
+        if friend_request.receiver_username != username:
+            return ResponseService.create_error_response(
+                Messages.INVALID_REQUEST, language, 400
+            )
 
         friend_request.status = "accepted"
         friend_request.save()
 
-        # send notification
-        # notification_service_url = os.environ.get('NOTIFICATION_SERVICE_URL')
-        # requests.post(f'{notification_service_url}/notifications/send/', json={
-        #     'receiver_username': friend_request.sender_username,
-        #     'message': f'{friend_request.receiver_username} accepted your friend request.'
-        # })
-
-        # bu kısım kafka ile yeniden yazılacak
         user_service_url = os.environ.get("USER_SERVICE_URL")
         requests.post(
             f"{user_service_url}/user/add_friend/",

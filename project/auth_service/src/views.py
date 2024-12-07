@@ -371,22 +371,25 @@ def validate_token(request):
     language = request.headers.get("Accept-Language", "tr")
     if request.method == "GET":
         access_token = request.headers.get("Authorization")
-        refresh_token = request.headers.get("Refresh")
 
-        if not access_token and not refresh_token:
+        if not access_token:
             return ResponseService.create_error_response(
                 Messages.MISSING_TOKEN, language, status_code=400
             )
+        
+        username = TokenService.validate_access_token(access_token.split(" ")[1])
+        logger.fatal(f"Username retrieved by access token: {username}")
+        user = Users.objects.get(username=username)
+        logger.fatal(f"User retrieved by username: {user.username}")
+        logger.fatal(f"User retrieved by username: {user.access_token}")
+        logger.fatal(f"User retrieved by username: {access_token}")
+        
+        if user.access_token != access_token.split(" ")[1]:
+            return ResponseService.create_error_response(
+                Messages.INVALID_ACCESS_TOKEN, language, status_code=400
+            )
 
-        if access_token and TokenService.validate_access_token(access_token):
-            return ResponseService.create_success_response({"valid": True})
-
-        if refresh_token and TokenService.validate_refresh_token(refresh_token):
-            return ResponseService.create_success_response({"valid": True})
-
-        return ResponseService.create_error_response(
-            Messages.INVALID_OR_EXPIRED_VERIFICATION_TOKEN, language, status_code=401
-        )
+        return ResponseService.create_success_response({"valid": True})
 
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, status_code=405

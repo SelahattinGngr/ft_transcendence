@@ -18,6 +18,7 @@ from django.urls import path
 from src import views
 
 urlpatterns = [
+    path('notification/add-notification/', views.notification_type_request),
     path('notification/get-notifications/', views.get_user_notifications),
     path('notification/read/<int:notification_id>/', views.notification_read),
 ]

@@ -200,6 +200,11 @@ def add_friend(request):
             Messages.CANNOT_ADD_YOURSELF_AS_FRIEND, language, 400
         )
     
+    if Friends.objects.filter(user_id=user.id, friend_id=friend.id).exists():
+        return ResponseService.create_error_response(
+            Messages.ALREADY_FRIENDS, language, 400
+        )
+    
     friend_model = Friends.objects.create(user_id=user, friend_id=friend)
     friend_model2 = Friends.objects.create(user_id=friend, friend_id=user)
     if friend_model and friend_model2:

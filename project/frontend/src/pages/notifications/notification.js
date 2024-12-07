@@ -3,7 +3,7 @@ import { Toast } from "../../components/toast.js";
 export async function getNotifications() {
   try {
     const response = await fetch(
-      "http://localhost:8000/notification/get-notifications",
+      "http://localhost:8000/notification/get-notifications/",
       {
         method: "GET",
         headers: {
@@ -13,13 +13,28 @@ export async function getNotifications() {
       }
     );
 
-    const data = await response.json();
+    const data = (await response.json()).data;
 
     if (!response.ok) {
       throw new Error(data.error);
     }
-    console.log(data.data);
-    document.getElementById("content").textContent = data.data;
+    const notificationList = document.querySelector("#notificationList");
+    data.forEach((notification) => {
+      const listItem = document.createElement("li");
+      listItem.classList.add("list-group-item");
+
+      const title = document.createElement("strong");
+      title.id = "type";
+      title.textContent = notification.type;
+
+      const content = document.createElement("span");
+      content.id = "content";
+      content.textContent = ` ${notification.content} - ${notification.sender_username}`;
+
+      listItem.appendChild(title);
+      listItem.appendChild(content);
+      notificationList.appendChild(listItem);
+    });
   } catch (error) {
     Toast({
       title: "Error",

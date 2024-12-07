@@ -11,6 +11,7 @@ class Messages(Enum):
     INVALID_BIO_LENGTH = ("Bio length must be between 0 and 255", "Bio uzunluğu 0 ile 255 arasında olmalıdır")
     CANNOT_ADD_YOURSELF_AS_FRIEND = ("You cannot add yourself as a friend", "Kendinizi arkadaş olarak ekleyemezsiniz")
     FRIEND_ADD_FAILED = ("Friend add failed", "Arkadaş ekleme başarısız")
+    ALREADY_FRIENDS = ("You are already friends", "Zaten arkadaşsınız")
 
     @staticmethod
     def get_message(message_enum, language="en"):

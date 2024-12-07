@@ -15,6 +15,7 @@ class Messages(Enum):
     REQUEST_ALREADY_SENT = ("Friend request already sent.", "Arkadaşlık isteği zaten gönderildi.")
     REQUEST_NOT_FOUND = ("Friend request not found.", "Arkadaşlık isteği bulunamadı.")
     REQUIRED_FIELDS = ("Required fields are missing.", "Gerekli alanlar eksik.")
+    INVALID_REQUEST = ("Invalid request.", "Geçersiz istek.")
 
     @staticmethod
     def get_message(message_enum, language="en"):

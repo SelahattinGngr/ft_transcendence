@@ -1,3 +1,4 @@
+import json
 import logging
 import requests
 import os
@@ -8,9 +9,23 @@ from .models import Notification
 
 logger = logging.getLogger(__name__)
 
-def notification_type_request(user_name, type, content):
+def notification_type_request(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        logger.fatal(f"Creating notification: {data}")
+        
+        receiver_username = data.get("receiver_username")
+        sender_username = data.get("sender_username")
+        type = data.get("type")
+        content = data.get("content")
+
+        notification = create_notification(receiver_username, type, content, sender_username)
+
+        return JsonResponse({"data": {"message": "Notification created"}}, status=201)
+
+def create_notification(receiver_username, type, content, sender_username):
     notification = Notification.objects.create(
-        user_name=user_name, type=type, content=content
+        receiver_username=receiver_username, type=type, content=content, sender_username=sender_username
     )
     logger.fatal(f"Notification created: {notification}")
     return notification
@@ -29,7 +44,7 @@ def get_user_notifications(request):
         logger.fatal(f"Getting notifications for user: {username}")
 
         notifications = (
-            Notification.objects.filter(user_name=username, is_read=False)
+            Notification.objects.filter(receiver_username=username, is_read=False)
             .order_by("-id")[:50]
             .values()
         )
