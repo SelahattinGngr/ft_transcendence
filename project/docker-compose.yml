@@ -113,6 +113,17 @@ services:
     hostname: chatservice
     networks:
       - backend
+  
+  logservice:
+    container_name: logservice
+    build: ./log_service
+    depends_on:
+      - apigateway
+    env_file:
+      - .env
+    hostname: logservice
+    networks:
+      - backend
 
   pgadmin:
     container_name: pgadmin
