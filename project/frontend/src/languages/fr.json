@@ -1,14 +1,14 @@
 {
     "index": {
         "nav": {
-            "about-us": "A propos de nous",
+            "about-us": "À propos de nous",
             "game": {
                 "title": "Jeux",
                 "dropdown": {
                     "localetournament": "Jouer au tournoi local",
                     "locale": "Jouer localement",
                     "online": "Jouer en ligne",
-                    "ai": "Jouer avec IA"
+                    "ai": "Jouer avec l'IA"
                 }
             },
             "profile": {
@@ -24,17 +24,134 @@
     },
     "home": {
         "hero": {
-            "description": "Un site Web simple avec un jeu de pong basique, qui est notre projet de fin d'études à l'Ecole 42 :D",
-            "ai": "Jouer avec IA",
+            "description": "Un jeu simple de Pong inclus dans un site web basique, dans le cadre de notre projet de fin d'études à l'Ecole 42 :D",
+            "ai": "Jouer avec l'IA",
             "locale": "Jouer localement"
         }
     },
-    "notification": {
-        "title": {
-            "friend_request": " Demande d'ami "
+    "2fa": {
+        "code": "Entrez votre code OTP",
+        "button": "Vérifier"
+    },
+    "about-us": {
+        "about": "Il n'y a pas de place comme 127.0.0.1"
+    },
+    "friends": {
+        "userplace": "Entrez le nom d'utilisateur de la personne que vous souhaitez ajouter",
+        "button": "Se connecter",
+        "usr": "Nom d'utilisateur"
+    },
+    "games": {
+        "ai": {
+            "set": "Paramètres du jeu avec IA",
+            "usr": "Joueur",
+            "placeholder": "Entrez votre adresse e-mail",
+            "ball": "Vitesse de la balle",
+            "gameDifficulty": "Difficulté du jeu",
+            "paddleHeight": "Hauteur du paddle",
+            "winScore": "Score de victoire",
+            "button": "Jouer",
+            "games": {
+                "try": "Rejouer",
+                "canvas": "Votre navigateur ne prend pas en charge l'élément HTML5 canvas"
+            }
         },
-        "content": {
-            "friend_request": " a envoyé une demande d'ami "
+        "locale": {
+            "settings": "Difficulté du jeu local",
+            "usr1": "Joueur 1",
+            "usr2": "Joueur 2",
+            "ball": "Vitesse de la balle",
+            "paddle": "Hauteur du paddle",
+            "win": "Score de victoire",
+            "button": "Jouer",
+            "games": {
+                "rest": "Réessayer",
+                "canvas": "Votre navigateur ne prend pas en charge l'élément HTML5 canvas"
+            }
+        },
+        "local-tournament": {
+            "sett": "Paramètres du tournoi local",
+            "usr1": "Joueur 1",
+            "usr2": "Joueur 2",
+            "usr3": "Joueur 3",
+            "usr4": "Joueur 4",
+            "ball": "Vitesse de la balle",
+            "paddle": "Hauteur du paddle",
+            "win": "Score de victoire",
+            "button": "Jouer",
+            "games": {
+                "rest": "Réessayer",
+                "canvas": "Votre navigateur ne prend pas en charge l'élément HTML5 canvas"
+            }
         }
+    },
+    "not": {
+        "back": "Retour à l'accueil"
+    },
+    "notification": {
+        "notification": "Notifications",
+        "name": "Prénom",
+        "update": "Mettre à jour les notifications"
+    },
+    "profile": {
+        "bioalert": "Aucune information bio valide trouvée",
+        "name": "Prénom",
+        "secname": "Nom",
+        "mail": "E-mail",
+        "update": "Mettre à jour la bio"
+    },
+    "retry": {
+        "mail": "E-mail",
+        "placeholder": "Entrez votre adresse e-mail",
+        "verfybutton": "Envoyer l'e-mail de vérification",
+        "account?": "Vous avez un compte ?",
+        "verfymail?": "Vous n'avez pas reçu l'e-mail de vérification ?",
+        "signup": "S'inscrire",
+        "retry": "Renvoyer l'e-mail"
+    },
+    "signin": {
+        "mail": "E-mail",
+        "placeholder": "Entrez votre adresse e-mail",
+        "pass": "Mot de passe",
+        "placeholder2": "Entrez votre mot de passe",
+        "signin": "Se connecter",
+        "account": "Vous n'avez pas de compte ?",
+        "signup": "S'inscrire",
+        "verification?": "Avez-vous reçu l'e-mail de vérification ?",
+        "retry": "Renvoyer l'e-mail",
+        "Or": "Se connecter avec"
+    },
+    "sup": {
+        "name": "Nom d'utilisateur",
+        "placeholder": "Entrez votre nom d'utilisateur",
+        "mail": "E-mail",
+        "placeholder2": "Entrez votre e-mail",
+        "pass": "Mot de passe",
+        "placeholder3": "Entrez votre mot de passe",
+        "retpass": "Confirmez votre mot de passe",
+        "placeholder4": "Entrez votre mot de passe",
+        "fname": "Prénom",
+        "placeholder5": "Entrez votre prénom",
+        "lname": "Nom",
+        "placeholder6": "Entrez votre nom",
+        "pp": "Photo de profil (facultatif)",
+        "al": "Vous avez déjà un compte ?",
+        "signin": "Se connecter",
+        "signup": "S'inscrire"
+    },
+    "verfy": {
+        "act": "Le compte est en cours de vérification"
+    },
+    "temp": {
+        "n": "Nouvelle discussion",
+        "o": "En ligne"
+    },
+    "log": {
+        "log": "Se connecter",
+        "name": "Nom d'utilisateur",
+        "pass": "Mot de passe"
+    },
+    "room": {
+        "ch": "Salle de discussion"
     }
 }

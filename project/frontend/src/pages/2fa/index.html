@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="/src/pages/2fa/2fa.css">
 <form class="form mx-auto" id="otpForm" method="post">
     <div class="content" id="otp">
-        <p style="text-align: center;">Enter your OTP Code</p>
+        <p style="text-align: center;" data-lang-path = "2fa.code">Enter your OTP Code</p>
         <div class="inp">
             <input maxlength="1" class="input" type="text" placeholder="" id="otp1" oninput="moveToNext(this, 'otp2')">
             <input maxlength="1" class="input" type="text" placeholder="" id="otp2" oninput="moveToNext(this, 'otp3')">
             <input maxlength="1" class="input" type="text" placeholder="" id="otp3" oninput="moveToNext(this, 'otp4')">
             <input maxlength="1" class="input" type="text" placeholder="" id="otp4" oninput="moveToNext(this, null)">
         </div>
-        <button class="button-submit">Verify</button>
+        <button class="button-submit" data-lang-path = "2fa.button">Verify</button>
     </div>
 </form>
