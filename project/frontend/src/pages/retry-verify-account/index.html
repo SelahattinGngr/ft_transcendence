@@ -1,15 +1,15 @@
 <link rel="stylesheet" href="/src/pages/retry-verify-account/retry.css">
 <form class="form mx-auto" id="retryForm">
     <div class="flex-column">
-        <label>Email </label>
+        <label  data-lang-path = "retry.mail" >Email </label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/at.svg" alt="">
-        <input type="text" class="input" id="retry-verify-email" placeholder="Enter your Email" required
+        <input type="text" class="input" id="retry-verify-email" data-lang-path="rety.placeholder" placeholder="Enter your Email" required
             autocomplete="email" />
     </div>
-    <button class="button-submit">Send Verification Email</button>
-    <p class="p">Don't have an account? <a class="span" href="#signup">Sign Up</a></p>
-    <p class="p">Haven't received your verification email? <a class="span" href="#retry-verify-account">Retry Mail</a>
+    <button class="button-submit" data-lang-path="retry.verfybutton">Send Verification Email</button>
+    <p class="p" data-lang-path="retry.account?">Don't have an account? <a class="span" href="#signup" data-lang-path="retry.signup">Sign Up</a></p>
+    <p class="p" data-lang-path="retry.verfymail?">Haven't received your verification email? <a class="span" href="#retry-verify-account" data-lang-path="retry.retry">Retry Mail</a>
     </p>
 </form>

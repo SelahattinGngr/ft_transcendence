@@ -2,27 +2,27 @@
 
 <form class="form mx-auto col-md-5" id="signinForm">
   <div class="flex-column">
-    <label>Email </label>
+    <label data-lang-path = "signin.mail">Email </label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/at.svg" alt="">
-    <input type="text" class="input" id="signinUsername" placeholder="Enter your Email" required autocomplete="email" />
+    <input type="text" class="input" id="signinUsername" data-lang-path="signin.placeholder" placeholder="Enter your Email" required autocomplete="email" />
   </div>
 
   <div class="flex-column">
-    <label>Password </label>
+    <label data-lang-path="signin.pass">Password </label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/lock.svg" alt="">
-    <input type="password" class="input" id="signinPassword" placeholder="Enter your Password" required
+    <input type="password" class="input" id="signinPassword" data-lang-path="signin.placeholder2" placeholder="Enter your Password" required
       autocomplete="current-password" />
   </div>
 
-  <button class="button-submit">Sign In</button>
-  <p class="p">Don't have an account? <a class="span" href="#signup">Sign Up</a></p>
-  <p class="p">Haven't received your verification email? <a class="span" href="#retry-verify-account">Retry Mail</a>
+  <button class="button-submit" data-lang-path="signin.signin">Sign In</button>
+  <p class="p" data-lang-path="signin.account?">Don't have an account? <a class="span" href="#signup" data-lang-path="signin.signup">Sign Up</a></p>
+  <p class="p" data-lang-path="signin.verification?">Haven't received your verification email? <a class="span" href="#retry-verify-account" data-lang-path="signin.retry">Retry Mail</a>
   </p>
-  <p class="p line">Or With</p>
+  <p class="p line" data-lang-path="signin.Or">Or With</p>
   <div class="flex-row">
     <button type="button" class="btn" id="ecole-button-submit">
       <img src="/src/assets/icons/42_Logo.svg" alt="">

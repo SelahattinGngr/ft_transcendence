@@ -3,20 +3,20 @@
 <form class="form mx-auto col-md-5" id="aiGamesForm">
     <div class="d-flex align-items-center gap-2">
         <img src="/src/assets/icons/controller.svg" alt="" style="width: 25px; height: 25px;">
-        <h4 class="card-title" data-lang-path="">
+        <h4 class="card-title" data-lang-path="games.ai.set">
             Ai oyun ayarları
         </h4>
     </div>
     <div class="flex-column">
-        <label>Oyuncu</label>
+        <label data-lang-path="games.ai.usr">Oyuncu</label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/person.svg" alt="">
-        <input type="text" class="input" id="gamerusername" placeholder="Enter your Email" required
+        <input type="text" class="input" id="gamerusername" data-lang-path="games.ai.placeholder" placeholder="Enter your Email" required
             autocomplete="email" />
     </div>
     <div class="flex-column">
-        <label>Top Hızı</label>
+        <label data-lang-path="games.ai.ball">Top Hızı</label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/speedometer.svg" alt="">
@@ -24,7 +24,7 @@
         <p id="rangeValue" class="text-center">1</p>
     </div>
     <div class="flex-column">
-        <label>Oyun Zorluğu</label>
+        <label data-lang-path="games.ai.gameDifficulty">Oyun Zorluğu</label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/activity.svg" alt="">
@@ -32,19 +32,19 @@
         <p id="difficultyRangeValue" class="text-center">1</p>
     </div>
     <div class="flex-column">
-        <label>Paddle Yüksekliği </label>
+        <label data-lang-path="games.ai.paddleHeight">Paddle Yüksekliği </label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/rulers.svg" alt="">
         <input type="number" value="100" min="100" max="200" step="10" class="input" id="paddleHeight" required />
     </div>
     <div class="flex-column">
-        <label>Kazanma Skoru</label>
+        <label data-lang-path="games.ai.winScore">Kazanma Skoru</label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/trophy.svg" alt="">
         <input type="number" value="5" min="5" max="15" class="input" id="winScore" required />
     </div>
 
-    <button class="button-submit">Oyna</button>
+    <button class="button-submit" data-lang-path="games.ai.button">Oyna</button>
 </form>
