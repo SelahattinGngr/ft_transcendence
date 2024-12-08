@@ -16,7 +16,10 @@ from .ResponseService import ResponseService
 from .TokenService import TokenService
 import random
 
+from .addLog import Log
+
 logger = logging.getLogger(__name__)
+service_name = "auth_service"
 
 
 def signup(request):
@@ -32,6 +35,7 @@ def signup(request):
             or not any(char.isdigit() for char in password)
             or not any(char.isalpha() for char in password)
         ):
+            Log.add_log(service_name, Messages.get_message(Messages.WEAK_PASSWORD, language), request)
             return ResponseService.create_error_response(
                 Messages.WEAK_PASSWORD, language, 400
             )
@@ -39,15 +43,18 @@ def signup(request):
         try:
             validate_email(email)
         except ValidationError:
+            Log.add_log(service_name, Messages.get_message(Messages.INVALID_EMAIL_FORMAT, language), request)
             return ResponseService.create_error_response(
                 Messages.INVALID_EMAIL_FORMAT, language, 400
             )
 
         if Users.objects.filter(email=email).exists():
+            Log.add_log(service_name, Messages.get_message(Messages.EMAIL_ALREADY_EXISTS, language), request)
             return ResponseService.create_error_response(
                 Messages.EMAIL_ALREADY_EXISTS, language, 400
             )
         if Users.objects.filter(username=username).exists():
+            Log.add_log(service_name, Messages.get_message(Messages.USERNAME_ALREADY_EXISTS, language), request)
             return ResponseService.create_error_response(
                 Messages.USERNAME_ALREADY_EXISTS, language, 400
             )
@@ -75,8 +82,10 @@ def signup(request):
                     "user-registration-events", {"email": email, "token": f"{frontend_url}/#verify-account?{token}"}
                 )
                 logger.fatal(f"Verification email sent to {email}")
+                Log.add_log(service_name, (f"Verification email sent to {email}"), request)
             except Exception as e:
                 logger.error(f"Error during sending verification email: {str(e)}")
+                Log.add_log(service_name, (f"Error during sending verification email: {str(e)}"), request)
 
             # UserService'e kullanıcıyı kaydetme
             user_service_url = os.environ.get("USER_SERVICE_URL")
@@ -95,20 +104,22 @@ def signup(request):
             )
             if user_service_response.status_code != 201:
                 user.delete()  # Eğer UserService kaydetmede hata alırsa, auth service'deki kullanıcıyı sil.
+                Log.add_log(service_name, Messages.get_message(Messages.USER_CREATION_FAILED, language), request)
                 return ResponseService.create_error_response(
                     Messages.USER_CREATION_FAILED, language, 500
                 )
-
+            Log.add_log(service_name, Messages.get_message(Messages.USER_CREATED_SUCCESSFULLY, language), request)
             return ResponseService.create_response(
                 True, "success", Messages.USER_CREATED_SUCCESSFULLY, language, 201
             )
 
         except Exception as e:
             logger.error(f"Error during signup: {str(e)}")
+            Log.add_log(service_name, Messages.get_message(Messages.SIGNUP_FAILED, language), request)
             return ResponseService.create_error_response(
                 Messages.SIGNUP_FAILED, language, 500
             )
-
+    Log.add_log(service_name, Messages.get_message(Messages.INVALID_REQUEST_METHOD, language), request)
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, 405
     )
@@ -131,16 +142,19 @@ def signin(request):
                 else Users.objects.get(username=signin)
             )
         except Users.DoesNotExist:
+            Log.add_log(service_name, Messages.get_message(Messages.USER_NOT_FOUND, language), request)
             return ResponseService.create_error_response(
                 Messages.USER_NOT_FOUND, language, 400
             )
 
         if not user.is_active:
+            Log.add_log(service_name, Messages.get_message(Messages.UNACTIVATE_ACCOUNT, language), request)
             return ResponseService.create_error_response(
                 Messages.UNACTIVATE_ACCOUNT, language, 400
             )
 
         if not user.check_password(password):
+            Log.add_log(service_name, Messages.get_message(Messages.INVALID_CREDENTIALS, language), request)
             return ResponseService.create_error_response(
                 Messages.INVALID_CREDENTIALS, language, 400
             )
@@ -154,7 +168,7 @@ def signin(request):
             expiration=TokenService.create_expiration_date(15),
         )
         return twofa_mail(user, code, language)
-
+    Log.add_log(service_name, Messages.get_message(Messages.INVALID_REQUEST_METHOD, language), request)
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, 405
     )
@@ -165,9 +179,12 @@ def twofa_mail(user, code, language):
         "user-2fa-events", {"email": user.email, "code": code}
         )
         logger.fatal(f"Two factorial code email sent to {user.email}")
+        Log.add_log(service_name, (f"Two factorial code email sent to {user.email}"), None)
     except Exception as e:
         logger.error(f"Error during sending Two factorial code email: {str(e)}, system will try to send it again")
+        Log.add_log(service_name, (f"Error during sending Two factorial code email: {str(e)}, system will try to send it again"), None)
     
+    Log.add_log(service_name, ({"username": user.username, "message": "Two factorial code sent to your email."}), None)
     return ResponseService.create_success_response({"username": user.username, "message": "Two factorial code sent to your email."})
 
 def generate_random_code():
@@ -183,11 +200,13 @@ def twofactor(request):
         try:
             user = Users.objects.get(username=username)
         except Users.DoesNotExist:
+            Log.add_log(service_name, Messages.get_message(Messages.USER_NOT_FOUND, language), request)
             return ResponseService.create_error_response(
                 Messages.USER_NOT_FOUND, language, 400
             )
 
         if not user.is_active:
+            Log.add_log(service_name, Messages.get_message(Messages.UNACTIVATE_ACCOUNT, language), request)
             return ResponseService.create_error_response(
                 Messages.UNACTIVATE_ACCOUNT, language, 400
             )
@@ -197,10 +216,12 @@ def twofactor(request):
             if TokenService.is_mail_token_expired(twofactor.expiration):
                 twofactor.status = False
                 twofactor.save()
+                Log.add_log(service_name, Messages.get_message(Messages.INVALID_CODE, language), request)
                 return ResponseService.create_error_response(
                     Messages.INVALID_CODE, language, 400
                 )
         except TwofactorCodes.DoesNotExist:
+            Log.add_log(service_name, Messages.get_message(Messages.INVALID_CODE, language), request)
             return ResponseService.create_error_response(
                 Messages.INVALID_CODE, language, 400
             )
@@ -223,7 +244,8 @@ def twofactor(request):
 
         twofactor.status = False
         twofactor.save()
-
+        
+        Log.add_log(service_name, Messages.get_message(Messages.USER_LOGGED_IN_SUCCESSFULLY, language), request)
         return ResponseService.create_success_response(token)
 
 
@@ -235,6 +257,7 @@ def signout(request):
             if auth_header and auth_header.startswith("Bearer "):
                 access_token = auth_header.split(" ")[1]  # "Bearer" kısmını çıkarıyoruz
             else:
+                Log.add_log(service_name, Messages.get_message(Messages.INVALID_ACCESS_TOKEN, language), request)
                 return ResponseService.create_error_response(
                     Messages.INVALID_ACCESS_TOKEN, language, 400
                 )
@@ -245,20 +268,24 @@ def signout(request):
             user.access_token = None
             user.save()
 
+            Log.add_log(service_name, Messages.get_message(Messages.USER_LOGGED_OUT_SUCCESSFULLY, language), request)
             return ResponseService.create_response(
                 True, "success", Messages.USER_LOGGED_OUT_SUCCESSFULLY, language, 200
             )
 
         except Users.DoesNotExist:
+            Log.add_log(service_name, Messages.get_message(Messages.INVALID_ACCESS_TOKEN, language), request)
             return ResponseService.create_error_response(
                 Messages.INVALID_ACCESS_TOKEN, language, 400
             )
         except Exception as e:
             logger.error(f"Error during signout: {str(e)}")
+            Log.add_log(service_name, Messages.get_message(Messages.SIGNOUT_FAILED, language), request)
             return ResponseService.create_error_response(
                 Messages.SIGNOUT_FAILED, language, 500
             )
-
+        
+    Log.add_log(service_name, Messages.get_message(Messages.INVALID_REQUEST_METHOD, language), request)
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, 405
     )
@@ -272,6 +299,7 @@ def refreshToken(request):
             if auth_header and auth_header.startswith("Bearer "):
                 refresh_token = auth_header.split(" ")[1]
             else:
+                Log.add_log(service_name, Messages.get_message(Messages.INVALID_REFRESH_TOKEN, language), request)
                 return ResponseService.create_error_response(
                     Messages.INVALID_REFRESH_TOKEN, language, 400
                 )
@@ -279,6 +307,7 @@ def refreshToken(request):
             user = Users.objects.get(refresh_token=refresh_token)
 
             if not TokenService.validate_refresh_token(refresh_token):
+                Log.add_log(service_name, Messages.get_message(Messages.EXPIRED_OR_INVALID_REFRESH_TOKEN, language), request)
                 return ResponseService.create_error_response(
                     Messages.EXPIRED_OR_INVALID_REFRESH_TOKEN, language, 401
                 )
@@ -304,18 +333,22 @@ def refreshToken(request):
                     "expiration_date": refresh_exp,
                 },
             }
+            Log.add_log(service_name, "token refreshed succesfully", request)
             return ResponseService.create_success_response(token)
 
         except Users.DoesNotExist:
+            Log.add_log(service_name, Messages.get_message(Messages.INVALID_REFRESH_TOKEN, language), request)
             return ResponseService.create_error_response(
                 Messages.INVALID_REFRESH_TOKEN, language, 400
             )
         except Exception as e:
             logger.error(f"Error during refresh_token: {str(e)}")
+            Log.add_log(service_name, Messages.get_message(Messages.REFRESH_TOKEN_FAILED, language), request)
             return ResponseService.create_error_response(
                 Messages.REFRESH_TOKEN_FAILED, language, 500
             )
 
+    Log.add_log(service_name, Messages.get_message(Messages.INVALID_REQUEST_METHOD, language), request)
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, 405
     )
@@ -342,6 +375,7 @@ def verifyAccount(request, verify_token):
 
             # send_verification_email(mail_token.user, new_token)
 
+            Log.add_log(service_name, Messages.get_message(Messages.TOKEN_EXPIRED_NEW_SENT, language), request)
             return ResponseService.create_error_response(
                 Messages.TOKEN_EXPIRED_NEW_SENT, language, 400
             )
@@ -353,15 +387,18 @@ def verifyAccount(request, verify_token):
         mail_token.status = False
         mail_token.save()
 
+        Log.add_log(service_name, Messages.get_message(Messages.ACCOUNT_VERIFIED_SUCCESSFULLY, language), request)
         return ResponseService.create_response(
             True, "success", Messages.ACCOUNT_VERIFIED_SUCCESSFULLY, language, 200
         )
     except MailTokens.DoesNotExist:
+        Log.add_log(service_name, Messages.get_message(Messages.INVALID_OR_EXPIRED_VERIFICATION_TOKEN, language), request)
         return ResponseService.create_error_response(
             Messages.INVALID_OR_EXPIRED_VERIFICATION_TOKEN, language, 400
         )
     except Exception as e:
         logger.error(f"Error during account verification: {str(e)}")
+        Log.add_log(service_name, Messages.get_message(Messages.AN_ERROR_OCCURRED, language), request)
         return ResponseService.create_error_response(
             Messages.AN_ERROR_OCCURRED, language, 500
         )
@@ -373,6 +410,7 @@ def validate_token(request):
         access_token = request.headers.get("Authorization")
 
         if not access_token:
+            Log.add_log(service_name, Messages.get_message(Messages.MISSING_TOKEN, language), request)
             return ResponseService.create_error_response(
                 Messages.MISSING_TOKEN, language, status_code=400
             )
@@ -385,12 +423,15 @@ def validate_token(request):
         logger.fatal(f"User retrieved by username: {access_token}")
         
         if user.access_token != access_token.split(" ")[1]:
+            Log.add_log(service_name, Messages.get_message(Messages.INVALID_ACCESS_TOKEN, language), request)
             return ResponseService.create_error_response(
                 Messages.INVALID_ACCESS_TOKEN, language, status_code=400
             )
 
+        Log.add_log(service_name, "valid token", request)
         return ResponseService.create_success_response({"valid": True})
-
+    
+    Log.add_log(service_name, Messages.get_message(Messages.INVALID_REQUEST_METHOD, language), request)
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, status_code=405
     )
@@ -409,6 +450,7 @@ def intraCallback(request):
     logger.fatal(f"Code retrieved from request body: {code}")
     
     if not code:
+        Log.add_log(service_name, Messages.get_message(Messages.AUTHORIZATION_CODE_NOT_PROVIDED, language), request)
         return ResponseService.create_error_response(
             Messages.AUTHORIZATION_CODE_NOT_PROVIDED, language, 400
         )
@@ -425,7 +467,10 @@ def intraCallback(request):
 
     response = requests.post(token_url, data=payload)
     logger.fatal(f"Response from token endpoint: {response.json()}")
+    Log.add_log(service_name, f"Response from token endpoint: {response.json()}", request)
+
     if response.status_code != 200:
+        Log.add_log(service_name, Messages.get_message(Messages.FAILED_TO_RETRIEVE_TOKEN, language), request)
         return ResponseService.create_error_response(
             Messages.FAILED_TO_RETRIEVE_TOKEN, language, response.status_code
         )
@@ -435,6 +480,7 @@ def intraCallback(request):
 
     user_response = intra_user(api_url, access_token)
     if user_response.status_code != 200 and user_response.status_code != 201:
+        Log.add_log(service_name, Messages.get_message(Messages.FAILED_TO_RETRIEVE_USER, language), request)
         return ResponseService.create_error_response(
             Messages.FAILED_TO_RETRIEVE_USER, language, str(user_response.json())
         )
@@ -465,12 +511,13 @@ def intra_user(api_url, access_token):
     # Kullanıcı daha önce oluşturulmuşsa bilgileri getir
     user = Users.objects.filter(username=user_create_data["username"]).first()
     if user:
+        Log.add_log(service_name, "user infos", None)#
         return ResponseService.create_success_response(
             valid_user(user, user_service_url), 200
         )
 
     # Kullanıcı daha önce oluşturulmamışsa oluştur
-
+    Log.add_log(service_name, f"if user doesn't exist: {user.username}, create", None)#
     return ResponseService.create_success_response(
         invalid_user(user_service_url, user_create_data), 201
     )
@@ -481,6 +528,8 @@ def create_tokens(username):
     atoken, exp = TokenService.generate_access_token(username)
     refresh_token = {"token": rtoken, "expiration_date": exp}
     access_token = {"token": atoken, "expiration_date": exp}
+
+    Log.add_log(service_name, f"Refresh token: {rtoken}, Access token: {atoken}", None)
     return refresh_token, access_token
 
 
@@ -493,6 +542,7 @@ def valid_user(user, user_service_url):
     user.refresh_token = data["refresh_token"]["token"]
     user.access_token = data["access_token"]["token"]
     user.save()
+    Log.add_log(service_name, f"User retrieved: {user.username}", None)
     return data
 
 
@@ -511,6 +561,7 @@ def invalid_user(user_service_url, user_create_data):
         refresh_token=data["refresh_token"]["token"],
         access_token=data["access_token"]["token"],
     )
+    Log.add_log(service_name, f"User created: {user.username}", None)
     return data
 
 
@@ -520,22 +571,27 @@ def get_accesstoken_by_username(request):
     if request.method == "GET":
         access_token = request.headers.get("Authorization")
         if not access_token:
+            Log.add_log(service_name, Messages.get_message(Messages.MISSING_TOKEN, language), request)
             return ResponseService.create_error_response(
                 Messages.MISSING_TOKEN, language, status_code=400
             )
         username = TokenService.validate_access_token(access_token.split(" ")[1])
         if not username:
+            Log.add_log(service_name, Messages.get_message(Messages.INVALID_ACCESS_TOKEN, language), request)
             return ResponseService.create_error_response(
                 Messages.INVALID_ACCESS_TOKEN, language, status_code=400
             )
         logger.fatal(f"Username retrieved by access token: {username}")
         user = Users.objects.filter(username=username).first()
         if not user:
+            Log.add_log(service_name, Messages.get_message(Messages.USER_NOT_FOUND, language), request)
             return ResponseService.create_error_response(
                 Messages.USER_NOT_FOUND, language, status_code=400
             )
+        Log.add_log(service_name, f"Username retrieved by access token: {username}", request)
         return ResponseService.create_success_response({"username": user.username}, 200)
 
+    Log.add_log(service_name, Messages.get_message(Messages.INVALID_REQUEST_METHOD, language), request)
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, status_code=405
     )
@@ -562,6 +618,7 @@ def retry_verification_account(request):
 
                 # send_verification_email(mail_token.user, new_token)
 
+                Log.add_log(service_name, Messages.get_message(Messages.TOKEN_EXPIRED_NEW_SENT, language), request)
                 return ResponseService.create_error_response(
                     Messages.TOKEN_EXPIRED_NEW_SENT, language, 400
                 )
@@ -572,26 +629,33 @@ def retry_verification_account(request):
                     "user-registration-events", {"email": email, "token": f"{frontend_url}/#verify-account?{mail_token.token}"}
                 )
                 logger.fatal(f"Verification email sent to {email}")
+                Log.add_log(service_name, Messages.get_message(Messages.VERIFICATION_EMAIL_SENT, language), request)
             except Exception as e:
                 logger.error(f"Error during sending verification email: {str(e)}")
+                Log.add_log(service_name, Messages.get_message(Messages.EMAIL_SENDING_FAILED, language), request)
 
+            Log.add_log(service_name, Messages.get_message(Messages.VERIFICATION_EMAIL_SENT, language), request)
             return ResponseService.create_response(
                 True, "success", Messages.VERIFICATION_EMAIL_SENT, language, 200
             )
         except Users.DoesNotExist:
+            Log.add_log(service_name, Messages.get_message(Messages.USER_NOT_FOUND, language), request)
             return ResponseService.create_error_response(
                 Messages.USER_NOT_FOUND, language, 404
             )
         except MailTokens.DoesNotExist:
+            Log.add_log(service_name, Messages.get_message(Messages.INVALID_OR_EXPIRED_VERIFICATION_TOKEN, language), request)
             return ResponseService.create_error_response(
                 Messages.INVALID_OR_EXPIRED_VERIFICATION_TOKEN, language, 400
             )
         except Exception as e:
             logger.error(f"Error during retry_verification_email: {str(e)}")
+            Log.add_log(service_name, Messages.get_message(Messages.EMAIL_SENDING_FAILED, language), request)
             return ResponseService.create_error_response(
                 Messages.AN_ERROR_OCCURRED, language, 500
             )
 
+    Log.add_log(service_name, Messages.get_message(Messages.INVALID_REQUEST_METHOD, language), request)
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, 405
     )

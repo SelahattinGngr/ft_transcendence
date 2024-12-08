@@ -5,15 +5,20 @@ import os
 from django.core.mail import send_mail
 from django.http import JsonResponse
 
+from .addLog import Log
+
 logger = logging.getLogger(__name__)
+service_name = "mail_service"
 
 def send_email(email, subject, message):
     from_email = os.getenv("EMAIL_HOST_USER")
     try:
         send_mail(subject, message, from_email, [email])
         logger.fatal(f"Email sent to {email} with subject '{subject}'")
+        Log.add_log(service_name, f"Email sent to {email} with subject '{subject}'", None)
     except Exception as e:
         logger.fatal(f"Failed to send email to {email}: {str(e)}")
+        Log.add_log(service_name, f"Failed to send email to {email}: {str(e)}", None)
 
 
 def mail_service(request):
@@ -26,12 +31,14 @@ def mail_service(request):
         email = data.get('user_email')
         
         if not all([subject, message, email]):
+            Log.add_log(service_name, "Missing email parameters", request)
             return JsonResponse({"message": "Missing email parameters"}, status=400)
         
         # E-posta gönderimi
         send_email(email, subject, message)
+        Log.add_log(service_name, f"Email sent to {email} with subject '{subject}'", request)
         return JsonResponse({"message": "Email sent successfully"}, status=200)
-
+    Log.add_log(service_name, "Invalid request", request)
     return JsonResponse({"message": "Invalid request"}, status=400)
 
 

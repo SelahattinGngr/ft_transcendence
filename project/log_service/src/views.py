@@ -1,6 +1,7 @@
-from urllib import request
+from requests import request
 from .models import Saved_log
 from django.http import JsonResponse
+
 
 class LogRequest:
     def __init__(self, service_name, log):

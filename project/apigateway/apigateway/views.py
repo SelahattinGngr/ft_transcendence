@@ -18,7 +18,8 @@ MICROSERVICES = {
     "chat": "http://chatservice:8000",
     "friend": "http://friendservice:8000",
     "notification": "http://notificationservice:8000",
-    "monitoring": "http://monitoringservice:8000"
+    "monitoring": "http://monitoringservice:8000",
+    "log": "http://logservice:8000",
 }
 
 def proxy_request(request, path):   
