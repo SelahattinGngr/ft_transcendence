@@ -28,5 +28,13 @@
             "ai": "Play with AI",
             "locale": "Play Locally"
         }
+    },
+    "notification": {
+        "title": {
+            "friend_request": " Friend Request "
+        },
+        "content": {
+            "friend_request": " sent a friend request "
+        }
     }
 }

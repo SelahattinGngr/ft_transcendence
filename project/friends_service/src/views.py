@@ -114,7 +114,16 @@ def reject_to_friend_request(request, id):
 
         username = access_user.json().get("data").get("username")
 
-        friend_request = friend_requests.objects.filter(id=id).first()
+        try:
+            logger.error(f"Friend request id: {id}")
+            logger.error(f"Username: {username}")
+            friend_request = friend_requests.objects.get(id=id)
+            logger.error(f"Friend request: {friend_request}")
+        except Exception as e:
+            logger.error(f"Friend request error: {e}")
+            return ResponseService.create_error_response(
+                Messages.REQUEST_NOT_FOUND, language, 404
+            )
         if not friend_request:
             return ResponseService.create_error_response(
                 Messages.REQUEST_NOT_FOUND, language, 404
@@ -146,9 +155,11 @@ def accept_friend_request(request, id):
         )
 
         username = access_user.json().get("data").get("username")
-
-        friend_request = friend_requests.objects.filter(id=id).first()
-        if not friend_request:
+        try:
+            logger.error(f"Friend request id: {id}")
+            friend_request = friend_requests.objects.get(id=id)
+            logger.error(f"Friend request: {friend_request}")
+        except Exception as e:
             return ResponseService.create_error_response(
                 Messages.REQUEST_NOT_FOUND, language, 404
             )
@@ -175,6 +186,31 @@ def accept_friend_request(request, id):
 
         return ResponseService.create_success_response(
             Messages.get_message(Messages.REQUEST_ACCEPTED, language), 200
+        )
+
+    return ResponseService.create_error_response(Messages.INVALID_METHOD, language, 405)
+
+# arkadaslık istekleri listeleme
+def list_friend_requests(request):
+    language = request.headers.get("Accept-Language", "tr")
+
+    if request.method == "GET":
+        access_token = request.headers.get("Authorization")
+
+        auth_service_url = os.environ.get("AUTH_SERVICE_URL")
+        access_user = requests.get(
+            f"{auth_service_url}/auth/access-token-by-username/",
+            headers={"Authorization": access_token},
+        )
+
+        username = access_user.json().get("data").get("username")
+
+        friend_requests_list = friend_requests.objects.filter(
+            receiver_username=username
+        ).values()
+
+        return ResponseService.create_success_response(
+            {"friend_requests": list(friend_requests_list)}, 200
         )
 
     return ResponseService.create_error_response(Messages.INVALID_METHOD, language, 405)

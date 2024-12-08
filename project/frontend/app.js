@@ -1,6 +1,6 @@
 import { Toast } from "./src/components/toast.js";
 import { moveToNext, otp } from "./src/pages/2fa/2fa.js";
-import { sendFriendRequest } from "./src/pages/friends/friends.js";
+import { sendFriendRequest } from "./src/pages/friend-request/friend.js";
 import { aiGameSetup } from "./src/pages/games/ai/aiGameSetup.js";
 import { AiGame } from "./src/pages/games/ai/game/aiGame.js";
 import { Tournament } from "./src/pages/games/locale-tournament/game/tournament.js";
@@ -26,6 +26,7 @@ import {
 
 window.changelanguage = changelanguage;
 window.signout = signout;
+window.getNotifications = getNotifications;
 
 document.addEventListener("DOMContentLoaded", async function () {
   isvalidToken();
@@ -133,11 +134,14 @@ function setupPageActions(page) {
           console.error(error);
         }
       }
-    } else if (page === "friends") {
+    } else if (page === "friend-request") {
       authController();
-      submitHandler("friendsForm", sendFriendRequest);
+      submitHandler("friendRequestForm", sendFriendRequest);
     } else if (page === "notifications") {
       getNotifications();
+      document
+        .querySelector("#updateNotifications")
+        .addEventListener("click", getNotifications);
     }
   } catch (error) {
     Toast({

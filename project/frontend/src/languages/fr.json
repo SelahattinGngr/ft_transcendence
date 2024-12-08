@@ -28,5 +28,13 @@
             "ai": "Jouer avec IA",
             "locale": "Jouer localement"
         }
+    },
+    "notification": {
+        "title": {
+            "friend_request": " Demande d'ami "
+        },
+        "content": {
+            "friend_request": " a envoyé une demande d'ami "
+        }
     }
 }

@@ -64,7 +64,7 @@ def notification_read(request, notification_id):
         username = access_user.json().get("data").get("username")
 
         notification = Notification.objects.get(id=notification_id)
-        if notification.user_name != username:
+        if notification.receiver_username != username:
             return JsonResponse(
                 {"data": {"message": "You are not authorized to read this notification"}},
                 status=403,

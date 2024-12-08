@@ -1,0 +1,129 @@
+#friendRequestForm.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #1f1f1f;
+    padding: 30px;
+    width: 450px;
+    border-radius: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+#friendRequestForm ::placeholder {
+    color: #aaa;
+}
+
+#friendRequestForm .form button {
+    align-self: flex-end;
+}
+
+#friendRequestForm .flex-column>label {
+    color: #f1f1f1;
+    font-weight: 600;
+}
+
+#friendRequestForm .inputForm {
+    border: 1.5px solid #333;
+    border-radius: 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    transition: 0.2s ease-in-out;
+    background-color: #2b2b2b;
+}
+
+#friendRequestForm .input {
+    margin-left: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    height: 100%;
+    background-color: #2b2b2b;
+    color: #f1f1f1;
+}
+
+#friendRequestForm .input:focus {
+    outline: none;
+}
+
+#friendRequestForm .inputForm:focus-within {
+    border: 1.5px solid #2d79f3;
+}
+
+#friendRequestForm .flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+#friendRequestForm .flex-row>div>label {
+    font-size: 14px;
+    color: #f1f1f1;
+    font-weight: 400;
+}
+
+#friendRequestForm .span {
+    font-size: 14px;
+    margin-left: 5px;
+    color: #2d79f3;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#friendRequestForm .button-submit {
+    margin: 20px 0 10px 0;
+    background-color: #2d79f3;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+}
+
+#friendRequestForm .ecole-button-submit {
+    margin: 20px 0 10px 0;
+    background-color: white;
+    border: none;
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+}
+
+#friendRequestForm .p {
+    text-align: center;
+    color: #f1f1f1;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+#friendRequestForm .btn {
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    gap: 10px;
+    border: 1px solid #333;
+    background-color: #2b2b2b;
+    color: #f1f1f1;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+#friendRequestForm .btn:hover {
+    border: 1px solid #2d79f3;
+}

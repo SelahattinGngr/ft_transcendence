@@ -28,5 +28,13 @@
             "ai": "Yapay Zeka ile oyna",
             "locale": "Yerelde oyna"
         }
+    },
+    "notification": {
+        "title": {
+            "friend_request": " Arkadaşlık isteği "
+        },
+        "content": {
+            "friend_request": " Arkadaşlık isteği gönderdi "
+        }
     }
 }
