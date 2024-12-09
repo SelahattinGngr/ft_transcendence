@@ -57,3 +57,12 @@ export function moveToNext(current, nextFieldID) {
     }
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    const otp1 = document.getElementById("otp1");
+    if (otp1) {
+      otp1.focus();//
+    }
+  }, 10);
+});
