@@ -38,3 +38,11 @@ class Friends(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class BlockedUsers(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    blocked_user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    username = models.CharField(Users, max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

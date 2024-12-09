@@ -1,11 +1,12 @@
 import json
 import logging
 import os
+from re import U
 
 import requests
 
 from .Messages import Messages
-from .models import Avatar, Friends, Users
+from .models import Avatar, Friends, Users, BlockedUsers
 from .ResponseService import ResponseService
 
 logger = logging.getLogger(__name__)
@@ -266,4 +267,40 @@ def list_friends(request):
 
     return ResponseService.create_success_response({"friends_list": friend_list}, 200)
 
+def block_user(request):
+    language = request.headers.get("Accept-Language", "tr")
+    if request.method != "POST":
+        return ResponseService.create_error_response(
+            Messages.INVALID_REQUEST_METHOD, language, 405
+        )
+
+    data = json.loads(request.body)
+    username = data.get("username")
+    blockname = data.get("block_username")
+
+    user = Users.objects.filter(username=username).first()
+    block = Users.objects.filter(username=blockname).first()
+
+    if not user or not block:
+        return ResponseService.create_error_response(
+            Messages.USER_NOT_FOUND, language, 404
+        )
+
+    if user == block:
+        return ResponseService.create_error_response(
+            Messages.CANNOT_BLOCK_YOURSELF, language, 400
+        )
+
+    if BlockedUsers.objects.filter(user_id=user.id, blocked_user_id=block.id).exists():
+        return ResponseService.create_error_response(
+            Messages.ALREADY_BLOCKED, language, 400
+        )
     
+    if Friends.objects.filter(user_id=user.id, friend_id=block.id).exists():
+        Friends.objects.filter(user_id=user.id, friend_id=block.id).delete()
+        Friends.objects.filter(user_id=block.id, friend_id=user.id).delete()
+        BlockedUsers.objects.create(user_id=user, blocked_user_id=block, username=block.username)
+
+    user.save()
+
+    return ResponseService.create_success_response({"user successfully blocked"}, 201)

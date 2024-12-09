@@ -14,6 +14,8 @@ class Messages(Enum):
     ALREADY_FRIENDS = ("You are already friends", "Zaten arkadaşsınız")
     INVALID_ACCESS_TOKEN = ("Invalid access token", "Geçersiz erişim belirteci")
     NO_ACCESS_TOKEN = ("No access token provided", "Erişim belirteci sağlanmadı")
+    CANNOT_BLOCK_YOURSELF = ("You cannot block yourself", "Kendinizi engelleyemezsiniz")
+    ALREADY_BLOCKED = ("User is already blocked", "Kullanıcı zaten engellendi")
     
     @staticmethod
     def get_message(message_enum, language="en"):
