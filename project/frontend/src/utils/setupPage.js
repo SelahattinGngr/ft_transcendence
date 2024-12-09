@@ -17,6 +17,7 @@ import { verificationCode } from "../pages/verify-account/verification.js";
 import { authButtons } from "./authButtons.js";
 import { authController, unAuthController } from "./isAuth.js";
 import { fetchFriendRequests } from "../pages/friends-requests/requests.js";
+import { fetchFriendsList } from "../pages/friends/friends.js";
 
 export function setupPageActions(page) {
   try {
@@ -88,7 +89,14 @@ export function setupPageActions(page) {
     } else if (page === "friend-request") {
       authController();
       submitHandler("friendRequestForm", sendFriendRequest);
+    } else if (page === "friends") {
+      authController();
+      fetchFriendsList();
+      document
+        .querySelector("#refreshFriends")
+        .addEventListener("click", fetchFriendsList);
     } else if (page === "friends-requests") {
+      authController();
       fetchFriendRequests();
       document
         .querySelector("#updateRequests")

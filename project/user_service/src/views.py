@@ -1,5 +1,8 @@
 import json
 import logging
+import os
+
+import requests
 
 from .Messages import Messages
 from .models import Avatar, Friends, Users
@@ -228,8 +231,23 @@ def list_friends(request):
             Messages.INVALID_REQUEST_METHOD, language, 405
         )
 
-    data = json.loads(request.body)
-    username = data.get("username")
+    access_token = request.headers.get("Authorization")
+    if access_token is None:
+        return ResponseService.create_error_response(
+            Messages.NO_ACCESS_TOKEN, language, 401
+        )
+    
+    auth_service_url = os.environ.get("AUTH_SERVICE_URL")
+    access_user = requests.get(
+        f"{auth_service_url}/auth/access-token-by-username/",
+        headers={"Authorization": access_token},
+    )
+    if access_user.status_code != 200:
+            return ResponseService.create_error_response(
+                Messages.INVALID_ACCESS_TOKEN, language, 401
+            )
+
+    username = access_user.json().get("data").get("username")
 
     user = Users.objects.filter(username=username).first()
     if not user:
@@ -242,18 +260,10 @@ def list_friends(request):
 
     for friend in friends:
         friend_list.append({
-            "id": friend.friend_id.id,
             "username": friend.friend_id.username,
-            "email": friend.friend_id.email,
-            "first_name": friend.friend_id.first_name,
-            "last_name": friend.friend_id.last_name,
-            "bio": friend.friend_id.bio,
             "avatar_url": friend.friend_id.avatar_id.url,
-            "medium_avatar": friend.friend_id.avatar_id.medium_url,
-            "small_avatar": friend.friend_id.avatar_id.small_url,
-            "micro_avatar": friend.friend_id.avatar_id.micro_url,
         })
 
-    return ResponseService.create_success_response(friend_list, 200)
+    return ResponseService.create_success_response({"friends_list": friend_list}, 200)
 
     

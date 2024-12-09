@@ -83,7 +83,7 @@
                 "canvas": "Tarayıcınız HTML5 canvas etiketini desteklemiyor"
             }
         },
-        "local-tournament": {
+        "locale-tournament": {
             "settingsMessage": "Yerel turnuva ayarları",
             "usr1": "Oyuncu 1",
             "usr1Placeholder": "Oyuncu 1 adını giriniz",

@@ -12,7 +12,9 @@ class Messages(Enum):
     CANNOT_ADD_YOURSELF_AS_FRIEND = ("You cannot add yourself as a friend", "Kendinizi arkadaş olarak ekleyemezsiniz")
     FRIEND_ADD_FAILED = ("Friend add failed", "Arkadaş ekleme başarısız")
     ALREADY_FRIENDS = ("You are already friends", "Zaten arkadaşsınız")
-
+    INVALID_ACCESS_TOKEN = ("Invalid access token", "Geçersiz erişim belirteci")
+    NO_ACCESS_TOKEN = ("No access token provided", "Erişim belirteci sağlanmadı")
+    
     @staticmethod
     def get_message(message_enum, language="en"):
         def normalize_language_code(language_code):
