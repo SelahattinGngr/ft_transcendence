@@ -220,3 +220,40 @@ def add_friend(request):
     return ResponseService.create_error_response(
         Messages.USER_CREATION_FAILED, language, 500
     )
+
+def list_friends(request):
+    language = request.headers.get("Accept-Language", "tr")
+    if request.method != "GET":
+        return ResponseService.create_error_response(
+            Messages.INVALID_REQUEST_METHOD, language, 405
+        )
+
+    data = json.loads(request.body)
+    username = data.get("username")
+
+    user = Users.objects.filter(username=username).first()
+    if not user:
+        return ResponseService.create_error_response(
+            Messages.USER_NOT_FOUND, language, 404
+        )
+    
+    friends = Friends.objects.filter(user_id=user.id)
+    friend_list = []
+
+    for friend in friends:
+        friend_list.append({
+            "id": friend.friend_id.id,
+            "username": friend.friend_id.username,
+            "email": friend.friend_id.email,
+            "first_name": friend.friend_id.first_name,
+            "last_name": friend.friend_id.last_name,
+            "bio": friend.friend_id.bio,
+            "avatar_url": friend.friend_id.avatar_id.url,
+            "medium_avatar": friend.friend_id.avatar_id.medium_url,
+            "small_avatar": friend.friend_id.avatar_id.small_url,
+            "micro_avatar": friend.friend_id.avatar_id.micro_url,
+        })
+
+    return ResponseService.create_success_response(friend_list, 200)
+
+    
