@@ -2,13 +2,13 @@
 
 <form class="form mx-auto col-md-5" id="friendRequestForm">
   <div class="flex-column">
-    <label>Username</label>
+    <label data-lang-path="friend-request.username"></label>
   </div>
   <div class="inputForm">
     <img src="/src/assets/icons/at.svg" alt="">
     <input type="text" name="friendUsername" class="input" id="friendsUsername"
-      placeholder="Enter your friends Username" required />
+      placeholder="Enter your friends Username" required data-lang-path="friend-request.userplace" />
   </div>
 
-  <button class="button-submit">Sign In</button>
+  <button class="button-submit" type="submit" data-lang-path="friend-request.submitButton"></button>
 </form>

@@ -1,0 +1,37 @@
+#friendsRequests .list-group-item {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#friendsRequests .list-group-item .view-profile {
+    color: #ff9800;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+#friendsRequests .list-group-item .view-profile:hover {
+    text-decoration: underline;
+}
+
+#friendsRequests .button-submit {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #ff9800;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#friendsRequests .button-submit:hover {
+    background-color: #ff5722;
+}

@@ -8,7 +8,6 @@ export async function handleSignup(event) {
   const repeatPassword = document.getElementById("signupRepeatPassword").value;
   const first_name = document.getElementById("signupFirstName").value;
   const last_name = document.getElementById("signupLastName").value;
-  const avatar_url = document.getElementById("signupAvatarUrl").value;
 
   try {
     if (password !== repeatPassword) {
@@ -30,7 +29,6 @@ export async function handleSignup(event) {
         password,
         first_name,
         last_name,
-        avatar_url,
       }),
     });
 

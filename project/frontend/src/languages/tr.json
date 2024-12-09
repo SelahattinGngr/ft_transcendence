@@ -2,6 +2,9 @@
     "index": {
         "nav": {
             "about-us": "Hakkımızda",
+            "friends": "Arkadaşlar",
+            "friend-request": "Arkadaşlık İsteği",
+            "friends-requests": "Arkadaşlık İstekleri",
             "game": {
                 "title": "Oyunlar",
                 "dropdown": {
@@ -26,133 +29,146 @@
         "hero": {
             "description": "Ecole 42 bitirme projemiz olan basit bir pong oyunu içeren basit bir web sitesi :D",
             "ai": "Yapay Zeka ile oyna",
-            "locale": "Yerelde oyna"
+            "locale": "Yerelde oyna",
+            "signin": "Giriş yap",
+            "signup": "Kayıt ol"
         }
     },
     "2fa": {
-        "code" : "OTP Kodunuzu giriniz",
-        "button" : "Doğrula"
+        "inputCode": "OTP Kodunuzu giriniz",
+        "button": "Doğrula"
     },
     "about-us": {
-        "about" : "There is no place like 127.0.0.1"
+        "about": "There is no place like 127.0.0.1"
     },
     "friends": {
+        "friends": "Arkadaşlar"
+    },
+    "friend-request": {
         "userplace": "Eklemek istediğiniz kişinin kullanıcı adını giriniz",
-        "button": "Giriş yap",
-        "usr": "Kullanıcı adı"
+        "submitButton": "Arkadaşlık isteği gönder",
+        "username": "Kullanıcı adı"
+    },
+    "friends-requests": {
+        "requests": "Arkadaşlık istekleri",
+        "accept": "Kabul et",
+        "decline": "Reddet",
+        "button": "İstekleri güncelle"
     },
     "games": {
         "ai": {
             "set": "Ai oyun ayarları",
-            "usr": "Oyuncu",
-            "placeholder": "Email adresinizi giriniz",
-            "ball": "Top hızı",
+            "usr": "Oyuncu Adı",
+            "placeholder": "Oyuncu adınızı giriniz",
+            "ballSpeed": "Top hızı",
             "gameDifficulty": "Oyun zorluğu",
             "paddleHeight": "Paddle Yüksekliği",
             "winScore": "Kazanma Skoru",
-            "button" : "Oyna",
-            "games" : {
-                "try" : "Tekrar oyna",
-                "canvas" : "Tarayıcınız HTML5 canvas etiketini desteklemiyor"
+            "button": "Oyna",
+            "games": {
+                "canvas": "Tarayıcınız HTML5 canvas etiketini desteklemiyor"
             }
         },
         "locale": {
-            "settings" : "Yerel oyun zorluğu",
-            "usr1" : "Oyuncu 1",
-            "usr2" : "Oyuncu 2",
-            "ball" : "Top hızı",
-            "paddle" : "Paddle Yüksekliği",
-            "win" : "Kazanma Skoru",
-            "button" : "Oyna",
+            "settingsMessage": "Yerel oyun ayarları",
+            "usr1": "Oyuncu 1",
+            "usr1Placeholder": "Oyuncu 1 adını giriniz",
+            "usr2": "Oyuncu 2",
+            "usr2Placeholder": "Oyuncu 2 adını giriniz",
+            "ballSpeed": "Top hızı",
+            "paddleHeight": "Paddle Yüksekliği",
+            "winScore": "Kazanma Skoru",
+            "button": "Oyna",
             "games": {
-                "rest" : "Sfırıla",
-                "canvas" :"Tarayıcınız HTML5 canvas etiketini desteklemiyor"
+                "canvas": "Tarayıcınız HTML5 canvas etiketini desteklemiyor"
             }
         },
         "local-tournament": {
-            "sett" : "Yerel turnuva ayarları",
-            "usr1" : "Oyuncu 1",
-            "usr2" : "Oyuncu 2",
-            "usr3" : "Oyuncu 3",
-            "usr4" : "Oyuncu 4",
-            "ball" :"Top hızı",
-            "paddle" :"Paddle Yüksekliği",
-            "win" :"Kazanma Skoru",
-            "button" : "Oyna",
-            "games" : {
-                "rest" :"Sfırıla",
-                "canvas" :"Tarayıcınız HTML5 canvas etiketini desteklemiyor"
+            "settingsMessage": "Yerel turnuva ayarları",
+            "usr1": "Oyuncu 1",
+            "usr1Placeholder": "Oyuncu 1 adını giriniz",
+            "usr2": "Oyuncu 2",
+            "usr2Placeholder": "Oyuncu 2 adını giriniz",
+            "usr3": "Oyuncu 3",
+            "usr3Placeholder": "Oyuncu 3 adını giriniz",
+            "usr4": "Oyuncu 4",
+            "usr4Placeholder": "Oyuncu 4 adını giriniz",
+            "ballSpeed": "Top hızı",
+            "paddleHeight": "Paddle Yüksekliği",
+            "winScore": "Kazanma Skoru",
+            "button": "Oyna",
+            "games": {
+                "canvas": "Tarayıcınız HTML5 canvas etiketini desteklemiyor"
             }
+        },
+        "online": {
+            "about": "Henüz bu özellik geliştirilme aşamasındadır"
         }
     },
-    "not" : {
-        "back" : "Ana Sayfaya Gidin"
+    "not-found": {
+        "notfound": "404 Sayfa bulunamadı",
+        "back": "Ana Sayfaya Gidin"
     },
-    "notification" : {
-        "notification" : "Bildirimler",
-        "name" : "İlk ad",
-        "update" : "Bildirimleri Güncelle"
+    "notification": {
+        "notification": "Bildirimler",
+        "update": "Bildirimleri Güncelle"
     },
-    "profile" : {
-        "bioalert" : "Geçerli bi Bio bilgisi bulunamadı",
-        "name":"İlk ad",
-        "secname":"İkinci ad",
-        "mail" : "Email",
-        "update" : "Bio güncelle"
+    "profile": {
+        "bioalert": "Geçerli bir Bio bilgisi bulunamadı",
+        "firstName": "İsim: ",
+        "lastName": "Soyisim: ",
+        "mail": "E-posta: ",
+        "updateBio": "Bio güncelle"
     },
-    "retry" : {
-        "mail" : "Email",
-        "placeholder" :"Email adresinizi giriniz",
-        "verfybutton" : "Doğrulama maili gönder",
-        "account?": "Hesabın var mı ?",
-        "verfymail?":"Doğrulama maili gelmedi mi ?",
-        "signup" : "Kayıt ol",
-        "retry" : "Tekrar mail at"
+    "retry-verify-account": {
+        "mail": "E-posta",
+        "placeholder": "Email adresinizi giriniz",
+        "verifybutton": "Doğrulama maili gönder",
+        "account": "Hesabın yok mu?",
+        "signup": "Kayıt ol"
     },
-    "signin" : {
-        "mail" : "Email",
-        "placeholder" :"Email adresinizi giriniz",
-        "pass" : "Şifre",
-        "placeholder2" : "Şifrenizi giriniz",
-        "signin" :"Giriş yap",
-        "account" : "Bir hesaba sahip misin ?",
-        "signup" :"Kayıt ol",
-        "verification?" : "Doğrulama maili geldimi ?",
-        "retry" :"Tekrar mail at",
-        "Or" : "Birlikte giriş yap"
+    "signin": {
+        "mail": "E-posta",
+        "mailPlaceholder": "Email adresinizi giriniz",
+        "password": "Şifre",
+        "passwordPlaceholder": "Şifrenizi giriniz",
+        "signin": "Giriş yap",
+        "account": "Hesabın yok mu?",
+        "signup": "Kayıt ol",
+        "verification": "Doğrulama maili gelmedi mi?",
+        "retry": "Tekrar mail gönderelim :)",
+        "orWith": "Veya"
     },
-    "sup" : {
-        "name" :"Kulanıcı adı",
-        "placeholder" : "Kullanıcı adınızı giriniz",
-        "mail" : "Email",
-        "placeholder2" :"Mailinizi giriniz",
-        "pass" : "Şifre",
-        "placeholder3" : "Şifrenizi giriniz",
-        "retpass" : "Şifrenizi tekrar giriniz",
-        "placeholder4" : "Şifrenizi giriniz",
-        "fname" : "ilk ad",
-        "placeholder5" : "İsminizi giriniz",
-        "lname" : "Soyad",
-        "placeholder6" : "Soyadınızı giriniz",
-        "pp" : "Profil resmi (Opsiyonel)",
-        "al" : "Bir hesaba sahip misin ? ",
-        "signin" :"Giriş yap",
-        "signup" :"Kayıt ol"
+    "signup": {
+        "username": "Kulanıcı adı",
+        "usernamePlaceholder": "Kullanıcı adınızı giriniz",
+        "mail": "E-posta",
+        "mailPlaceholder": "E-posta adresinizi giriniz",
+        "password": "Şifre",
+        "passwordPlaceholder": "Şifrenizi giriniz",
+        "repeatPassword": "Şifrenizi tekrar giriniz",
+        "repeatPasswordPlaceholder": "Şifrenizi giriniz",
+        "firstName": "İsim",
+        "firstNamePlaceholder": "İsminizi giriniz",
+        "lastName": "Soyisim",
+        "lastNamePlaceholder": "Soyisminizi giriniz",
+        "signup": "Kayıt ol",
+        "account": "Zaten bir hesabın var mı?",
+        "signin": "Giriş yap"
     },
-    "verfy" :{
-        "act" : "Hesap doğrulanıyor"
+    "verify": {
+        "spinner": "Hesap doğrulanıyor"
     },
-    "temp" : {
-        "n" : "Yeni Sohbet",
-        "o" : "Çevrim içi"
+    "temp": {
+        "n": "Yeni Sohbet",
+        "o": "Çevrim içi"
     },
-    "log" : {
-        "log" : "Giriş yap",
-        "name" : "Kulanıcı adı",
-        "pass" :"Şifre"
+    "log": {
+        "log": "Giriş yap",
+        "name": "Kulanıcı adı",
+        "pass": "Şifre"
     },
-    "room" : {
-        "ch" : "Sohbet Odası"
+    "room": {
+        "ch": "Sohbet Odası"
     }
-
 }

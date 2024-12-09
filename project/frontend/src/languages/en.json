@@ -2,6 +2,9 @@
     "index": {
         "nav": {
             "about-us": "About Us",
+            "friends": "Friends",
+            "friend-request": "Friend Request",
+            "friends-requests": "Friend Requests",
             "game": {
                 "title": "Games",
                 "dropdown": {
@@ -24,130 +27,143 @@
     },
     "home": {
         "hero": {
-            "description": "A simple Pong game included in a basic website, part of our Ecole 42 final project :D",
+            "description": "A simple web page with a simple pong game as our Ecole 42 graduation project :D",
             "ai": "Play with AI",
-            "locale": "Play Locally"
+            "locale": "Play Locally",
+            "signin": "Sign In",
+            "signup": "Sign Up"
         }
     },
     "2fa": {
-        "code": "Enter your OTP code",
+        "inputCode": "Enter your OTP code",
         "button": "Verify"
     },
     "about-us": {
         "about": "There is no place like 127.0.0.1"
     },
     "friends": {
+        "friends": "Friends"
+    },
+    "friend-request": {
         "userplace": "Enter the username of the person you want to add",
-        "button": "Log In",
-        "usr": "Username"
+        "submitButton": "Send Friend Request",
+        "username": "Username"
+    },
+    "friends-requests": {
+        "requests": "Friend Requests",
+        "accept": "Accept",
+        "decline": "Decline"
     },
     "games": {
         "ai": {
-            "set": "AI game settings",
-            "usr": "Player",
-            "placeholder": "Enter your email address",
-            "ball": "Ball Speed",
+            "set": "AI Game Settings",
+            "usr": "Player Name",
+            "placeholder": "Enter your name",
+            "ballSpeed": "Ball Speed",
             "gameDifficulty": "Game Difficulty",
             "paddleHeight": "Paddle Height",
-            "winScore": "Winning Score",
+            "winScore": "Win Score",
             "button": "Play",
             "games": {
-                "try": "Play Again",
-                "canvas": "Your browser does not support HTML5 canvas element"
+                "canvas": "Your browser does not support HTML5 canvas"
             }
         },
         "locale": {
-            "settings": "Local game difficulty",
+            "settingsMessage": "Local Game Settings",
             "usr1": "Player 1",
+            "usr1Placeholder": "Enter Player 1 name",
             "usr2": "Player 2",
-            "ball": "Ball Speed",
-            "paddle": "Paddle Height",
-            "win": "Winning Score",
+            "usr2Placeholder": "Enter Player 2 name",
+            "ballSpeed": "Ball Speed",
+            "paddleHeight": "Paddle Height",
+            "winScore": "Win Score",
             "button": "Play",
             "games": {
-                "rest": "Retry",
-                "canvas": "Your browser does not support HTML5 canvas element"
+                "canvas": "Your browser does not support HTML5 canvas"
             }
         },
         "local-tournament": {
-            "sett": "Local tournament settings",
+            "settingsMessage": "Local Tournament Settings",
             "usr1": "Player 1",
+            "usr1Placeholder": "Enter Player 1 name",
             "usr2": "Player 2",
+            "usr2Placeholder": "Enter Player 2 name",
             "usr3": "Player 3",
+            "usr3Placeholder": "Enter Player 3 name",
             "usr4": "Player 4",
-            "ball": "Ball Speed",
-            "paddle": "Paddle Height",
-            "win": "Winning Score",
+            "usr4Placeholder": "Enter Player 4 name",
+            "ballSpeed": "Ball Speed",
+            "paddleHeight": "Paddle Height",
+            "winScore": "Win Score",
             "button": "Play",
             "games": {
-                "rest": "Retry",
-                "canvas": "Your browser does not support HTML5 canvas element"
+                "canvas": "Your browser does not support HTML5 canvas"
             }
+        },
+        "online": {
+            "about": "This feature is still under development"
         }
     },
-    "not": {
-        "back": "Go to Homepage"
+    "not-found": {
+        "notfound": "404 Page Not Found",
+        "back": "Go to Home Page"
     },
     "notification": {
         "notification": "Notifications",
-        "name": "First Name",
         "update": "Update Notifications"
     },
     "profile": {
         "bioalert": "No valid bio information found",
-        "name": "First Name",
-        "secname": "Last Name",
-        "mail": "Email",
-        "update": "Update Bio"
+        "firstName": "First Name: ",
+        "lastName": "Last Name: ",
+        "mail": "Email: ",
+        "updateBio": "Update Bio"
     },
-    "retry": {
+    "retry-verify-account": {
         "mail": "Email",
-        "placeholder": "Enter your email address",
-        "verfybutton": "Send Verification Email",
-        "account?": "Do you have an account?",
-        "verfymail?": "Didn't receive the verification email?",
-        "signup": "Sign Up",
-        "retry": "Resend Email"
+        "placeholder": "Enter your email",
+        "verifybutton": "Send Verification Email",
+        "account": "Don't have an account?",
+        "signup": "Sign Up"
     },
     "signin": {
         "mail": "Email",
-        "placeholder": "Enter your email address",
-        "pass": "Password",
-        "placeholder2": "Enter your password",
+        "mailPlaceholder": "Enter your email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
         "signin": "Sign In",
         "account": "Don't have an account?",
         "signup": "Sign Up",
-        "verification?": "Did you receive the verification email?",
-        "retry": "Resend Email",
-        "Or": "Sign in with"
+        "verification": "Didn't receive the verification email?",
+        "retry": "Resend email :)",
+        "orWith": "Or"
     },
-    "sup": {
-        "name": "Username",
-        "placeholder": "Enter your username",
+    "signup": {
+        "username": "Username",
+        "usernamePlaceholder": "Enter your username",
         "mail": "Email",
-        "placeholder2": "Enter your email",
-        "pass": "Password",
-        "placeholder3": "Enter your password",
-        "retpass": "Re-enter your password",
-        "placeholder4": "Enter your password",
-        "fname": "First Name",
-        "placeholder5": "Enter your first name",
-        "lname": "Last Name",
-        "placeholder6": "Enter your last name",
-        "pp": "Profile Picture (Optional)",
-        "al": "Already have an account?",
-        "signin": "Sign In",
-        "signup": "Sign Up"
+        "mailPlaceholder": "Enter your email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "repeatPassword": "Repeat your password",
+        "repeatPasswordPlaceholder": "Repeat your password",
+        "firstName": "First Name",
+        "firstNamePlaceholder": "Enter your first name",
+        "lastName": "Last Name",
+        "lastNamePlaceholder": "Enter your last name",
+        "signup": "Sign Up",
+        "account": "Already have an account?",
+        "signin": "Sign In"
     },
-    "verfy": {
-        "act": "Account is being verified"
+    "verify": {
+        "spinner": "Verifying account"
     },
     "temp": {
         "n": "New Chat",
         "o": "Online"
     },
     "log": {
-        "log": "Log In",
+        "log": "Sign In",
         "name": "Username",
         "pass": "Password"
     },

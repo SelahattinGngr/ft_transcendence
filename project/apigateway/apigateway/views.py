@@ -2,6 +2,8 @@ import logging
 import requests
 from django.http import JsonResponse
 
+from .addLog import Log
+
 logger = logging.getLogger(__name__)
 
 # TODO: auth işlemleri harici tüm servislere access token kontrolü eklenecek
@@ -26,7 +28,12 @@ def proxy_request(request, path):
     service_url = MICROSERVICES.get(path.split('/')[0], None)
     if not service_url:
         return JsonResponse({"error": "Invalid service name"}, status=400)
-
+    
+    log_message = f"incoming request: {request.method}"
+    if request.body:
+        log_message += f" {request.body}"
+    Log.add_log(service_name=path, log_message=log_message, request=request)
+    
     try:
         response = requests.request(
             method=request.method,
@@ -34,6 +41,10 @@ def proxy_request(request, path):
             headers=request.headers,
             data=request.body
         )
+    
+        Log.add_log(service_name=path,
+                    log_message=f"outgoing response: {response.status_code} {response.text}",
+                    request=request)
         return JsonResponse(response.json(), status=response.status_code)
     except requests.exceptions.RequestException as e:
         return JsonResponse({"error": "Service request failed", "details": str(e)}, status=500)

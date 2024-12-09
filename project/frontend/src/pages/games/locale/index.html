@@ -3,26 +3,27 @@
 <form class="form mx-auto col-md-5" id="localeGamesForm">
     <div class="d-flex align-items-center gap-2">
         <img src="/src/assets/icons/controller.svg" alt="" style="width: 25px; height: 25px;">
-        <h4 class="card-title" data-lang-path="games.locale.settings">
-            Yerel oyun ayarları
+        <h4 class="card-title" data-lang-path="games.locale.settingsMessage">
         </h4>
     </div>
     <div class="flex-column">
-        <label data-lang-path="games.locale.usr1">Oyuncu 1</label>
+        <label data-lang-path="games.locale.usr1"></label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/person.svg" alt="">
-        <input type="text" class="input" id="gamer1username" placeholder="Enter your username" required />
+        <input type="text" class="input" id="gamer1username" placeholder=""
+            data-lang-path="games.locale.usr1Placeholder" required />
     </div>
     <div class="flex-column">
-        <label data-lang-path="games.locale.usr2">Oyuncu 2</label>
+        <label data-lang-path="games.locale.usr2"></label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/person.svg" alt="">
-        <input type="text" class="input" id="gamer2username" placeholder="Enter your username" required />
+        <input type="text" class="input" id="gamer2username" placeholder=""
+            data-lang-path="games.locale.usr2Placeholder" required />
     </div>
     <div class="flex-column">
-        <label data-lang-path="games.locale.ball">Top Hızı</label>
+        <label data-lang-path="games.locale.ballSpeed"></label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/speedometer.svg" alt="">
@@ -30,19 +31,19 @@
         <p id="rangeValue" class="text-center">1</p>
     </div>
     <div class="flex-column">
-        <label data-lang-path="games.locale.paddle">Paddle Yüksekliği </label>
+        <label data-lang-path="games.locale.paddleHeight"></label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/rulers.svg" alt="">
         <input type="number" value="100" min="100" step="10" max="200" class="input" id="paddleHeight" required />
     </div>
     <div class="flex-column">
-        <label data-lang-path="games.locale.win">Kazanma Skoru</label>
+        <label data-lang-path="games.locale.winScore"></label>
     </div>
     <div class="inputForm">
         <img src="/src/assets/icons/trophy.svg" alt="">
         <input type="number" value="5" min="5" max="15" class="input" id="winScore" required />
     </div>
 
-    <button class="button-submit" data-lang-path="games.locale.button">Oyna</button>
+    <button class="button-submit" data-lang-path="games.locale.button"></button>
 </form>

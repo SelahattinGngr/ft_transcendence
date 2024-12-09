@@ -2,7 +2,7 @@ import {
   getTemporaryData,
   setTemporaryData,
 } from "../../../../utils/temporaryLocaleStorage.js";
-import { Game } from "./game.js";
+import { Game } from "./tournamentGame.js";
 
 export class Tournament {
   #data = getTemporaryData("localeTournamentGameData");

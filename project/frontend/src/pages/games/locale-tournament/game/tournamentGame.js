@@ -56,7 +56,7 @@ export class Game {
   #startGame() {
     if (this.#isGameStarted) return;
     this.#isGameStarted = true;
-    this.#startCountdown(0);
+    this.#startCountdown(5);
   }
 
   #startCountdown(seconds) {

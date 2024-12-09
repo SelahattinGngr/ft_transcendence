@@ -13,6 +13,7 @@ export async function setuplanguage() {
   }
   const json = await response.json();
   const elements = document.querySelectorAll("[data-lang-path]");
+
   elements.forEach((element) => {
     const path = element.getAttribute("data-lang-path");
     const keys = path.split(".");
@@ -22,7 +23,11 @@ export async function setuplanguage() {
     });
 
     if (value !== undefined) {
-      element.innerHTML = value;
+      if (element.tagName === "INPUT") {
+        element.placeholder = value;
+      } else {
+        element.innerHTML = value;
+      }
     }
   });
 }
