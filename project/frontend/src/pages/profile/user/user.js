@@ -4,7 +4,7 @@ import { getLanguage } from "../../../utils/language.js";
 export async function fetchUserProfile(userName) {
   console.log(userName);
   try {
-    const response = await fetch(`http://localhost:8000/user/${userName}`, {
+    const response = await fetch(`http://localhost:8000/api/user/${userName}`, {
       method: "GET",
       headers: {
         "Accept-Language": getLanguage(),

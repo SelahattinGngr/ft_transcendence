@@ -4,7 +4,7 @@ import { setuplanguage } from "../../utils/language.js";
 export async function getNotifications() {
   try {
     const response = await fetch(
-      "http://localhost:8000/notification/get-notifications/",
+      "http://localhost:8000/api/notification/get-notifications/",
       {
         method: "GET",
         headers: {
@@ -91,7 +91,7 @@ export async function getNotifications() {
 export async function readNotification(e, notificationId) {
   try {
     const response = await fetch(
-      "http://localhost:8000/notification/read/" + notificationId + "/",
+      "http://localhost:8000/api/notification/read/" + notificationId + "/",
       {
         method: "PATCH",
         headers: {
@@ -125,7 +125,7 @@ export async function readNotification(e, notificationId) {
 export async function acceptRequest(e, notificationId) {
   try {
     const response = await fetch(
-      "http://localhost:8000/friend/accept-request/" + notificationId,
+      "http://localhost:8000/api/friend/accept-request/" + notificationId,
       {
         method: "GET",
         headers: {
@@ -158,7 +158,7 @@ export async function acceptRequest(e, notificationId) {
 export async function rejectRequest(e, notificationId) {
   try {
     const response = await fetch(
-      "http://localhost:8000/friend/reject-request/" + notificationId,
+      "http://localhost:8000/api/friend/reject-request/" + notificationId,
       {
         method: "GET",
         headers: {

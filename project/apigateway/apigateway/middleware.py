@@ -6,7 +6,7 @@ from django.utils.deprecation import MiddlewareMixin
 class TokenValidationMiddleware(MiddlewareMixin):
     def process_request(self, request):
         # Eğer istek Auth servisine ise token doğrulama yapma
-        if request.path.startswith('/auth/'):
+        if request.path.startswith('/api/auth/'):
             return None
 
         # Bearer token'ı header'dan al

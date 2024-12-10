@@ -13,15 +13,18 @@ export async function sendFriendRequest(event) {
     if (!accessToken) {
       throw new Error("No active session found.");
     }
-    const response = await fetch("http://localhost:8000/friend/send-request/", {
-      method: "POST",
-      headers: {
-        "Accept-Language": getLanguage(),
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({ friend_username: friendUsername }),
-    });
+    const response = await fetch(
+      "http://localhost:8000/api/friend/send-request/",
+      {
+        method: "POST",
+        headers: {
+          "Accept-Language": getLanguage(),
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ friend_username: friendUsername }),
+      }
+    );
     const data = await response.json();
     if (!response.ok) {
       throw new Error(data.error);

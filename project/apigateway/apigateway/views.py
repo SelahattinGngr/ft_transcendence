@@ -24,27 +24,35 @@ MICROSERVICES = {
     "log": "http://logservice:8000",
 }
 
-def proxy_request(request, path):   
-    service_url = MICROSERVICES.get(path.split('/')[0], None)
+
+def proxy_request(request, path):
+    service_url = MICROSERVICES.get(path.split("/")[1], None)
     if not service_url:
         return JsonResponse({"error": "Invalid service name"}, status=400)
-    
+
+    new_path = request.path.replace("api/", "", 1)
+    request.path = new_path
+
     log_message = f"incoming request: {request.method}"
     if request.body:
         log_message += f" {request.body}"
     Log.add_log(service_name=path, log_message=log_message, request=request)
-    
+
     try:
         response = requests.request(
             method=request.method,
             url=f"{service_url}{request.path}",
             headers=request.headers,
-            data=request.body
+            data=request.body,
         )
-    
-        Log.add_log(service_name=path,
-                    log_message=f"outgoing response: {response.status_code} {response.text}",
-                    request=request)
+
+        Log.add_log(
+            service_name=path,
+            log_message=f"outgoing response: {response.status_code} {response.text}",
+            request=request,
+        )
         return JsonResponse(response.json(), status=response.status_code)
     except requests.exceptions.RequestException as e:
-        return JsonResponse({"error": "Service request failed", "details": str(e)}, status=500)
+        return JsonResponse(
+            {"error": "Service request failed", "details": str(e)}, status=500
+        )

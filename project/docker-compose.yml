@@ -8,7 +8,7 @@ services:
       - .env
     hostname: frontend
     ports:
-      - "8080:80"
+      - "8080:443"
     networks:
       - backend
 
@@ -75,7 +75,7 @@ services:
       - notification_db_data:/var/lib/postgresql/data
     networks:
       - backend
-      
+
   mailservice:
     container_name: mailservice
     build: ./mail_service
@@ -87,7 +87,7 @@ services:
     hostname: mailservice
     networks:
       - backend
-  
+
   gameservice:
     container_name: gameservice
     build: ./game_service
@@ -99,7 +99,7 @@ services:
     hostname: gameservice
     networks:
       - backend
-    
+
   # chatservice:
   #   container_name: chatservice
   #   build: ./chat_service
@@ -113,7 +113,7 @@ services:
   #   hostname: chatservice
   #   networks:
   #     - backend
-  
+
   logservice:
     container_name: logservice
     build: ./log_service
@@ -146,7 +146,7 @@ services:
     networks:
       - kafka-net
       - backend
-    
+
   kafka:
     container_name: kafka
     image: bitnami/kafka:latest

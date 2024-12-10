@@ -21,7 +21,6 @@ class Log:
                 "ip_address": Log.get_client_ip(request),
             }
             response = requests.post(log_api_url, json=log_data, headers=headers)
-            logger.info(f"Log sent. Status: {response.status_code}, Response: {response.text}")
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error(f"Error sending log: {str(e)}")

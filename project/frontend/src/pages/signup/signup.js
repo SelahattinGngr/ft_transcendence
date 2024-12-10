@@ -17,7 +17,7 @@ export async function handleSignup(event) {
         theme: "danger",
       });
     }
-    const response = await fetch("http://localhost:8000/auth/signup/", {
+    const response = await fetch("http://localhost:8000/api/auth/signup/", {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -1,6 +1,6 @@
 export async function fetchFriendRequests() {
   const response = await fetch(
-    "http://localhost:8000/friend/list-friends-request/",
+    "http://localhost:8000/api/friend/list-friends-request/",
     {
       method: "GET",
       headers: {
@@ -43,7 +43,7 @@ export async function fetchFriendRequests() {
 export async function acceptRequest(e, id) {
   e.preventDefault();
   const response = await fetch(
-    `http://localhost:8000/friend/accept-friend-request/${id}/`,
+    `http://localhost:8000/api/friend/accept-friend-request/${id}/`,
     {
       method: "GET",
       headers: {
@@ -62,7 +62,7 @@ export async function acceptRequest(e, id) {
 export async function rejectRequest(e, id) {
   e.preventDefault();
   const response = await fetch(
-    `http://localhost:8000/friend/reject-request/${id}/`,
+    `http://localhost:8000/api/friend/reject-request/${id}/`,
     {
       method: "GET",
       headers: {

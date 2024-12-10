@@ -6,7 +6,7 @@ export async function retryVerifyAccount(event) {
   console.log(email);
   try {
     const response = await fetch(
-      "http://localhost:8000/auth/retry-verify-account/",
+      "http://localhost:8000/api/auth/retry-verify-account/",
       {
         method: "POST",
         headers: {

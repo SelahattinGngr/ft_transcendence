@@ -10,7 +10,7 @@ export async function verificationCode() {
   }
   try {
     const response = await fetch(
-      `http://localhost:8000/auth/verify-account/${verificationToken}`
+      `http://localhost:8000/api/auth/verify-account/${verificationToken}`
     );
     const data = await response.json();
     await new Promise((resolve) => setTimeout(resolve, 2000));

@@ -1,4 +1,4 @@
-@url = http://localhost:8000
+@url = http://localhost:8000/api
 
 ### signup
 POST {{url}}/auth/signup/ HTTP/1.1

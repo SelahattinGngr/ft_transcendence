@@ -9,13 +9,16 @@ export async function loadProfile() {
   }
 
   try {
-    const response = await fetch(`http://localhost:8000/user/${username}/`, {
-      method: "GET",
-      headers: {
-        "Accept-Language": "tr",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
+    const response = await fetch(
+      `http://localhost:8000/api/user/${username}/`,
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": "tr",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
 
     const { data, error } = await response.json();
     if (!response.ok) {
@@ -61,7 +64,7 @@ function setupBioUpdate(currentBio) {
     try {
       console.log("Sending bio update request...");
       const response = await fetch(
-        `http://localhost:8000/user/update/${username}/`,
+        `http://localhost:8000/api/user/update/${username}/`,
         {
           method: "PUT",
           headers: {

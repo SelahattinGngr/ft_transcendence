@@ -10,7 +10,7 @@ export async function signout() {
   }
 
   try {
-    const response = await fetch("http://localhost:8000/auth/signout/", {
+    const response = await fetch("http://localhost:8000/api/auth/signout/", {
       method: "GET",
       headers: {
         "Accept-Language": getLanguage(),

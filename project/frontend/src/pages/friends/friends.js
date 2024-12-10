@@ -3,13 +3,16 @@ import { getLanguage } from "../../utils/language.js";
 
 export async function fetchFriendsList() {
   try {
-    const response = await fetch("http://localhost:8000/user/list_friends", {
-      method: "GET",
-      headers: {
-        "Accept-Language": getLanguage(),
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
+    const response = await fetch(
+      "http://localhost:8000/api/user/list_friends",
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": getLanguage(),
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
 
     const { data, error } = await response.json();
     if (!response.ok) {

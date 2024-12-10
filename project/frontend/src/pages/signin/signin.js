@@ -7,7 +7,7 @@ export async function handleSignin(event) {
   const password = document.getElementById("signinPassword").value;
 
   try {
-    const response = await fetch("http://localhost:8000/auth/signin/", {
+    const response = await fetch("http://localhost:8000/api/auth/signin/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export async function intraSignin() {
 }
 
 async function getIntraUrl() {
-  const response = await fetch("http://localhost:8000/auth/intra/", {
+  const response = await fetch("http://localhost:8000/api/auth/intra/", {
     method: "GET",
     headers: {
       "Accept-Language": "tr",
@@ -91,7 +91,7 @@ function closePopupSettings(popup) {
       clearInterval(timer);
       popup.close();
       const responseBackend = await fetch(
-        `http://localhost:8000/auth/intra-callback/?code=${code}`,
+        `http://localhost:8000/api/auth/intra-callback/?code=${code}`,
         {
           method: "POST",
           headers: {

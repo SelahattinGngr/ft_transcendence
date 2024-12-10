@@ -17,7 +17,7 @@ export async function otp(event) {
     if (!username) {
       window.location.hash = "signin";
     }
-    const response = await fetch("http://localhost:8000/auth/two-factor/", {
+    const response = await fetch("http://localhost:8000/api/auth/two-factor/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     const otp1 = document.getElementById("otp1");
     if (otp1) {
-      otp1.focus();//
+      otp1.focus(); //
     }
   }, 10);
 });

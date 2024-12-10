@@ -9,13 +9,16 @@ export async function isvalidToken() {
   }
 
   try {
-    const response = await fetch("http://localhost:8000/auth/validate-token/", {
-      method: "GET",
-      headers: {
-        "Accept-Language": getLanguage(),
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await fetch(
+      "http://localhost:8000/api/auth/validate-token/",
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": getLanguage(),
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {
