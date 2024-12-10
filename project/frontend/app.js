@@ -16,7 +16,7 @@ window.getNotifications = getNotifications;
 document.addEventListener("DOMContentLoaded", async function () {
   isvalidToken();
   const hash = window.location?.hash?.slice(1) ?? "home";
-  const page = hash.split("?")[0];
+  const page = hash.startsWith("profile/user") ? hash : hash.split("?")[0];
   await loadPage(page);
   active(page);
   loadlanguage();
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 window.addEventListener("hashchange", async function () {
   const hash = window.location?.hash?.slice(1) ?? "home";
-  const page = hash.split("?")[0];
+  const page = hash.startsWith("profile/user") ? hash : hash.split("?")[0];
   await loadPage(page);
   active(page);
 });

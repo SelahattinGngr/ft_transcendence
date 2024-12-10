@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="profile.css">
+<link rel="stylesheet" href="/src/pages/profile/profile.css" />
 <div class="container mt-5">
-  <div class="card mx-auto shadow" style="max-width: 600px; background-color: #1f1f1f; color: #f1f1f1">
+  <div class="card mx-auto shadow profile-card" style="max-width: 600px; background-color: #1f1f1f; color: #f1f1f1">
     <div class="card-body text-center">
       <img id="profile-avatar" src="https://via.placeholder.com/150" alt="Avatar" class="rounded-circle mb-3"
         style="width: 150px; height: 150px; object-fit: cover" />
@@ -8,18 +8,46 @@
       <p id="profile-bio" class="text-light" data-lang-path="profile.bioalert"></p>
       <ul class="list-group list-group-flush text-start">
         <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
-          <strong data-lang-path="profile.firstName"></strong> <span id="profile-firstname"></span>
+          <strong data-lang-path="profile.firstName"></strong>
+          <span id="profile-firstname"></span>
         </li>
         <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
-          <strong data-lang-path="profile.lastName"></strong> <span id="profile-lastname"></span>
+          <strong data-lang-path="profile.lastName"></strong>
+          <span id="profile-lastname"></span>
         </li>
         <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
-          <strong data-lang-path="profile.mail"></strong> <span id="profile-email"></span>
+          <strong data-lang-path="profile.mail"></strong>
+          <span id="profile-email"></span>
         </li>
       </ul>
-      <button class="btn btn-outline-primary mt-3" data-lang-path="profile.updateBio"></button>
+      <button id="update-bio-btn" class="btn btn-outline-primary mt-3" data-lang-path="profile.updateBio"></button>
+    </div>
+  </div>
+
+  <div class="card mx-auto shadow mt-4 profile-card"
+    style="max-width: 600px; background-color: #1f1f1f; color: #f1f1f1">
+    <div class="card-body">
+      <h4 class="card-title text-center mb-4" data-lang-path="profile.matchHistory"></h4>
+      <div id="match-history"></div>
     </div>
   </div>
 </div>
 
-<script src="./profile.js" type="module"></script>
+<div class="modal fade" id="bioModal" tabindex="-1" aria-labelledby="bioModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light profile-card">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bioModalLabel" data-lang-path="profile.updateBio"></h5>
+      </div>
+      <div class="modal-body">
+        <textarea id="bio-input" class="form-control bg-dark text-light" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          data-lang-path="profile.closeButton"></button>
+        <button type="button" class="btn btn-primary" id="save-bio-btn" data-lang-path="profile.saveButton">
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

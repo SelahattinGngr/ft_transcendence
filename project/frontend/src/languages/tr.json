@@ -118,7 +118,10 @@
         "firstName": "İsim: ",
         "lastName": "Soyisim: ",
         "mail": "E-posta: ",
-        "updateBio": "Bio güncelle"
+        "updateBio": "Bio güncelle",
+        "matchHistory": "Maç Geçmişi",
+        "closeButton": "İptal",
+        "saveButton": "Değişiklikleri Kaydet"
     },
     "retry-verify-account": {
         "mail": "E-posta",

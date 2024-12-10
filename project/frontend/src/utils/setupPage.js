@@ -1,23 +1,24 @@
 import { Toast } from "../components/toast.js";
 import { moveToNext, otp } from "../pages/2fa/2fa.js";
 import { sendFriendRequest } from "../pages/friend-request/friend.js";
+import { fetchFriendRequests } from "../pages/friends-requests/requests.js";
+import { fetchFriendsList } from "../pages/friends/friends.js";
 import { aiGameSetup } from "../pages/games/ai/aiGameSetup.js";
 import { AiGame } from "../pages/games/ai/game/aiGame.js";
-import { Game } from "../pages/games/locale/game/game.js";
 import { Tournament } from "../pages/games/locale-tournament/game/tournament.js";
 import { localeTournamentSetup } from "../pages/games/locale-tournament/localeTournamentGameSetup.js";
+import { Game } from "../pages/games/locale/game/game.js";
 import { localeGameSetup } from "../pages/games/locale/localeGameSetup.js";
 import { homeActions } from "../pages/home/home.js";
 import { getNotifications } from "../pages/notifications/notification.js";
 import { loadProfile } from "../pages/profile/profile.js";
+import { fetchUserProfile } from "../pages/profile/user/user.js";
 import { retryVerifyAccount } from "../pages/retry-verify-account/retry.js";
 import { handleSignin, intraSignin } from "../pages/signin/signin.js";
 import { handleSignup } from "../pages/signup/signup.js";
 import { verificationCode } from "../pages/verify-account/verification.js";
 import { authButtons } from "./authButtons.js";
 import { authController, unAuthController } from "./isAuth.js";
-import { fetchFriendRequests } from "../pages/friends-requests/requests.js";
-import { fetchFriendsList } from "../pages/friends/friends.js";
 
 export function setupPageActions(page) {
   try {
@@ -41,8 +42,13 @@ export function setupPageActions(page) {
       unAuthController();
       submitHandler("signupForm", handleSignup);
     } else if (page === "profile") {
+      authController();
       loadProfile();
+    } else if (page.startsWith("profile/user")) {
+      authController();
+      fetchUserProfile(page.split("?")[1]);
     } else if (page === "verify-account") {
+      unAuthController();
       verificationCode();
     } else if (page === "not-found") {
       const randomNumber = Math.floor(Math.random() * 33) + 1;
@@ -50,6 +56,7 @@ export function setupPageActions(page) {
         "not-found-image"
       ).src = `/src/assets/errors/${randomNumber}.svg`;
     } else if (page === "retry-verify-account") {
+      unAuthController();
       submitHandler("retryForm", retryVerifyAccount);
     } else if (page === "games/locale") {
       putRange("#ballSpeed", "#rangeValue");
@@ -102,6 +109,7 @@ export function setupPageActions(page) {
         .querySelector("#updateRequests")
         .addEventListener("click", fetchFriendRequests);
     } else if (page === "notifications") {
+      authController();
       getNotifications();
       document
         .querySelector("#updateNotifications")

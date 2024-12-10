@@ -6,7 +6,7 @@ export async function setuplanguage() {
     language = "TR";
     localStorage.setItem("language", language);
   }
-  const response = await fetch(`/src/languages/${language}.json`);
+  const response = await fetch(`/src/languages/${language.toLowerCase()}.json`);
   if (!response.ok) {
     changelanguage("TR");
     return;

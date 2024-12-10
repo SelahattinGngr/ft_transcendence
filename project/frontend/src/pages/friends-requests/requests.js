@@ -27,7 +27,7 @@ export async function fetchFriendRequests() {
                         <button class="btn btn-success accept-request" data-id="${request.id}" onclick="acceptRequest(event, ${request.id})">Kabul Et</button>
                         <span>size bir arkadaşlık isteği gönderdi.</span>
                         <button class="btn btn-danger reject-request" data-id="${request.id}" onclick="rejectRequest(event, ${request.id})">Reddet</button>
-                        <a href="/profile/${request.sender_username}" class="view-profile" target="_blank">Profilini Gör</a>
+                        <a href="/profile/user?${request.sender_username}" class="view-profile" target="_blank">Profilini Gör</a>
                     `;
 
       friendsRequestLists.appendChild(listItem);

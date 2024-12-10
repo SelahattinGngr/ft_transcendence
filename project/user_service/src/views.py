@@ -134,7 +134,7 @@ def intra_create(request):
     }
     return ResponseService.create_success_response(user, 201)
 
-
+# avatar guncelleme işlemleri askıya alındı
 def update_profile(request, username):
     language = request.headers.get("Accept-Language", "tr")
     if request.method != "PUT":
@@ -152,17 +152,17 @@ def update_profile(request, username):
         data = json.loads(request.body.decode("utf-8"))
 
         bio = data.get("bio", user.bio)
-        avatar_url = data.get("avatar_url", user.avatar_id.url)
+        # avatar_url = data.get("avatar_url", user.avatar_id.url)
 
         if len(bio) > 255:
             return ResponseService.create_error_response(
                 Messages.INVALID_BIO_LENGTH, language, 400
             )
 
-        avatar = Avatar.objects.filter(id=user.avatar_id.id).first()
-        if avatar:
-            avatar.url = avatar_url
-            avatar.save()
+        # avatar = Avatar.objects.filter(id=user.avatar_id.id).first()
+        # if avatar:
+        #     avatar.url = avatar_url
+        #     avatar.save()
 
         user.bio = bio
         user.save()
@@ -171,7 +171,7 @@ def update_profile(request, username):
             "id": user.id,
             "username": user.username,
             "bio": user.bio,
-            "avatar_url": avatar.url,
+            # "avatar_url": avatar.url,
         }
         return ResponseService.create_success_response(updated_user, 200)
 

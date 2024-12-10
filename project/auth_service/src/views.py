@@ -17,6 +17,7 @@ import random
 
 logger = logging.getLogger(__name__)
 
+
 def signup(request):
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
@@ -70,7 +71,11 @@ def signup(request):
             try:
                 frontend_url = os.environ.get("FRONTEND_URL")
                 send_kafka_message(
-                    "user-registration-events", {"email": email, "token": f"{frontend_url}/#verify-account?{token}"}
+                    "user-registration-events",
+                    {
+                        "email": email,
+                        "token": f"{frontend_url}/#verify-account?{token}",
+                    },
                 )
                 logger.fatal(f"Verification email sent to {email}")
             except Exception as e:
@@ -87,7 +92,7 @@ def signup(request):
                 "last_name": data.get("last_name", ""),
                 "source_id": user.id,
                 # "avatar_url": data.get("avatar_url", ""), # TODO: avatar_url şartı eklendiğinde burası açılacak
-                "avatar_url": "https://i.hizliresim.com/h8083or.jpg"
+                "avatar_url": "https://i.hizliresim.com/h8083or.jpg",
             }
             logger.fatal(f"User data: {user_data}")
             user_service_response = requests.post(
@@ -142,7 +147,7 @@ def signin(request):
             return ResponseService.create_error_response(
                 Messages.INVALID_CREDENTIALS, language, 400
             )
-        
+
         code = generate_random_code()
 
         # TODO: giriş yapmaya calısan kisi tekrar giris yapmaya calısırsa eski kodu false yapmalıyız
@@ -156,19 +161,24 @@ def signin(request):
         Messages.INVALID_REQUEST_METHOD, language, 405
     )
 
+
 def twofa_mail(user, code, language):
     try:
-        send_kafka_message(
-        "user-2fa-events", {"email": user.email, "code": code}
-        )
+        send_kafka_message("user-2fa-events", {"email": user.email, "code": code})
         logger.fatal(f"Two factorial code email sent to {user.email}")
     except Exception as e:
-        logger.error(f"Error during sending Two factorial code email: {str(e)}, system will try to send it again")
-    
-    return ResponseService.create_success_response({"username": user.username, "message": "Two factorial code sent to your email."})
+        logger.error(
+            f"Error during sending Two factorial code email: {str(e)}, system will try to send it again"
+        )
+
+    return ResponseService.create_success_response(
+        {"username": user.username, "message": "Two factorial code sent to your email."}
+    )
+
 
 def generate_random_code():
-    return ''.join([str(random.randint(0, 9)) for _ in range(4)])
+    return "".join([str(random.randint(0, 9)) for _ in range(4)])
+
 
 def twofactor(request):
     language = request.headers.get("Accept-Language", "tr")
@@ -188,7 +198,7 @@ def twofactor(request):
             return ResponseService.create_error_response(
                 Messages.UNACTIVATE_ACCOUNT, language, 400
             )
-        
+
         try:
             twofactor = TwofactorCodes.objects.get(user=user, code=code, status=True)
             if TokenService.is_mail_token_expired(twofactor.expiration):
@@ -201,7 +211,6 @@ def twofactor(request):
             return ResponseService.create_error_response(
                 Messages.INVALID_CODE, language, 400
             )
-        
 
         access_token, access_exp = TokenService.generate_access_token(user.username)
         refresh_token, refresh_exp = TokenService.generate_refresh_token(user.username)
@@ -220,7 +229,7 @@ def twofactor(request):
 
         twofactor.status = False
         twofactor.save()
-        
+
         return ResponseService.create_success_response(token)
 
 
@@ -255,7 +264,7 @@ def signout(request):
             return ResponseService.create_error_response(
                 Messages.SIGNOUT_FAILED, language, 500
             )
-        
+
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, 405
     )
@@ -373,21 +382,23 @@ def validate_token(request):
             return ResponseService.create_error_response(
                 Messages.MISSING_TOKEN, language, status_code=400
             )
-        
+
         username = TokenService.validate_access_token(access_token.split(" ")[1])
-        logger.fatal(f"Username retrieved by access token: {username}")
-        user = Users.objects.get(username=username)
-        logger.fatal(f"User retrieved by username: {user.username}")
-        logger.fatal(f"User retrieved by username: {user.access_token}")
-        logger.fatal(f"User retrieved by username: {access_token}")
-        
+
+        try:
+            user = Users.objects.get(username=username)
+        except Users.DoesNotExist:
+            return ResponseService.create_error_response(
+                Messages.USER_NOT_FOUND, language, status_code=400
+            )
+
         if user.access_token != access_token.split(" ")[1]:
             return ResponseService.create_error_response(
                 Messages.INVALID_ACCESS_TOKEN, language, status_code=400
             )
 
         return ResponseService.create_success_response({"valid": True})
-    
+
     return ResponseService.create_error_response(
         Messages.INVALID_REQUEST_METHOD, language, status_code=405
     )
@@ -404,7 +415,7 @@ def intraCallback(request):
     data = json.loads(request.body.decode("utf-8"))
     code = data.get("code")
     logger.fatal(f"Code retrieved from request body: {code}")
-    
+
     if not code:
         return ResponseService.create_error_response(
             Messages.AUTHORIZATION_CODE_NOT_PROVIDED, language, 400
@@ -538,6 +549,7 @@ def get_accesstoken_by_username(request):
         Messages.INVALID_REQUEST_METHOD, language, status_code=405
     )
 
+
 def retry_verification_account(request):
     language = request.headers.get("Accept-Language", "tr")
     if request.method == "POST":
@@ -567,7 +579,11 @@ def retry_verification_account(request):
             try:
                 frontend_url = os.environ.get("FRONTEND_URL")
                 send_kafka_message(
-                    "user-registration-events", {"email": email, "token": f"{frontend_url}/#verify-account?{mail_token.token}"}
+                    "user-registration-events",
+                    {
+                        "email": email,
+                        "token": f"{frontend_url}/#verify-account?{mail_token.token}",
+                    },
                 )
                 logger.fatal(f"Verification email sent to {email}")
             except Exception as e:

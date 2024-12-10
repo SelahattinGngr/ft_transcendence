@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/src/pages/profile/user/user.css">
+<div id="user-profile">
+    <div class="container mt-5">
+        <div class="card mx-auto shadow profile-card"
+            style="max-width: 600px; background-color: #1f1f1f; color: #f1f1f1">
+            <div class="card-body text-center">
+                <img id="profile-avatar" src="https://via.placeholder.com/150" alt="Avatar" class="rounded-circle mb-3"
+                    style="width: 150px; height: 150px; object-fit: cover" />
+                <h3 id="profile-username" class="card-title"></h3>
+                <p id="profile-bio" class="text-light" data-lang-path="profile.bioalert"></p>
+                <ul class="list-group list-group-flush text-start">
+                    <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
+                        <strong data-lang-path="profile.firstName"></strong> <span id="profile-firstname"></span>
+                    </li>
+                    <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
+                        <strong data-lang-path="profile.lastName"></strong> <span id="profile-lastname"></span>
+                    </li>
+                    <li class="list-group-item" style="background-color: transparent; color: #f1f1f1">
+                        <strong data-lang-path="profile.mail"></strong> <span id="profile-email"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mx-auto shadow mt-4 profile-card"
+            style="max-width: 600px; background-color: #1f1f1f; color: #f1f1f1">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-4">Match History</h4>
+                <div id="match-history">
+                    <!-- TODO: db'den çekilen veriler burada gözükecek.-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
