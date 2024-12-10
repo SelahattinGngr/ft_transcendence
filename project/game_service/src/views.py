@@ -1,100 +1,42 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
+import json
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Game, Move
-from .serializers import GameSerializer, MoveSerializer
+from .models import  GameHistory
+from django.http import JsonResponse
 
-"""
-    frontend de oyun oynansın backend sadece kimlerin oynadığını ve oyunun durumunu tutsun
-    front da oyuncuya davet atılsın kafi
-"""
 
-# Game API Views
-class GameListView(APIView):
-    """
-    Liste halinde mevcut tüm oyunları getirir.
-    """
-    def get(self, request):
-        games = Game.objects.all()
-        serializer = GameSerializer(games, many=True)
-        return Response(serializer.data)
+# post -> usrname/userScore/aiScore/isWin
+# isWin boolean olacak, user kazandıysa true kazanmadıysa false dönecek
 
-class GameDetailView(APIView):
-    """
-    Belirli bir oyunun detaylarını gösterir.
-    """
-    def get(self, request, game_id):
-        game = get_object_or_404(Game, game_id=game_id)
-        serializer = GameSerializer(game)
-        return Response(serializer.data)
+# get -> son 10 maçın verileri dönecek
+# http://localhost:8000/game/get-history/<username>
 
-class GameCreateView(APIView):
-    """
-    Yeni bir oyun başlatır.
-    """
-    def post(self, request):
-        serializer = GameSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def save_game(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    try:
+        data = json.loads(request.body)
+        username = data.get("username")
+        userScore = data.get("userScore")
+        aiScore = data.get("aiScore")
+        isWin = data.get("isWin")
 
-class GameUpdateView(APIView):
-    """
-    Mevcut bir oyunun durumunu günceller (örneğin, oyuncu hamlesi).
-    """
-    def put(self, request, game_id):
-        game = get_object_or_404(Game, game_id=game_id)
-        serializer = GameSerializer(game, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        game = GameHistory.objects.create(username=username, userScore=userScore, aiScore=aiScore, isWin=isWin)
+        game.save()
+        return JsonResponse({"message": "Game saved successfully"}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-# Move API Views
-class MoveCreateView(APIView):
-    """
-    Oyuna yeni bir hamle ekler.
-    """
-    def post(self, request, game_id):
-        game = get_object_or_404(Game, game_id=game_id)
-        serializer = MoveSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(game=game)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Tournament API Views
-class TournamentCreateView(APIView):
-    """
-    Yeni bir turnuva oluşturur.
-    """
-    def post(self, request):
-        # Turnuva oluşturma işlemleri
-        return Response({"message": "Turnuva başarıyla oluşturuldu!"}, status=status.HTTP_201_CREATED)
+def get_history(request, username):
+    if request.method != "GET":
+        return JsonResponse({"error": "Method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-class TournamentListView(APIView):
-    """
-    Mevcut tüm turnuvaları listeler.
-    """
-    def get(self, request):
-        # Turnuva listesi çekme işlemleri
-        return Response({"message": "Turnuva listesi burada!"}, status=status.HTTP_200_OK)
-
-# Matchmaking API Views
-class MatchmakingCreateView(APIView):
-    """
-    İki oyuncuyu eşleştirir.
-    """
-    def post(self, request):
-        # Eşleştirme işlemleri
-        return Response({"message": "Eşleştirme başarıyla yapıldı!"}, status=status.HTTP_201_CREATED)
-
-class MatchmakingStatusView(APIView):
-    """
-    Eşleştirme durumunu kontrol eder.
-    """
-    def get(self, request):
-        # Eşleştirme durumu kontrol işlemleri
-        return Response({"message": "Eşleştirme durumu!"}, status=status.HTTP_200_OK)
+    try: 
+        history = GameHistory.objects.filter(username=username).order_by("-id")[:10]
+        history_data = list(history.values())
+        return JsonResponse({"data": history_data}, safe=False, status=status.HTTP_200_OK)
+    except GameHistory.DoesNotExist:
+        return JsonResponse({"error": "No game history found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

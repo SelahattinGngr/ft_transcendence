@@ -8,7 +8,7 @@ services:
       - .env
     hostname: frontend
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
       - backend
 
@@ -100,19 +100,19 @@ services:
     networks:
       - backend
     
-  chatservice:
-    container_name: chatservice
-    build: ./chat_service
-    ports:
-      - "8001:8000"
-    #depends_on:
-    #  - userservice
-    #  - kafka
-    env_file:
-      - .env
-    hostname: chatservice
-    networks:
-      - backend
+  # chatservice:
+  #   container_name: chatservice
+  #   build: ./chat_service
+  #   ports:
+  #     - "8001:8000"
+  #   #depends_on:
+  #   #  - userservice
+  #   #  - kafka
+  #   env_file:
+  #     - .env
+  #   hostname: chatservice
+  #   networks:
+  #     - backend
   
   logservice:
     container_name: logservice
@@ -132,7 +132,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
       PGADMIN_DEFAULT_PASSWORD: "admin"
     ports:
-      - "8080:80"
+      - "8081:80"
     networks:
       - backend
 

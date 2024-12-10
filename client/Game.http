@@ -1,0 +1,42 @@
+@url = http://localhost:8000
+
+###
+# @name signin
+POST {{url}}/auth/signin/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "signin": "bege",
+    "password": "123Gursoy123"
+}
+
+###
+# @name signin
+POST {{url}}/auth/two-factor/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+
+{
+    "username": "bege",
+    "code": "8784"
+}
+
+###
+# @name get_history
+GET {{url}}/game/history/bege/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJlZ2UiLCJleHAiOjE3NjUzODAzODd9.eJ8Xv2LXhBFhguavRyHqrTgz5hRcUf-4n-HCWjkCKVw
+
+###
+# @name save_game
+POST {{url}}/game/save-game/ HTTP/1.1
+Accept-Language: tr
+Accept: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJlZ2UiLCJleHAiOjE3NjUzODAzODd9.eJ8Xv2LXhBFhguavRyHqrTgz5hRcUf-4n-HCWjkCKVw
+
+{
+    "username": "bege",
+    "userScore": 5,
+    "aiScore": 3,
+    "isWin": true
+}
