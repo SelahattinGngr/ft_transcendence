@@ -26,17 +26,20 @@ MICROSERVICES = {
 
 
 def proxy_request(request, path):
-    service_url = MICROSERVICES.get(path.split("/")[1], None)
+    service_url = MICROSERVICES.get(path.split("/")[0], None)
     if not service_url:
         return JsonResponse({"error": "Invalid service name"}, status=400)
 
+    logger.fatal(f"service_url: {request.GET.get('code')}")
     new_path = request.path.replace("api/", "", 1)
+    if request.path.startswith("/auth/intra-callback/"):
+        new_path += f"?code={request.GET.get('code')}"
     request.path = new_path
-
-    log_message = f"incoming request: {request.method}"
-    if request.body:
-        log_message += f" {request.body}"
-    Log.add_log(service_name=path, log_message=log_message, request=request)
+    logger.fatal(f"request.path: {request.path}")
+    # log_message = f"incoming request: {request.method}"
+    # if request.body:
+    #     log_message += f" {request.body}"
+    # Log.add_log(service_name=path, log_message=log_message, request=request)
 
     try:
         response = requests.request(
@@ -46,11 +49,11 @@ def proxy_request(request, path):
             data=request.body,
         )
 
-        Log.add_log(
-            service_name=path,
-            log_message=f"outgoing response: {response.status_code} {response.text}",
-            request=request,
-        )
+        # Log.add_log(
+        #     service_name=path,
+        #     log_message=f"outgoing response: {response.status_code} {response.text}",
+        #     request=request,
+        # )
         return JsonResponse(response.json(), status=response.status_code)
     except requests.exceptions.RequestException as e:
         return JsonResponse(
