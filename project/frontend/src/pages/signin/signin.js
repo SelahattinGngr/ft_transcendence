@@ -8,7 +8,7 @@ export async function handleSignin(event) {
 
   try {
     const response = await fetch(
-      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/signin/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/myapi/auth/signin/",
       {
         method: "POST",
         headers: {
@@ -57,7 +57,7 @@ export async function intraSignin() {
 
 async function getIntraUrl() {
   const response = await fetch(
-    "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/intra/",
+    "https://k2m10s01.42kocaeli.com.tr:8080/myapi/auth/intra/",
     {
       method: "GET",
       headers: {
@@ -91,13 +91,15 @@ function createPopup(url) {
 function closePopupSettings(popup) {
   const timer = setInterval(async function () {
     const urlParams = new URLSearchParams(popup.location.search);
+    console.log("URL Params:", popup.location.href);
     const code = urlParams.get("code");
+    console.log("Code:", code);
     if (!!code) {
       console.log("Code:", code);
       clearInterval(timer);
       popup.close();
       const responseBackend = await fetch(
-        `https://k2m10s01.42kocaeli.com.tr:8080/api/auth/intra-callback/?code=${code}`,
+        `https://k2m10s01.42kocaeli.com.tr:8080/myapi/auth/intra-callback/?code=${code}`,
         {
           method: "POST",
           headers: {

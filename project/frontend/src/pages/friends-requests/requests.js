@@ -2,7 +2,7 @@ import { Toast } from "../../components/toast.js";
 
 export async function fetchFriendRequests() {
   const response = await fetch(
-    "https://k2m10s01.42kocaeli.com.tr:8080/api/friend/list-friends-request/",
+    "https://k2m10s01.42kocaeli.com.tr:8080/myapi/friend/list-friends-request/",
     {
       method: "GET",
       headers: {
@@ -52,7 +52,7 @@ export async function acceptRequest(e, id) {
   e.preventDefault();
   try {
     const response = await fetch(
-      `https://k2m10s01.42kocaeli.com.tr:8080/api/friend/accept-request/${id}/`,
+      `https://k2m10s01.42kocaeli.com.tr:8080/myapi/friend/accept-request/${id}/`,
       {
         method: "GET",
         headers: {
@@ -79,7 +79,7 @@ export async function rejectRequest(e, id) {
   e.preventDefault();
   try {
     const response = await fetch(
-      `https://k2m10s01.42kocaeli.com.tr:8080/api/friend/reject-request/${id}/`,
+      `https://k2m10s01.42kocaeli.com.tr:8080/myapi/friend/reject-request/${id}/`,
       {
         method: "GET",
         headers: {

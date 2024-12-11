@@ -18,7 +18,7 @@ export async function handleSignup(event) {
       });
     }
     const response = await fetch(
-      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/signup/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/myapi/auth/signup/",
       {
         method: "POST",
         headers: {

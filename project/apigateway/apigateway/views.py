@@ -26,16 +26,20 @@ MICROSERVICES = {
 
 
 def proxy_request(request, path):
-    service_url = MICROSERVICES.get(path.split("/")[0], None)
-    if not service_url:
-        return JsonResponse({"error": "Invalid service name"}, status=400)
-
-    logger.fatal(f"service_url: {request.GET.get('code')}")
-    new_path = request.path.replace("api/", "", 1)
-    if request.path.startswith("/auth/intra-callback/"):
+    if request.path.startswith("/api/auth/"):
+        service_url = MICROSERVICES.get("auth", None)
+        new_path = request.path.replace("api/", "", 1)
         new_path += f"?code={request.GET.get('code')}"
-    request.path = new_path
-    logger.fatal(f"request.path: {request.path}")
+        request.path = new_path
+    else:
+        service_url = MICROSERVICES.get(path.split("/")[0], None)
+        if not service_url:
+            return JsonResponse({"error": "Invalid service name"}, status=400)
+
+        new_path = request.path.replace("myapi/", "", 1)
+        if request.path.startswith("/auth/intra-callback/"):
+            new_path += f"?code={request.GET.get('code')}"
+        request.path = new_path
     # log_message = f"incoming request: {request.method}"
     # if request.body:
     #     log_message += f" {request.body}"

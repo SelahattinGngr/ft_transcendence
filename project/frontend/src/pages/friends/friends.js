@@ -4,7 +4,7 @@ import { getLanguage } from "../../utils/language.js";
 export async function fetchFriendsList() {
   try {
     const response = await fetch(
-      "https://k2m10s01.42kocaeli.com.tr:8080/api/user/list_friends",
+      "https://k2m10s01.42kocaeli.com.tr:8080/myapi/user/list_friends",
       {
         method: "GET",
         headers: {

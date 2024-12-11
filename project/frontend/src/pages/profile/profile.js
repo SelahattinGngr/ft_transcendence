@@ -10,7 +10,7 @@ export async function loadProfile() {
 
   try {
     const response = await fetch(
-      `https://k2m10s01.42kocaeli.com.tr:8080/api/user/${username}/`,
+      `https://k2m10s01.42kocaeli.com.tr:8080/myapi/user/${username}/`,
       {
         method: "GET",
         headers: {
@@ -64,7 +64,7 @@ function setupBioUpdate(currentBio) {
     try {
       console.log("Sending bio update request...");
       const response = await fetch(
-        `https://k2m10s01.42kocaeli.com.tr:8080/api/user/update/${username}/`,
+        `https://k2m10s01.42kocaeli.com.tr:8080/myapi/user/update/${username}/`,
         {
           method: "PUT",
           headers: {
@@ -102,7 +102,7 @@ async function loadMatchHistory() {
   try {
     const username = localStorage.getItem("username");
     const response = await fetch(
-      `https://k2m10s01.42kocaeli.com.tr:8080/api/game/get-history/${username}`,
+      `https://k2m10s01.42kocaeli.com.tr:8080/myapi/game/get-history/${username}`,
       {
         method: "GET",
         headers: {

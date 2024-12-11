@@ -11,7 +11,7 @@ export async function signout() {
 
   try {
     const response = await fetch(
-      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/signout/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/myapi/auth/signout/",
       {
         method: "GET",
         headers: {

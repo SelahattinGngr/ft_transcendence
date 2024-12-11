@@ -10,7 +10,7 @@ export async function isvalidToken() {
 
   try {
     const response = await fetch(
-      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/validate-token/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/myapi/auth/validate-token/",
       {
         method: "GET",
         headers: {

@@ -4,7 +4,7 @@ import { setuplanguage } from "../../utils/language.js";
 export async function getNotifications() {
   try {
     const response = await fetch(
-      "https://k2m10s01.42kocaeli.com.tr:8080/api/notification/get-notifications/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/myapi/notification/get-notifications/",
       {
         method: "GET",
         headers: {
@@ -91,7 +91,7 @@ export async function getNotifications() {
 export async function readNotification(e, notificationId) {
   try {
     const response = await fetch(
-      "https://k2m10s01.42kocaeli.com.tr:8080/api/notification/read/" +
+      "https://k2m10s01.42kocaeli.com.tr:8080/myapi/notification/read/" +
         notificationId +
         "/",
       {
@@ -127,7 +127,7 @@ export async function readNotification(e, notificationId) {
 // export async function acceptRequest(e, notificationId) {
 //   try {
 //     const response = await fetch(
-//       "https://k2m10s01.42kocaeli.com.tr:8080/api/friend/accept-request/" + notificationId,
+//       "https://k2m10s01.42kocaeli.com.tr:8080/myapi/friend/accept-request/" + notificationId,
 //       {
 //         method: "GET",
 //         headers: {
@@ -160,7 +160,7 @@ export async function readNotification(e, notificationId) {
 // export async function rejectRequest(e, notificationId) {
 //   try {
 //     const response = await fetch(
-//       "https://k2m10s01.42kocaeli.com.tr:8080/api/friend/reject-request/" + notificationId,
+//       "https://k2m10s01.42kocaeli.com.tr:8080/myapi/friend/reject-request/" + notificationId,
 //       {
 //         method: "GET",
 //         headers: {

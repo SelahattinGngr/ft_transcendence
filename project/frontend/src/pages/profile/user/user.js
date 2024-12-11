@@ -4,7 +4,7 @@ import { getLanguage } from "../../../utils/language.js";
 export async function fetchUserProfile(userName) {
   try {
     const response = await fetch(
-      `https://k2m10s01.42kocaeli.com.tr:8080/api/user/${userName}`,
+      `https://k2m10s01.42kocaeli.com.tr:8080/myapi/user/${userName}`,
       {
         method: "GET",
         headers: {
@@ -39,7 +39,7 @@ export async function fetchUserProfile(userName) {
 async function loadMatchHistory(username) {
   try {
     const response = await fetch(
-      `https://k2m10s01.42kocaeli.com.tr:8080/api/game/get-history/${username}`,
+      `https://k2m10s01.42kocaeli.com.tr:8080/myapi/game/get-history/${username}`,
       {
         method: "GET",
         headers: {

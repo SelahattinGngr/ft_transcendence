@@ -18,7 +18,7 @@ export async function otp(event) {
       window.location.hash = "signin";
     }
     const response = await fetch(
-      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/two-factor/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/myapi/auth/two-factor/",
       {
         method: "POST",
         headers: {
