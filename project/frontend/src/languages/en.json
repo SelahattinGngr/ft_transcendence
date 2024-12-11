@@ -27,15 +27,13 @@
     },
     "home": {
         "hero": {
-            "description": "A simple web page with a simple pong game as our Ecole 42 graduation project :D",
-            "ai": "Play with AI",
-            "locale": "Play Locally",
-            "signin": "Sign In",
-            "signup": "Sign Up"
+            "description": "A simple website with a pong game for our Ecole 42 final project :D",
+            "tournament": "Play Tournament",
+            "locale": "Play Locally"
         }
     },
     "2fa": {
-        "inputCode": "Enter your OTP code",
+        "inputCode": "Enter your OTP Code",
         "button": "Verify"
     },
     "about-us": {
@@ -52,20 +50,21 @@
     "friends-requests": {
         "requests": "Friend Requests",
         "accept": "Accept",
-        "decline": "Decline"
+        "decline": "Decline",
+        "button": "Update Requests"
     },
     "games": {
         "ai": {
             "set": "AI Game Settings",
             "usr": "Player Name",
-            "placeholder": "Enter your name",
+            "placeholder": "Enter your player name",
             "ballSpeed": "Ball Speed",
             "gameDifficulty": "Game Difficulty",
             "paddleHeight": "Paddle Height",
-            "winScore": "Win Score",
+            "winScore": "Winning Score",
             "button": "Play",
             "games": {
-                "canvas": "Your browser does not support HTML5 canvas"
+                "canvas": "Your browser does not support the HTML5 canvas tag"
             }
         },
         "locale": {
@@ -76,10 +75,10 @@
             "usr2Placeholder": "Enter Player 2 name",
             "ballSpeed": "Ball Speed",
             "paddleHeight": "Paddle Height",
-            "winScore": "Win Score",
+            "winScore": "Winning Score",
             "button": "Play",
             "games": {
-                "canvas": "Your browser does not support HTML5 canvas"
+                "canvas": "Your browser does not support the HTML5 canvas tag"
             }
         },
         "locale-tournament": {
@@ -94,59 +93,62 @@
             "usr4Placeholder": "Enter Player 4 name",
             "ballSpeed": "Ball Speed",
             "paddleHeight": "Paddle Height",
-            "winScore": "Win Score",
+            "winScore": "Winning Score",
             "button": "Play",
             "games": {
-                "canvas": "Your browser does not support HTML5 canvas"
+                "canvas": "Your browser does not support the HTML5 canvas tag"
             }
         },
         "online": {
-            "about": "This feature is still under development"
+            "about": "This feature is under development"
         }
     },
     "not-found": {
         "notfound": "404 Page Not Found",
-        "back": "Go to Home Page"
+        "back": "Go to Homepage"
     },
     "notification": {
         "notification": "Notifications",
         "update": "Update Notifications"
     },
     "profile": {
-        "bioalert": "No valid bio information found",
+        "bioalert": "No valid Bio information found",
         "firstName": "First Name: ",
         "lastName": "Last Name: ",
         "mail": "Email: ",
-        "updateBio": "Update Bio"
+        "updateBio": "Update Bio",
+        "matchHistory": "Match History",
+        "closeButton": "Cancel",
+        "saveButton": "Save Changes"
     },
     "retry-verify-account": {
         "mail": "Email",
-        "placeholder": "Enter your email",
-        "verifybutton": "Send Verification Email",
+        "placeholder": "Enter your email address",
+        "verifybutton": "Send Verification Mail",
         "account": "Don't have an account?",
         "signup": "Sign Up"
     },
     "signin": {
         "mail": "Email",
-        "mailPlaceholder": "Enter your email",
+        "mailPlaceholder": "Enter your email address",
         "password": "Password",
         "passwordPlaceholder": "Enter your password",
         "signin": "Sign In",
         "account": "Don't have an account?",
         "signup": "Sign Up",
-        "verification": "Didn't receive the verification email?",
-        "retry": "Resend email :)",
+        "verification": "Didn't receive a verification email?",
+        "retry": "Resend it :)",
         "orWith": "Or"
     },
     "signup": {
         "username": "Username",
         "usernamePlaceholder": "Enter your username",
         "mail": "Email",
-        "mailPlaceholder": "Enter your email",
+        "mailPlaceholder": "Enter your email address",
         "password": "Password",
         "passwordPlaceholder": "Enter your password",
-        "repeatPassword": "Repeat your password",
-        "repeatPasswordPlaceholder": "Repeat your password",
+        "repeatPassword": "Re-enter your password",
+        "repeatPasswordPlaceholder": "Re-enter your password",
         "firstName": "First Name",
         "firstNamePlaceholder": "Enter your first name",
         "lastName": "Last Name",
@@ -156,14 +158,14 @@
         "signin": "Sign In"
     },
     "verify": {
-        "spinner": "Verifying account"
+        "spinner": "Verifying Account"
     },
     "temp": {
         "n": "New Chat",
         "o": "Online"
     },
     "log": {
-        "log": "Sign In",
+        "log": "Log In",
         "name": "Username",
         "pass": "Password"
     },
