@@ -1,48 +1,93 @@
-<link rel="stylesheet" href="/src/pages/games/ai/ai.css">
+<link rel="stylesheet" href="/src/pages/games/ai/ai.css" />
 
 <form class="form mx-auto col-md-5" id="aiGamesForm">
-    <div class="d-flex align-items-center gap-2">
-        <img src="/src/assets/icons/controller.svg" alt="" style="width: 25px; height: 25px;">
-        <h4 class="card-title" data-lang-path="games.ai.set"></h4>
-    </div>
-    <div class="flex-column">
-        <label data-lang-path="games.ai.usr">Oyuncu</label>
-    </div>
-    <div class="inputForm">
-        <img src="/src/assets/icons/person.svg" alt="">
-        <input type="text" class="input" id="gamerusername" data-lang-path="games.ai.placeholder" placeholder=""
-            required autocomplete="username" />
-    </div>
-    <div class="flex-column">
-        <label data-lang-path="games.ai.ballSpeed"></label>
-    </div>
-    <div class="inputForm">
-        <img src="/src/assets/icons/speedometer.svg" alt="">
-        <input type="range" class="form-range" value="1" min="1" max="10" step="0.5" id="ballSpeed">
-        <p id="rangeValue" class="text-center">1</p>
-    </div>
-    <div class="flex-column">
-        <label data-lang-path="games.ai.gameDifficulty"></label>
-    </div>
-    <div class="inputForm">
-        <img src="/src/assets/icons/activity.svg" alt="">
-        <input type="range" class="form-range" value="1" min="1" max="5" step="1" id="gameDifficulty">
-        <p id="difficultyRangeValue" class="text-center">1</p>
-    </div>
-    <div class="flex-column">
-        <label data-lang-path="games.ai.paddleHeight"></label>
-    </div>
-    <div class="inputForm">
-        <img src="/src/assets/icons/rulers.svg" alt="">
-        <input type="number" value="100" min="100" max="200" step="10" class="input" id="paddleHeight" required />
-    </div>
-    <div class="flex-column">
-        <label data-lang-path="games.ai.winScore"></label>
-    </div>
-    <div class="inputForm">
-        <img src="/src/assets/icons/trophy.svg" alt="">
-        <input type="number" value="5" min="5" max="15" class="input" id="winScore" required />
-    </div>
+  <div class="d-flex align-items-center gap-2">
+    <img
+      src="/src/assets/icons/controller.svg"
+      alt=""
+      style="width: 25px; height: 25px"
+    />
+    <h4 class="card-title" data-lang-path="games.ai.set"></h4>
+  </div>
+  <div class="flex-column">
+    <label data-lang-path="games.ai.usr">Oyuncu</label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/person.svg" alt="" />
+    <input
+      type="text"
+      class="input"
+      id="gamerusername"
+      data-lang-path="games.ai.placeholder"
+      placeholder=""
+      required
+      autocomplete="username"
+      disabled
+    />
+  </div>
+  <div class="flex-column">
+    <label data-lang-path="games.ai.ballSpeed"></label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/speedometer.svg" alt="" />
+    <input
+      type="range"
+      class="form-range"
+      value="1"
+      min="1"
+      max="10"
+      step="0.5"
+      id="ballSpeed"
+    />
+    <p id="rangeValue" class="text-center">1</p>
+  </div>
+  <div class="flex-column">
+    <label data-lang-path="games.ai.gameDifficulty"></label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/activity.svg" alt="" />
+    <input
+      type="range"
+      class="form-range"
+      value="1"
+      min="1"
+      max="5"
+      step="1"
+      id="gameDifficulty"
+    />
+    <p id="difficultyRangeValue" class="text-center">1</p>
+  </div>
+  <div class="flex-column">
+    <label data-lang-path="games.ai.paddleHeight"></label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/rulers.svg" alt="" />
+    <input
+      type="number"
+      value="100"
+      min="100"
+      max="200"
+      step="10"
+      class="input"
+      id="paddleHeight"
+      required
+    />
+  </div>
+  <div class="flex-column">
+    <label data-lang-path="games.ai.winScore"></label>
+  </div>
+  <div class="inputForm">
+    <img src="/src/assets/icons/trophy.svg" alt="" />
+    <input
+      type="number"
+      value="5"
+      min="5"
+      max="15"
+      class="input"
+      id="winScore"
+      required
+    />
+  </div>
 
-    <button class="button-submit" data-lang-path="games.ai.button"></button>
+  <button class="button-submit" data-lang-path="games.ai.button"></button>
 </form>

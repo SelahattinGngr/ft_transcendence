@@ -2,7 +2,6 @@ import { Toast } from "../../../components/toast.js";
 import { getLanguage } from "../../../utils/language.js";
 
 export async function fetchUserProfile(userName) {
-  console.log(userName);
   try {
     const response = await fetch(`http://localhost:8000/api/user/${userName}`, {
       method: "GET",
@@ -24,7 +23,7 @@ export async function fetchUserProfile(userName) {
     document.querySelector("#profile-firstname").textContent = data.first_name;
     document.querySelector("#profile-lastname").textContent = data.last_name;
     document.querySelector("#profile-email").textContent = data.email;
-    loadMatchHistory();
+    loadMatchHistory(userName);
   } catch (error) {
     Toast({
       type: "error",
@@ -34,8 +33,50 @@ export async function fetchUserProfile(userName) {
   }
 }
 
-function loadMatchHistory() {
-  const matchHistoryContainer = document.getElementById("match-history");
-  matchHistoryContainer.innerHTML =
-    "<p>Ahmet gardaşım tam burada maç sonucu için off'a bass</p>";
+async function loadMatchHistory(username) {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/api/game/get-history/${username}`,
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": getLanguage(),
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
+
+    const { data, error } = await response.json();
+    const matchHistoryContainer = document.querySelector("#match-history");
+    if (!response.ok) {
+      matchHistoryContainer.innerHTML =
+        "<p>Ahmet gardaşım tam burada maç sonucu için off'a bass</p>";
+      throw new Error(error);
+    }
+
+    if (data.length === 0) {
+      matchHistoryContainer.innerHTML = "<p>No match history</p>";
+      return;
+    }
+
+    const matchHistory = data.map((match) => {
+      return `
+        <div class="card mb-3 text-bg-${match.isWin ? "success" : "danger"}">
+          <div class="card-body">
+            <h5 class="card-title">${match.username} vs ${match.aiName}</h5>
+            <p class="card-text">${match.userScore} - ${match.aiScore}</p>
+            <p class="card-text">${match.created_at}</p>
+          </div>
+        </div>
+      `;
+    });
+
+    matchHistoryContainer.innerHTML = matchHistory.join("");
+  } catch (error) {
+    Toast({
+      title: "Error",
+      message: error.message,
+      theme: "danger",
+    });
+  }
 }

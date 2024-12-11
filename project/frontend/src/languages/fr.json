@@ -82,7 +82,7 @@
                 "canvas": "Votre navigateur ne prend pas en charge le canvas HTML5"
             }
         },
-        "local-tournament": {
+        "locale-tournament": {
             "settingsMessage": "Paramètres du tournoi local",
             "usr1": "Joueur 1",
             "usr1Placeholder": "Entrez le nom du joueur 1",

@@ -24,19 +24,19 @@ Accept: application/json
 
 ###
 # @name get_history
-GET {{url}}/game/history/bege/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJlZ2UiLCJleHAiOjE3NjUzODAzODd9.eJ8Xv2LXhBFhguavRyHqrTgz5hRcUf-4n-HCWjkCKVw
+GET {{url}}/api/game/get-history/bege/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlbGFoYXR0aW4iLCJleHAiOjE3NjU0MDIxMjd9.rvFJyy0QsPja2JokOndWzd5JydwisPug-VySdoIrDjU
 
 ###
 # @name save_game
-POST {{url}}/game/save-game/ HTTP/1.1
+POST {{url}}/api/game/save-game/ HTTP/1.1
 Accept-Language: tr
 Accept: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJlZ2UiLCJleHAiOjE3NjUzODAzODd9.eJ8Xv2LXhBFhguavRyHqrTgz5hRcUf-4n-HCWjkCKVw
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlbGFoYXR0aW4iLCJleHAiOjE3NjU0MDIxMjd9.rvFJyy0QsPja2JokOndWzd5JydwisPug-VySdoIrDjU
 
 {
-    "username": "bege",
-    "userScore": 5,
-    "aiScore": 3,
-    "isWin": true
+    "username": "selahattin",
+    "userScore": 1,
+    "aiScore": 5,
+    "isWin": false
 }

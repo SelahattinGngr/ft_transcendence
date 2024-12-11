@@ -32,6 +32,7 @@ export async function otp(event) {
     }
     localStorage.setItem("access_token", data.data.access_token.token);
     localStorage.setItem("refresh_token", data.data.refresh_token.token);
+    localStorage.setItem("profileImage", await getProfileImage());
     authButtons();
     Toast({
       title: "Success",
@@ -66,3 +67,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 10);
 });
+
+async function getProfileImage() {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/api/user/${username}/`,
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": "tr",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
+
+    const { data, error } = await response.json();
+    if (!response.ok) {
+      throw new Error(error);
+    }
+
+    return data.avatar_url;
+  } catch (error) {
+    Toast({
+      title: "Error",
+      message: error.message,
+      theme: "danger",
+    });
+  }
+}

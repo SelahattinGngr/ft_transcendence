@@ -1,3 +1,4 @@
+import { moveToNext } from "./src/pages/2fa/2fa.js";
 import { getNotifications } from "./src/pages/notifications/notification.js";
 import { active } from "./src/utils/active.js";
 import { isvalidToken } from "./src/utils/isValidToken.js";
@@ -12,6 +13,7 @@ import { signout } from "./src/utils/signout.js";
 window.changelanguage = changelanguage;
 window.signout = signout;
 window.getNotifications = getNotifications;
+window.moveToNext = moveToNext;
 
 document.addEventListener("DOMContentLoaded", async function () {
   isvalidToken();
@@ -36,7 +38,7 @@ async function loadPage(page) {
       page = "home";
       window.location.hash = "#home";
     }
-    const filePath = `/src/pages/${page}/`;
+    const filePath = `/src/pages/${page.split("?")[0]}/`;
     const response = await fetch(filePath);
     if (!response.ok) {
       throw new Error("Page not found");

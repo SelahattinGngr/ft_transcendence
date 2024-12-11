@@ -28,10 +28,8 @@
     "home": {
         "hero": {
             "description": "Ecole 42 bitirme projemiz olan basit bir pong oyunu içeren basit bir web sitesi :D",
-            "ai": "Yapay Zeka ile oyna",
-            "locale": "Yerelde oyna",
-            "signin": "Giriş yap",
-            "signup": "Kayıt ol"
+            "tournament": "Turnuva Oyna",
+            "locale": "Yerelde oyna"
         }
     },
     "2fa": {

@@ -82,7 +82,7 @@
                 "canvas": "Your browser does not support HTML5 canvas"
             }
         },
-        "local-tournament": {
+        "locale-tournament": {
             "settingsMessage": "Local Tournament Settings",
             "usr1": "Player 1",
             "usr1Placeholder": "Enter Player 1 name",

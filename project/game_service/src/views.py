@@ -19,9 +19,10 @@ def save_game(request):
         username = data.get("username")
         userScore = data.get("userScore")
         aiScore = data.get("aiScore")
+        aiName = "MOULINETTE"
         isWin = data.get("isWin")
 
-        game = GameHistory.objects.create(username=username, userScore=userScore, aiScore=aiScore, isWin=isWin)
+        game = GameHistory.objects.create(username=username, userScore=userScore, aiScore=aiScore, isWin=isWin, aiName=aiName)
         game.save()
         return JsonResponse({"message": "Game saved successfully"}, status=status.HTTP_201_CREATED)
     except Exception as e:

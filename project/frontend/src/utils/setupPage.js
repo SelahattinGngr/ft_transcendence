@@ -1,5 +1,5 @@
 import { Toast } from "../components/toast.js";
-import { moveToNext, otp } from "../pages/2fa/2fa.js";
+import { otp } from "../pages/2fa/2fa.js";
 import { sendFriendRequest } from "../pages/friend-request/friend.js";
 import { fetchFriendRequests } from "../pages/friends-requests/requests.js";
 import { fetchFriendsList } from "../pages/friends/friends.js";
@@ -9,7 +9,6 @@ import { Tournament } from "../pages/games/locale-tournament/game/tournament.js"
 import { localeTournamentSetup } from "../pages/games/locale-tournament/localeTournamentGameSetup.js";
 import { Game } from "../pages/games/locale/game/game.js";
 import { localeGameSetup } from "../pages/games/locale/localeGameSetup.js";
-import { homeActions } from "../pages/home/home.js";
 import { getNotifications } from "../pages/notifications/notification.js";
 import { loadProfile } from "../pages/profile/profile.js";
 import { fetchUserProfile } from "../pages/profile/user/user.js";
@@ -27,9 +26,7 @@ export function setupPageActions(page) {
       // window.location.pathname kullanarak sayfa yolunu değiştirebilirsiniz.
       window.location.hash = "home";
     }
-    if (page === "home") {
-      homeActions();
-    } else if (page === "signin") {
+    if (page === "signin") {
       unAuthController();
       submitHandler("signinForm", handleSignin);
       document
@@ -59,17 +56,31 @@ export function setupPageActions(page) {
       unAuthController();
       submitHandler("retryForm", retryVerifyAccount);
     } else if (page === "games/locale") {
+      if (isMobile()) {
+        throw new Error("This game is not supported on mobile devices.");
+      }
       putRange("#ballSpeed", "#rangeValue");
       submitHandler("localeGamesForm", localeGameSetup);
     } else if (page === "games/locale-tournament") {
+      if (isMobile()) {
+        throw new Error("This game is not supported on mobile devices.");
+      }
       putRange("#ballSpeed", "#rangeValue");
       submitHandler("localeTournamentGamesForm", localeTournamentSetup);
     } else if (page === "games/ai") {
+      if (isMobile()) {
+        throw new Error("This game is not supported on mobile devices.");
+      }
       authController();
+      document.querySelector("#gamerusername").value =
+        localStorage.getItem("username");
       putRange("#ballSpeed", "#rangeValue");
       putRange("#gameDifficulty", "#difficultyRangeValue");
       submitHandler("aiGamesForm", aiGameSetup);
     } else if (page === "games/ai/game") {
+      if (isMobile()) {
+        throw new Error("This game is not supported on mobile devices.");
+      }
       try {
         new AiGame();
       } catch (error) {
@@ -78,6 +89,9 @@ export function setupPageActions(page) {
         }
       }
     } else if (page === "games/locale/game") {
+      if (isMobile()) {
+        throw new Error("This game is not supported on mobile devices.");
+      }
       try {
         new Game();
       } catch (error) {
@@ -86,6 +100,9 @@ export function setupPageActions(page) {
         }
       }
     } else if (page === "games/locale-tournament/game") {
+      if (isMobile()) {
+        throw new Error("This game is not supported on mobile devices.");
+      }
       try {
         new Tournament();
       } catch (error) {
@@ -121,10 +138,10 @@ export function setupPageActions(page) {
       message: error.message,
       theme: "danger",
     });
+    window.location.hash = "home";
     console.error("Error setting up page actions:", error);
   }
 }
-window.moveToNext = moveToNext;
 
 function submitHandler(elementId, eventListener) {
   document.getElementById(elementId).addEventListener("submit", eventListener);
@@ -134,4 +151,10 @@ function putRange(querySelector, id) {
   document.querySelector(querySelector).addEventListener("input", (e) => {
     document.querySelector(id).innerHTML = e.target.value;
   });
+}
+
+function isMobile() {
+  return /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(
+    navigator.userAgent
+  );
 }

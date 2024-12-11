@@ -251,8 +251,41 @@ export class AiGame {
       message: `${winner} wins!`,
       type: "success",
     });
-    setTimeout(() => {
+    setTimeout(async () => {
+      await this.#saveGame();
       window.location.hash = "games/ai";
     }, 3000);
+  }
+
+  async #saveGame() {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/game/save-game/",
+        {
+          method: "POST",
+          headers: {
+            "Accept-Language": "tr",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+          body: JSON.stringify({
+            username: this.#player1.name,
+            userScore: this.#player1.score,
+            aiScore: this.#aiPlayer.score,
+            isWin: this.#player1.score > this.#aiPlayer.score,
+          }),
+        }
+      );
+      const { data, error } = await response.json();
+      if (!response.ok) {
+        throw new Error(error);
+      }
+    } catch (error) {
+      Toast({
+        title: "Error",
+        message: error.message,
+        type: "error",
+      });
+    }
   }
 }
