@@ -86,7 +86,6 @@ export class Game {
   #initializeGame() {
     document.addEventListener("keydown", (event) => {
       if (!this.#keyboardList.includes(event.key)) return;
-      event.preventDefault();
       if (event.key === "w") this.#leftPaddle.dy = -this.#paddleSpeed;
       if (event.key === "s") this.#leftPaddle.dy = this.#paddleSpeed;
       if (event.key === "ArrowUp") this.#rightPaddle.dy = -this.#paddleSpeed;
@@ -95,7 +94,6 @@ export class Game {
 
     document.addEventListener("keyup", (event) => {
       if (!this.#keyboardList.includes(event.key)) return;
-      event.preventDefault();
       if (event.key === "w" || event.key === "s") this.#leftPaddle.dy = 0;
       if (event.key === "ArrowUp" || event.key === "ArrowDown")
         this.#rightPaddle.dy = 0;

@@ -17,14 +17,17 @@ export async function otp(event) {
     if (!username) {
       window.location.hash = "signin";
     }
-    const response = await fetch("http://localhost:8000/api/auth/two-factor/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Language": getLanguage(),
-      },
-      body: JSON.stringify({ username, code }),
-    });
+    const response = await fetch(
+      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/two-factor/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": getLanguage(),
+        },
+        body: JSON.stringify({ username, code }),
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {
@@ -32,7 +35,6 @@ export async function otp(event) {
     }
     localStorage.setItem("access_token", data.data.access_token.token);
     localStorage.setItem("refresh_token", data.data.refresh_token.token);
-    localStorage.setItem("profileImage", await getProfileImage());
     authButtons();
     Toast({
       title: "Success",
@@ -63,35 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     const otp1 = document.getElementById("otp1");
     if (otp1) {
-      otp1.focus(); //
+      otp1.focus();
     }
   }, 10);
 });
-
-async function getProfileImage() {
-  try {
-    const response = await fetch(
-      `http://localhost:8000/api/user/${username}/`,
-      {
-        method: "GET",
-        headers: {
-          "Accept-Language": "tr",
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      }
-    );
-
-    const { data, error } = await response.json();
-    if (!response.ok) {
-      throw new Error(error);
-    }
-
-    return data.avatar_url;
-  } catch (error) {
-    Toast({
-      title: "Error",
-      message: error.message,
-      theme: "danger",
-    });
-  }
-}

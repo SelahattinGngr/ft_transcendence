@@ -17,20 +17,23 @@ export async function handleSignup(event) {
         theme: "danger",
       });
     }
-    const response = await fetch("http://localhost:8000/api/auth/signup/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Accept-Language": "tr",
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-        first_name,
-        last_name,
-      }),
-    });
+    const response = await fetch(
+      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/signup/",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Accept-Language": "tr",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          first_name,
+          last_name,
+        }),
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {

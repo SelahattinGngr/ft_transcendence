@@ -1,6 +1,8 @@
+import { Toast } from "../../components/toast.js";
+
 export async function fetchFriendRequests() {
   const response = await fetch(
-    "http://localhost:8000/api/friend/list-friends-request/",
+    "https://k2m10s01.42kocaeli.com.tr:8080/api/friend/list-friends-request/",
     {
       method: "GET",
       headers: {
@@ -24,13 +26,19 @@ export async function fetchFriendRequests() {
 
       listItem.innerHTML = `
                         <strong>${request.sender_username}</strong>
-                        <button class="btn btn-success accept-request" data-id="${request.id}" onclick="acceptRequest(event, ${request.id})">Kabul Et</button>
+                        <button class="btn btn-success accept-request" data-id="${request.id}">Kabul Et</button>
                         <span>size bir arkadaşlık isteği gönderdi.</span>
-                        <button class="btn btn-danger reject-request" data-id="${request.id}" onclick="rejectRequest(event, ${request.id})">Reddet</button>
+                        <button class="btn btn-danger reject-request" data-id="${request.id}">Reddet</button>
                         <a href="/#profile/user?${request.sender_username}" class="view-profile">Profilini Gör</a>
                     `;
 
       friendsRequestLists.appendChild(listItem);
+    });
+    document.querySelector(".accept-request").addEventListener("click", (e) => {
+      acceptRequest(e, e.target.dataset.id);
+    });
+    document.querySelector(".reject-request").addEventListener("click", (e) => {
+      rejectRequest(e, e.target.dataset.id);
     });
   } else {
     const listItem = document.createElement("li");
@@ -42,38 +50,54 @@ export async function fetchFriendRequests() {
 
 export async function acceptRequest(e, id) {
   e.preventDefault();
-  const response = await fetch(
-    `http://localhost:8000/api/friend/accept-friend-request/${id}/`,
-    {
-      method: "GET",
-      headers: {
-        "Accept-Language": "tr",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
+  try {
+    const response = await fetch(
+      `https://k2m10s01.42kocaeli.com.tr:8080/api/friend/accept-request/${id}/`,
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": "tr",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error);
     }
-  );
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.error);
+    fetchFriendRequests();
+  } catch (error) {
+    Toast({
+      title: "Error",
+      message: error.message,
+      theme: "danger",
+    });
   }
-  fetchFriendRequests();
 }
 
 export async function rejectRequest(e, id) {
   e.preventDefault();
-  const response = await fetch(
-    `http://localhost:8000/api/friend/reject-request/${id}/`,
-    {
-      method: "GET",
-      headers: {
-        "Accept-Language": "tr",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
+  try {
+    const response = await fetch(
+      `https://k2m10s01.42kocaeli.com.tr:8080/api/friend/reject-request/${id}/`,
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": "tr",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error);
     }
-  );
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.error);
+    fetchFriendRequests();
+  } catch (error) {
+    Toast({
+      title: "Error",
+      message: error.message,
+      theme: "danger",
+    });
   }
-  fetchFriendRequests();
 }

@@ -4,7 +4,7 @@ import { getLanguage } from "../../utils/language.js";
 export async function fetchFriendsList() {
   try {
     const response = await fetch(
-      "http://localhost:8000/api/user/list_friends",
+      "https://k2m10s01.42kocaeli.com.tr:8080/api/user/list_friends",
       {
         method: "GET",
         headers: {
@@ -28,7 +28,7 @@ export async function fetchFriendsList() {
 
         listItem.innerHTML = `
           <strong>${friend.username}</strong>
-          <a href="/profile/${friend.username}" class="view-profile" target="_blank">Profili Gör</a>
+          <a href="/#profile/user?${friend.username}" class="view-profile">Profili Gör</a>
           `;
 
         friendsList.appendChild(listItem);

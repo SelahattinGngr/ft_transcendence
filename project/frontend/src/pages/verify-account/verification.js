@@ -10,7 +10,7 @@ export async function verificationCode() {
   }
   try {
     const response = await fetch(
-      `http://localhost:8000/api/auth/verify-account/${verificationToken}`
+      `https://k2m10s01.42kocaeli.com.tr:8080/api/auth/verify-account/${verificationToken}`
     );
     const data = await response.json();
     await new Promise((resolve) => setTimeout(resolve, 2000));

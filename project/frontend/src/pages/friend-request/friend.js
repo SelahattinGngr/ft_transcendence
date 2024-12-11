@@ -14,7 +14,7 @@ export async function sendFriendRequest(event) {
       throw new Error("No active session found.");
     }
     const response = await fetch(
-      "http://localhost:8000/api/friend/send-request/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/api/friend/send-request/",
       {
         method: "POST",
         headers: {

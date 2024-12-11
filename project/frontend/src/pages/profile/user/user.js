@@ -3,13 +3,16 @@ import { getLanguage } from "../../../utils/language.js";
 
 export async function fetchUserProfile(userName) {
   try {
-    const response = await fetch(`http://localhost:8000/api/user/${userName}`, {
-      method: "GET",
-      headers: {
-        "Accept-Language": getLanguage(),
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
+    const response = await fetch(
+      `https://k2m10s01.42kocaeli.com.tr:8080/api/user/${userName}`,
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": getLanguage(),
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
 
     const { data, error } = await response.json();
     if (!response.ok) {
@@ -36,7 +39,7 @@ export async function fetchUserProfile(userName) {
 async function loadMatchHistory(username) {
   try {
     const response = await fetch(
-      `http://localhost:8000/api/game/get-history/${username}`,
+      `https://k2m10s01.42kocaeli.com.tr:8080/api/game/get-history/${username}`,
       {
         method: "GET",
         headers: {

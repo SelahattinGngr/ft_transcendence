@@ -7,14 +7,17 @@ export async function handleSignin(event) {
   const password = document.getElementById("signinPassword").value;
 
   try {
-    const response = await fetch("http://localhost:8000/api/auth/signin/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Language": "tr",
-      },
-      body: JSON.stringify({ signin, password }),
-    });
+    const response = await fetch(
+      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/signin/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": "tr",
+        },
+        body: JSON.stringify({ signin, password }),
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {
@@ -53,12 +56,15 @@ export async function intraSignin() {
 }
 
 async function getIntraUrl() {
-  const response = await fetch("http://localhost:8000/api/auth/intra/", {
-    method: "GET",
-    headers: {
-      "Accept-Language": "tr",
-    },
-  });
+  const response = await fetch(
+    "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/intra/",
+    {
+      method: "GET",
+      headers: {
+        "Accept-Language": "tr",
+      },
+    }
+  );
 
   const data = await response.json();
 
@@ -91,7 +97,7 @@ function closePopupSettings(popup) {
       clearInterval(timer);
       popup.close();
       const responseBackend = await fetch(
-        `http://localhost:8000/api/auth/intra-callback/?code=${code}`,
+        `https://k2m10s01.42kocaeli.com.tr:8080/api/auth/intra-callback/?code=${code}`,
         {
           method: "POST",
           headers: {

@@ -4,7 +4,7 @@ import { setuplanguage } from "../../utils/language.js";
 export async function getNotifications() {
   try {
     const response = await fetch(
-      "http://localhost:8000/api/notification/get-notifications/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/api/notification/get-notifications/",
       {
         method: "GET",
         headers: {
@@ -53,27 +53,27 @@ export async function getNotifications() {
         readNotification(e, notification.id)
       );
 
-      const requestAcceptButton = document.createElement("button");
-      requestAcceptButton.classList.add("btn", "btn-success");
-      requestAcceptButton.textContent = "Accept";
-      requestAcceptButton.addEventListener("click", (e) =>
-        acceptRequest(e, notification.id)
-      );
+      // const requestAcceptButton = document.createElement("button");
+      // requestAcceptButton.classList.add("btn", "btn-success");
+      // requestAcceptButton.textContent = "Accept";
+      // requestAcceptButton.addEventListener("click", (e) =>
+      //   acceptRequest(e, notification.id)
+      // );
 
-      const requestRejectButton = document.createElement("button");
-      requestRejectButton.classList.add("btn", "btn-danger");
-      requestRejectButton.textContent = "Reject";
-      requestRejectButton.addEventListener("click", (e) =>
-        rejectRequest(e, notification.id)
-      );
+      // const requestRejectButton = document.createElement("button");
+      // requestRejectButton.classList.add("btn", "btn-danger");
+      // requestRejectButton.textContent = "Reject";
+      // requestRejectButton.addEventListener("click", (e) =>
+      //   rejectRequest(e, notification.id)
+      // );
 
       listItem.appendChild(title);
       listItem.appendChild(href);
       listItem.appendChild(content);
-      if (notification.type === "friend_request") {
-        listItem.appendChild(requestAcceptButton);
-        listItem.appendChild(requestRejectButton);
-      }
+      // if (notification.type === "friend_request") {
+      //   listItem.appendChild(requestAcceptButton);
+      //   listItem.appendChild(requestRejectButton);
+      // }
       listItem.appendChild(readButton);
       notificationList.appendChild(listItem);
     });
@@ -91,7 +91,9 @@ export async function getNotifications() {
 export async function readNotification(e, notificationId) {
   try {
     const response = await fetch(
-      "http://localhost:8000/api/notification/read/" + notificationId + "/",
+      "https://k2m10s01.42kocaeli.com.tr:8080/api/notification/read/" +
+        notificationId +
+        "/",
       {
         method: "PATCH",
         headers: {
@@ -122,69 +124,69 @@ export async function readNotification(e, notificationId) {
   }
 }
 
-export async function acceptRequest(e, notificationId) {
-  try {
-    const response = await fetch(
-      "http://localhost:8000/api/friend/accept-request/" + notificationId,
-      {
-        method: "GET",
-        headers: {
-          "Accept-Language": "tr",
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      }
-    );
+// export async function acceptRequest(e, notificationId) {
+//   try {
+//     const response = await fetch(
+//       "https://k2m10s01.42kocaeli.com.tr:8080/api/friend/accept-request/" + notificationId,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Accept-Language": "tr",
+//           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+//         },
+//       }
+//     );
 
-    const data = await response.json();
-    console.log(data);
+//     const data = await response.json();
+//     console.log(data);
 
-    if (!response.ok) {
-      throw new Error(data.error);
-    }
-    Toast({
-      title: "Success",
-      message: data.data,
-      theme: "success",
-    });
-  } catch (error) {
-    Toast({
-      title: "Error",
-      message: error.message,
-      theme: "danger",
-    });
-    console.error("Error accepting request:", error);
-  }
-}
-export async function rejectRequest(e, notificationId) {
-  try {
-    const response = await fetch(
-      "http://localhost:8000/api/friend/reject-request/" + notificationId,
-      {
-        method: "GET",
-        headers: {
-          "Accept-Language": "tr",
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      }
-    );
+//     if (!response.ok) {
+//       throw new Error(data.error);
+//     }
+//     Toast({
+//       title: "Success",
+//       message: data.data,
+//       theme: "success",
+//     });
+//   } catch (error) {
+//     Toast({
+//       title: "Error",
+//       message: error.message,
+//       theme: "danger",
+//     });
+//     console.error("Error accepting request:", error);
+//   }
+// }
+// export async function rejectRequest(e, notificationId) {
+//   try {
+//     const response = await fetch(
+//       "https://k2m10s01.42kocaeli.com.tr:8080/api/friend/reject-request/" + notificationId,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Accept-Language": "tr",
+//           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+//         },
+//       }
+//     );
 
-    const data = await response.json();
-    console.log(data);
+//     const data = await response.json();
+//     console.log(data);
 
-    if (!response.ok) {
-      throw new Error(data.error);
-    }
-    Toast({
-      title: "Success",
-      message: data.data,
-      theme: "success",
-    });
-  } catch (error) {
-    Toast({
-      title: "Error",
-      message: error.message,
-      theme: "danger",
-    });
-    console.error("Error rejecting request:", error);
-  }
-}
+//     if (!response.ok) {
+//       throw new Error(data.error);
+//     }
+//     Toast({
+//       title: "Success",
+//       message: data.data,
+//       theme: "success",
+//     });
+//   } catch (error) {
+//     Toast({
+//       title: "Error",
+//       message: error.message,
+//       theme: "danger",
+//     });
+//     console.error("Error rejecting request:", error);
+//   }
+// }

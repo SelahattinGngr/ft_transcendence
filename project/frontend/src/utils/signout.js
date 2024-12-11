@@ -10,13 +10,16 @@ export async function signout() {
   }
 
   try {
-    const response = await fetch("http://localhost:8000/api/auth/signout/", {
-      method: "GET",
-      headers: {
-        "Accept-Language": getLanguage(),
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await fetch(
+      "https://k2m10s01.42kocaeli.com.tr:8080/api/auth/signout/",
+      {
+        method: "GET",
+        headers: {
+          "Accept-Language": getLanguage(),
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {
@@ -31,6 +34,7 @@ export async function signout() {
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("username");
     authButtons();
+    window.location.hash = "home";
   } catch (error) {
     console.error("Error during logout:", error);
     Toast({

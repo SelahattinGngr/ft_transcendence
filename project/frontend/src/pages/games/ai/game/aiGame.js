@@ -260,7 +260,7 @@ export class AiGame {
   async #saveGame() {
     try {
       const response = await fetch(
-        "http://localhost:8000/api/game/save-game/",
+        "https://k2m10s01.42kocaeli.com.tr:8080/api/game/save-game/",
         {
           method: "POST",
           headers: {

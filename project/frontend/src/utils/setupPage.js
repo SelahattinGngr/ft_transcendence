@@ -125,6 +125,7 @@ export function setupPageActions(page) {
       document
         .querySelector("#updateRequests")
         .addEventListener("click", fetchFriendRequests);
+    
     } else if (page === "notifications") {
       authController();
       getNotifications();
