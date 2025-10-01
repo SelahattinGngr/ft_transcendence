@@ -413,7 +413,6 @@ def intra(request):
 def intraCallback(request):
     language = request.headers.get("Accept-Language", "tr")
     code = request.GET.get("code")
-    logger.fatal(f"CODE VAR BURADA KÖR GÖZÜNÜ SİKEYİM ->>>>> {code}")
 
     if not code:
         return ResponseService.create_error_response(
